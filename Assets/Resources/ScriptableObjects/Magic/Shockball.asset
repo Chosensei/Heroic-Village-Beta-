@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e7bafedd316a044987b37e5e33df5c, type: 3}
+  m_Name: Shockball
+  m_EditorClassIdentifier: 
+  name: Shock
+  damage: 6
+  speed: 3
+  castTime: 5
+  spellPrefab: {fileID: 1800952293168636718, guid: 4e388628b7ec75a43875d3715429e666, type: 3}

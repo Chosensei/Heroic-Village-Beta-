@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e7bafedd316a044987b37e5e33df5c, type: 3}
+  m_Name: FireBall
+  m_EditorClassIdentifier: 
+  name: Fire
+  damage: 5
+  speed: 3
+  castTime: 3
+  spellPrefab: {fileID: 7301269761715261549, guid: afbf2dbc036d5f64abceb9df7c378073, type: 3}
