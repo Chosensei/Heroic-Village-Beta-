@@ -15,7 +15,7 @@ public class MagicBook : MonoBehaviour
     private bool doneCasting = false; 
     public MagicData CastMagic(int index)
     {
-        UIManager.Instance.skillTxt[index].text = magicData[index].Name;
+        //UIManager.Instance.skillTxt[index].text = magicData[index].Name;
         //UIManager.Instance.skillTxt[index].color = Color.white;
         //UIManager.Instance.castTimeTxt[index].color = Color.white;
         //UIManager.Instance.castTimeImg[index].color = new Color(0, 0, 0, 134); // light black color
@@ -37,7 +37,7 @@ public class MagicBook : MonoBehaviour
             progress += rate * Time.deltaTime;
             timePassed += Time.deltaTime;
             // Display number of seconds passed after casting
-            UIManager.Instance.castTimeTxt[index].text = (magicData[index].CastTime - timePassed).ToString("F1");
+            //UIManager.Instance.castTimeTxt[index].text = (magicData[index].CastTime - timePassed).ToString("F1");
             doneCasting = true;
 
             yield return null;

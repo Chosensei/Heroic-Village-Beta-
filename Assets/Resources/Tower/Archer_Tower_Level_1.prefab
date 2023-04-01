@@ -1,0 +1,169 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1902171638753626002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1902171638753626005}
+  - component: {fileID: 1902171638753626007}
+  - component: {fileID: 1902171638753626004}
+  m_Layer: 0
+  m_Name: Archer_Tower_Level_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1902171638753626005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902171638753626002}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -105.8, y: -1.1824188, z: 1.676651}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6868086308531721711}
+  - {fileID: 2924043083598047441}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &1902171638753626007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902171638753626002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f7892be1ec56cd49a946173f5facee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 3723325365943407189, guid: 10f6d52bc4e5e9745bfbb1d6c2be0cef, type: 3}
+  shootingPoint: {fileID: 2924043083598047441}
+  baseDamage: 1
+  baseFireRate: 10
+  baseFiringRange: 100
+  currentTowerLevel: 1
+  maxTowerLevel: 5
+  bulletSpeed: 30
+--- !u!135 &1902171638753626004
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902171638753626002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 150
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6271545884074993683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2924043083598047441}
+  m_Layer: 0
+  m_Name: Shooting point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2924043083598047441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6271545884074993683}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 36.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1902171638753626005}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1902171637643075832
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1902171638753626005}
+    m_Modifications:
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6391516
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6391516
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656054603032588205, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+      propertyPath: m_Name
+      value: Archer_Tower_Model
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+--- !u!4 &6868086308531721711 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4987040722504398103, guid: 8d0b218640dac7d4385bc94a54f1a828, type: 3}
+  m_PrefabInstance: {fileID: 1902171637643075832}
+  m_PrefabAsset: {fileID: 0}

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86768ad62930bd646b0e6ff936b8e400, type: 3}
+  m_Name: CatapultTower
+  m_EditorClassIdentifier: 
+  upgrades:
+  - damageBoost: 5
+    fireRateBoost: 0.5
+    firingRangeBoost: 6
+    aoeRangeBoost: 10
+    aoeBlastBoost: 2
+    dotBoost: 0
+    slowMvtBoost: 0
+    stunDurationBoost: 0
+  - damageBoost: 10
+    fireRateBoost: 1
+    firingRangeBoost: 6
+    aoeRangeBoost: 12
+    aoeBlastBoost: 3
+    dotBoost: 0
+    slowMvtBoost: 0
+    stunDurationBoost: 0
+  - damageBoost: 15
+    fireRateBoost: 1.5
+    firingRangeBoost: 6
+    aoeRangeBoost: 15
+    aoeBlastBoost: 4
+    dotBoost: 0
+    slowMvtBoost: 0
+    stunDurationBoost: 0
+  - damageBoost: 20
+    fireRateBoost: 2
+    firingRangeBoost: 6
+    aoeRangeBoost: 20
+    aoeBlastBoost: 5
+    dotBoost: 0
+    slowMvtBoost: 0
+    stunDurationBoost: 0

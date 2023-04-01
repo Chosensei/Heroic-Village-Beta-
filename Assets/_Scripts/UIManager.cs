@@ -1,88 +1,75 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; 
 
-public class UIManager : Singleton <UIManager>
+
+public class UIManager : Singleton<UIManager>
 {
-    //SpellCast on button key press 
-    [SerializeField]
-    private Button[] _actionButtons;
-    private KeyCode _action1, _action2, _action3, _action4;
+    [Header("Building Prefabs")]
+    public GameObject villageHousePrefab;
+    public GameObject arrowTowerPrefab;
+    public GameObject catapultTowerPrefab;
+    public GameObject wizardTowerPrefab;
+
+    [Header("UI Stuff")]
+    public Button VillageHouseButton;
+    public Button ArrowTowerButton;
+    public Button CatapultTowerButton;
+    public Button WizardTowerButton;
+    public Button SellBuildingButton;
+    public Button UpgradeBuildingButton;
+    public Button[] switchElementButtons;
+    [Space]
+    public GameObject PlacementTowerUIMenu1;
+    public GameObject PlacementTowerUIMenu2;
+    public GameObject UpgradeTowerUIMenu;
+    public GameObject SwitchElementUIMenu;
+    //private BaseTowerController btc;
+    private TowerPlacementController tpc;
+    //private TowerLevelSwitch tls;
 
     [Header("Player UI")]
+    public TextMeshProUGUI moneyText;
     [SerializeField] private Image healthbar;
     [SerializeField] private Image manabar;
 
     [Header("Base Wall UI")]
+    public GameObject[] WallUIObjects;
     [SerializeField] private Image[] wallHP;
+    
 
-    [Header("Player HUD")]
-    public Text[] skillTxt;
-    public Text[] castTimeTxt;
-    //public Image[] castTimeImg;
+    [Header("Debug")]
+    public GameObject currentSelectedBuilding = null; 
+
 
     void Start()
     {
-        // Keybinds to spells
-        _action1 = KeyCode.Alpha1;
-        _action2 = KeyCode.Alpha2;
-        _action3 = KeyCode.Alpha3;
-        _action4 = KeyCode.Alpha4; 
+        SetupButtons();
 
         // Default health & mana to maximum in UI 
         healthbar.fillAmount = 1;
         manabar.fillAmount = 1;
 
         // Set default wall HP
-        foreach(Image w in wallHP)
+        foreach (Image w in wallHP)
         {
             w.fillAmount = 1;
         }
-
-        // set HUD 
-        foreach (Text txt in skillTxt)
-        {
-            txt.color = Color.black;
-        }
-        //skillTxt[index].text = magicData[index].Name;
-        //skillTxt[index].color = Color.black;
-        //castTimeImg[index].color = Color.white;
-        //castTimeTxt[index].color = Color.black;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(_action1))
-        {
-            ActionButtonOnClick(0);
-            //Debug.Log("Fire");
-        }
-        if (Input.GetKeyDown(_action2))
-        {
-            ActionButtonOnClick(1);
-            //Debug.Log("Ice");
-        }
-        if (Input.GetKeyDown(_action3))
-        {
-            ActionButtonOnClick(2);
-            //Debug.Log("Stun");
-        }
-        if (Input.GetKeyDown(_action4))
-        {
-            ActionButtonOnClick(3);
-        }
+
     }
-    private void ActionButtonOnClick(int btnIndex)
-    {
-        _actionButtons[btnIndex].onClick.Invoke();
-    }
-    
+
     // Manage healthbars & mana
     public void UpdateHealthBar(float currentHp, float maxHp)
     {
-        healthbar.fillAmount = currentHp / maxHp; 
+        healthbar.fillAmount = currentHp / maxHp;
     }
     public void UpdateManaBar(float currentMp, float maxMp)
     {
@@ -92,11 +79,104 @@ public class UIManager : Singleton <UIManager>
     {
         wallHP[wallIndex].fillAmount = currentHp / maxHp;
     }
-    public void ResetHUDText(int index)
+
+    // tower placement UI
+    public void ShowBuildTowerMenuUI(TowerPlacementController placementPoint)
     {
-       // castTimeImg[index].color = Color.white;
-        skillTxt[index].color = Color.black;
-        castTimeTxt[index].color = Color.black;
-        
+        tpc = placementPoint;
+        PlacementTowerUIMenu1.gameObject.SetActive(true);
+    }
+    public void CloseBuildTowerMenu()
+    {
+        PlacementTowerUIMenu1.gameObject.SetActive(false);
+        PlacementTowerUIMenu2.gameObject.SetActive(false);
+    }
+
+    public void SwitchMenuPages()
+    {
+        if (PlacementTowerUIMenu1.activeSelf)
+        {
+            PlacementTowerUIMenu1.SetActive(false);
+            PlacementTowerUIMenu2.SetActive(true);
+        }
+        else
+        {
+            PlacementTowerUIMenu1.SetActive(true);
+            PlacementTowerUIMenu2.SetActive(false);
+        }
+    }
+    //public void ShowUpgradeMenu(BaseTowerController baseTower)
+    //{
+    //    btc = baseTower;
+    //    UpgradeTowerUIMenu.SetActive(true);
+    //}
+    public void ShowUpgradeMenu(TowerLevelSwitch towerLevelSwitch)
+    {
+        //tls = towerLevelSwitch;
+        UpgradeTowerUIMenu.SetActive(true);
+    }
+    private void SetupButtons()
+    {
+        VillageHouseButton.onClick.AddListener(() =>
+        {
+            GameObject house = Instantiate(villageHousePrefab);
+            house.transform.position = tpc.transform.position;
+            tpc.TowerPlaced(house.GetComponent<BaseTowerController>());
+            CloseBuildTowerMenu();
+        });
+        ArrowTowerButton.onClick.AddListener(() =>
+        {
+            GameObject tower = Instantiate(arrowTowerPrefab);
+            tower.transform.position = tpc.transform.position;
+            tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
+            CloseBuildTowerMenu();
+        });
+        CatapultTowerButton.onClick.AddListener(() =>
+        {
+            GameObject tower = Instantiate(catapultTowerPrefab);
+            tower.transform.position = tpc.transform.position;
+            tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
+            CloseBuildTowerMenu();
+        });
+        WizardTowerButton.onClick.AddListener(() =>
+        {
+            GameObject tower = Instantiate(wizardTowerPrefab);
+            tower.transform.position = tpc.transform.position;
+            tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
+            CloseBuildTowerMenu();
+        });
+
+        // UPGRADES
+        UpgradeBuildingButton.onClick.AddListener(() =>
+        {
+            currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
+            tls.UpgradeTowerPrefab();
+            if (tls.WizardTower == true) { SwitchElementUIMenu.gameObject.SetActive(true); }
+            else { SwitchElementUIMenu.gameObject.SetActive(false); }
+            //print("Upgraded tower!");
+            //tls.UpgradeTestMessage();
+        });
+        SellBuildingButton.onClick.AddListener(() =>
+        {
+            currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
+            tls.SellTowerPrefab();
+            currentSelectedBuilding = null;
+            //print("Sold tower!");
+        });
+        switchElementButtons[0].onClick.AddListener(() =>
+        {
+            currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
+            tls.ChangeWizardElementType("Fire");
+        });
+        switchElementButtons[1].onClick.AddListener(() =>
+        {
+            currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
+            tls.ChangeWizardElementType("Lightning");
+        });
+        switchElementButtons[2].onClick.AddListener(() =>
+        {
+            currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
+            tls.ChangeWizardElementType("Ice");
+        });
     }
 }

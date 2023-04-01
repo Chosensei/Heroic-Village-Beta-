@@ -38,7 +38,7 @@ public class SpellScript : MonoBehaviour
     {
         Vector3 dir = SpellTarget.position - transform.position;
         _rb.velocity = dir * magicData.Speed;
-        Debug.Log("Spell velocity: " + magicData.Speed);
+        //Debug.Log("Spell velocity: " + magicData.Speed);
         // rotate gameobject to hit target
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -54,7 +54,7 @@ public class SpellScript : MonoBehaviour
             // Enemy damage function
             EnemyTarget enemy = other.gameObject.GetComponent<EnemyTarget>();
             enemy.TakeDamage(magicData.Damage);
-            Debug.Log("Spell damage: " + magicData.Damage);
+            //Debug.Log("Spell damage: " + magicData.Damage);
             Destroy(this.gameObject);
         }
     }

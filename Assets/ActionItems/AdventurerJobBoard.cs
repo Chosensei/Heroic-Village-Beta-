@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AdventurerJobBoard : ActionItem
+public class AdventurerJobBoard : JobBoard
 {
     public string[] dialogue;
     private new string name = "Job Board";

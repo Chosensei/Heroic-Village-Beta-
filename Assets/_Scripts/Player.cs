@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 /// <summary>
 /// This script allows for us to click anywhere on the NavMesh and have our player move there.
 /// </summary>
@@ -12,29 +13,52 @@ public class Player : MonoBehaviour
     [Header("For Debugging")]
     public bool HaveTarget = false;
     public GameObject SelectedTarget;
-    [SerializeField] private float manacost = 10f; 
+    [SerializeField] private float manacost = 10f;
+
+    [Header("Input References")]
+    [SerializeField] private Animator animator = null;
+    [SerializeField] private PlayerInput playerInput = null;
+    [SerializeField] private CharacterController controller = null;
 
     [Header("Player Stats")]
-    [SerializeField] private float currentHealth; 
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float currentMana; 
-    [SerializeField] private float maxMana;
-    [SerializeField] private float clickDistance;
+    [SerializeField] private float movementSpeed = 5f;
+    [SerializeField] private float currentHealth;
+    [SerializeField] private float MaxHealth = 100;
+    [SerializeField] private float currentMana;
+    [SerializeField] private float maxMana = 50;
+    [SerializeField] private float clickDistance = 300;
+    [SerializeField] private float manaRegenTime = 10;
 
+    public PlayerInput PlayerInput => playerInput;
     public GameObject MySelectedTarget { get; set; }
-
-    // temp magic spells array
-    [Tooltip("Press 1,2,3 to cast dif elemental spell")]
-    [SerializeField] private GameObject[] spellPrefab;
-    [SerializeField] private Transform _magicCastExit;
-    protected bool isAttacking = false;                 // can be used to activate animation for attack later on
-    protected Coroutine attackRoutine;
+    public float MyMaxMana => maxMana;
+    public float MyCurrentMana
+    {
+        get { return currentMana; }
+        set { currentMana = value; }
+    }
+    public float ManaCost
+    {
+        get { return manacost; }
+        set { manacost = value; }
+    }
     private NavMeshAgent playerAgent;
+    private Vector2 inputMovement;
+    private Vector2 currentInputVector;
+    private Vector2 smoothInputVelocity;
+    private float smoothInputSpeed = 0.2f;
+    private float rotSpeed = 0.1f;
+    private Quaternion rotGoal;
+    private Rigidbody playerBody;
+
     //private SpellBook _spellBook;
-    private MagicBook magicbook; 
+
     protected bool canMove => Input.GetMouseButton(0) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
     // Player Stats region
     public CharacterStats characterStats;
+
+    private PlayerCombat _playerCombat; 
+
     //public int power = 10, toughness = 10, atkSpd = 10;
     private Color hitColor = Color.yellow;
 
@@ -42,11 +66,9 @@ public class Player : MonoBehaviour
     void InitializeStats()
     {
         // Set player health
-        maxHealth = 100f;
-        currentHealth = maxHealth;
+        currentHealth = MaxHealth;
 
         // Set player mana
-        maxMana = 50f; 
         currentMana = maxMana;
 
         // Set max click distance
@@ -61,14 +83,16 @@ public class Player : MonoBehaviour
         if (playerAgent == null)
             playerAgent = GetComponent<NavMeshAgent>();
 
-        magicbook = GetComponent<MagicBook>(); 
+        _playerCombat = GetComponent<PlayerCombat>();
+        playerBody = GetComponent<Rigidbody>();
+
         //EnemyTarget enemytarget = GetComponent<EnemyTarget>();
     }
 
     void Update()
     {
-        MagicLineOfSight();
-        RotateFollowMouse();
+        _playerCombat.MagicLineOfSight();
+        //RotateFollowMouse();
         // Move on mouse click 
         if (canMove)
         {
@@ -79,8 +103,28 @@ public class Player : MonoBehaviour
         { 
             MySelectedTarget = null; 
         }
+        // Auto-regen skills
+        //RestoreManaOverTime(20, 2);
         //Debug.DrawRay(transform.position, transform.forward * 5f, Color.red);
+        #region Movement 
 
+        currentInputVector = Vector2.SmoothDamp(currentInputVector, inputMovement, ref smoothInputVelocity, smoothInputSpeed);
+        Vector3 move = new Vector3(currentInputVector.x, 0f, currentInputVector.y);
+        //var finalMovement = inputMovement;
+
+        var finalMovement = move * movementSpeed * Time.deltaTime;
+
+        controller.Move(finalMovement);
+
+        Vector3 velocity = controller.velocity;
+        velocity.y = 0f;
+
+        if (velocity.magnitude > 0.2f)
+        { 
+            rotGoal = Quaternion.LookRotation(finalMovement);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotGoal, rotSpeed);
+        }
+        #endregion
         #region FOR DEBUGGING
         SelectedTarget = MySelectedTarget; 
 
@@ -89,13 +133,16 @@ public class Player : MonoBehaviour
         else
             HaveTarget = true;
 
+        // Testing for mana regen
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            RestoreMana(50); 
+            currentMana -= 50;
         }
 
         #endregion
     }
+
+
     private void RotateFollowMouse()
     {
         //Vector3 mousePos = Input.mousePosition;
@@ -157,36 +204,47 @@ public class Player : MonoBehaviour
     public void SelfHealing(int amount)
     {
         // Add some hp to player
-        if (currentHealth < maxHealth)
+        if (currentHealth < MaxHealth)
         {
             currentHealth += amount;
-            UIManager.Instance.UpdateHealthBar(currentHealth, maxHealth);
-            if (currentHealth > maxHealth)
-                currentHealth = maxHealth;
+            UIManager.Instance.UpdateHealthBar(currentHealth, MaxHealth);
+            if (currentHealth > MaxHealth)
+                currentHealth = MaxHealth;
         }
     }
-    public void RestoreMana(int amount)
+    public void RestoreManaOverTime(int amount, float duration)
     {
-        // Add some mp to player
+        // Restore some mp to player after X seconds
         if (currentMana < maxMana)
         {
             currentMana += amount;
+            //StartCoroutine(RestoreManaOverTimeCoroutine(amount, duration));
             UIManager.Instance.UpdateManaBar(currentMana, maxMana);
-            if (currentMana > maxMana)
-                currentMana = maxMana;
+            if (currentMana > maxMana) { currentMana = maxMana; }
+        }
+    }
+    IEnumerator RestoreManaOverTimeCoroutine(int regenAmount, float duration)
+    {
+        float amountRestored = 0;
+        float regenPerLoop = regenAmount / duration;
+        while (amountRestored < regenAmount)
+        {
+            currentMana += regenPerLoop;
+            amountRestored += regenPerLoop; 
+            yield return new WaitForSeconds(manaRegenTime);
         }
     }
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        UIManager.Instance.UpdateHealthBar(currentHealth, maxHealth);
+        UIManager.Instance.UpdateHealthBar(currentHealth, MaxHealth);
         if (currentHealth <= 0)
             Die(); 
     }
     private void Die()
     {
         Debug.Log("Player dead. Reset Health.");
-        this.currentHealth = this.maxHealth; 
+        this.currentHealth = this.MaxHealth; 
     }
     // How Enemies does damage to YOU!
     private void OnTriggerEnter(Collider other)
@@ -199,96 +257,17 @@ public class Player : MonoBehaviour
             TakeDamage(dmgAmt);
         }
     }
-    #region Magic Casting 
-    private bool MagicLineOfSight()
+
+    public void OnMove(InputAction.CallbackContext ctx)
     {
-        Vector3 origin = transform.position;
-        Vector3 dir = transform.forward;
-        float rayLength = 50f;
-        Debug.DrawRay(origin, dir * rayLength, Color.green);
-
-        Ray ray = new Ray(origin, dir);
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(ray, out hitInfo, rayLength, LayerMask.GetMask("Enemy")))
-        {   // Wont fire spell at non-enemies
-            if (hitInfo.collider.CompareTag("Enemy"))
-                MySelectedTarget = hitInfo.transform.gameObject; 
-                return true;
-        }
-        return false;
+        inputMovement = ctx.ReadValue<Vector2>();
     }
-    /// <summary>
-    /// Cast spell by pressing 1-3 keys
-    /// </summary>
-    /// <param name="spellIndex"></param>
-    public void CastSpell(int spellIndex)
+
+    // FOR FUTURE MOVES
+    public void OnDodge(InputAction.CallbackContext ctx)
     {
-        //Debug.Log("Casted Spell!");
+        if (!ctx.performed) { return; }
 
-        if (MySelectedTarget != null && !isAttacking && MagicLineOfSight())
-            attackRoutine = StartCoroutine(SpellAttack(spellIndex));
-        
+        //animator.SetTrigger("Dodge");
     }
-    private void StopAttack()
-    {
-        // magicbook stopattack function
-        magicbook.StopCasting();
-        // player's own stopattack functions
-        if (attackRoutine != null)
-        {
-            StopCoroutine(attackRoutine);
-            isAttacking = false;
-            Debug.Log("Stopped casting");
-        }
-        
-    }
-    private IEnumerator SpellAttack(int spellIndex)
-    {
-
-        //Transform currentTarget = TargetEnemy;
-        MagicData newSpell = magicbook.CastMagic(spellIndex);
-        //Spells newSpell = _spellBook.CastSpell(spellIndex);
-        
-        // Here can optionally add a spell casttime if wanted
-        //yield return new WaitForSeconds(3);
-
-        if (MagicLineOfSight()) 
-        {
-            isAttacking = true;
-            //CastSpell(0);
-        }
-
-        if (currentMana >= manacost)
-        {
-            currentMana -= manacost;
-            UIManager.Instance.UpdateManaBar(currentMana, maxMana);
-
-            //SpellScript s = Instantiate(spellPrefab[spellIndex], _magicCastExit.position, Quaternion.identity).GetComponent<SpellScript>();
-            SpellScript s = Instantiate(newSpell.SpellPrefab, _magicCastExit.position, Quaternion.identity).GetComponent<SpellScript>();
-            s.SpellTarget = MySelectedTarget.transform; 
-            yield return new WaitForSeconds(newSpell.CastTime);
-            StopAttack();
-
-        }
-        else  // Not enough mana!
-        {
-            Debug.Log("Insufficient Mana! ( Mana = " + currentMana + ")");
-        }
-
-
-
-        //yield return new WaitForSeconds(newSpell.CastTime); 
-
-        //if (currentTarget != null)
-        //{
-        //    SpellScript s = Instantiate(newSpell.SpellPrefab, _magicCastExit.position, Quaternion.identity).GetComponent<SpellScript>();
-        //    s.Init(currentTarget, newSpell.Damage);
-        //}
-        // Bind method to button
-        //CastSpell();
-
-
-    }
-    #endregion
 }

@@ -11,18 +11,19 @@ TagManager:
   - Wall 0
   - Wall 1
   - Wall 2
+  - Terrain
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Environment
   - Water
   - UI
   - Player
   - Enemy
   - Cage Wall
-  - 
-  - 
+  - Mini Map
+  - Terrain
   - 
   - 
   - 

@@ -35,6 +35,10 @@ public class CageWall : MonoBehaviour
         }
 
     }
+    public bool IsDead()
+    {
+        return currentWallHP <= 0;
+    }
     public void TakeDamage(int amount, int index)
     {
         if (!isInvincible)
@@ -49,6 +53,8 @@ public class CageWall : MonoBehaviour
         {
             isDestroyed = true; 
             isUnderAtk = false;
+            // Maybe can call the enemies clear target mwthod here?
+
         }
 
     }

@@ -41,6 +41,9 @@ public class EnemyTarget : Interactable, IEnemy
     [SerializeField] private Image enemyHealthbar;
     [SerializeField] private Transform canvasTransform;
 
+    CageWall _cageWall; 
+
+    bool wallBreached = false;
     // Visual Feedback
     //private Renderer _renderer;
     //private Color originalColor;
@@ -71,6 +74,7 @@ public class EnemyTarget : Interactable, IEnemy
         // Initialize enemy stats this way  
         //characterStats = new CharacterStats(power, toughness, atkSpd);
 
+        // MIGHT NEED TO USE A AIMANAGER TO DETERMINE WHEN A WALL IS DESTROYED FROM SCENE AND CLEAR THE TARGETS FROM OLD LIST AND SET A NEW CLOSEST TARGETS
     }
     private void Update()
     {
@@ -94,37 +98,64 @@ public class EnemyTarget : Interactable, IEnemy
         else
             MoveToTarget();
 
+        if (wallBreached)
+        {
+            print("Wall breached!");
+            ResetTargets();
+            wallBreached = false;
+        }
+            
+
+
         //if (!isAlive)
         //    spawner.GetComponent<Spawner>().enemyCount--; 
 
-        if (defaultTarget == null)
-        {
-            defaultTarget = CageWallTarget[wallTargetIndex];
+        //if (defaultTarget == null)
+        //{
+        //    defaultTarget = CageWallTarget[wallTargetIndex];
 
-            switch (wallTargetIndex)
-            {
-                case 0: // Last Wall index
-                    defaultTarget = CageWallTarget[0];
-                    break;
+        //    switch (wallTargetIndex)
+        //    {
+        //        case 0: // Last Wall index
+        //            defaultTarget = CageWallTarget[0];
+        //            break;
 
-                case 1: // Second Wall index
-                    defaultTarget = CageWallTarget[1];
-                    break;
+        //        case 1: // Second Wall index
+        //            defaultTarget = CageWallTarget[1];
+        //            break;
 
-                case 2: // First Wall index
-                    defaultTarget = CageWallTarget[2];
-                    break;
+        //        case 2: // First Wall index
+        //            defaultTarget = CageWallTarget[2];
+        //            break;
 
-                default:
-                    print("No target!");
-                    return;
-            }
-        }
+        //        default:
+        //            print("No target!");
+        //            return;
+        //    }
+        //}
         // Nothing in it
         if (Input.GetKeyDown(KeyCode.T))
         {
 
         }
+    }
+    // NEED A REFERENCE TO CAGEWALL : TO KNOW WHEN A WALL HAS BEEN DESTROYED SUCCESSFULLY
+    //private void wallIsDestroyed(out CageWall cw)
+    //{
+    //    cw = gameObject.GetComponent<CageWall>();
+    //    // Reset target when wall destroyed
+    //    if (cw.isDestroyed)
+    //    {
+    //        print("Wall Destroyed");
+    //        wallTargetIndex--;
+    //        ResetTargetList();
+    //        ResetNewTarget();
+    //    }
+    //}
+    private void ResetTargets()
+    {
+        ResetTargetList();
+        ResetNewTarget();
     }
     private void FixedUpdate()
     {
@@ -213,11 +244,13 @@ public class EnemyTarget : Interactable, IEnemy
             cw.isUnderAtk = true;
             if (cw.isDestroyed)
             {
-                //Destroy(CageWallTarget[wallTargetIndex].gameObject);
+                //wallTargetIndex--;
+                //wallBreached = true;
                 CageWallTarget[wallTargetIndex].gameObject.SetActive(false);
                 wallTargetIndex--;
                 ResetTargetList();
                 ResetNewTarget();
+                wallBreached = true;
             }
         }
     }
@@ -229,9 +262,10 @@ public class EnemyTarget : Interactable, IEnemy
             cw.isUnderAtk = false;
             if (cw.isDestroyed)
             {
-                wallTargetIndex--;
-                ResetTargetList();
-                ResetNewTarget();
+                //wallTargetIndex--;
+                //wallBreached = true;
+                //ResetTargetList();
+                //ResetNewTarget();
             }
         }
     }
