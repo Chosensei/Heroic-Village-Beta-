@@ -18,7 +18,11 @@ public class TowerUpgrade : ScriptableObject
         public float slowMvtBoost;
         public float stunDurationBoost;
         [Header("Village House")]
-        public int incomeBoost; 
+        public int incomeBoost;
+        [Header("Others")]
+        public int saleAmount;
+        public int upgradeAmount; 
+
     }
 
     public Upgrade[] upgrades;

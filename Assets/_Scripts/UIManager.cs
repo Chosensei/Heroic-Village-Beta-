@@ -43,8 +43,33 @@ public class UIManager : Singleton<UIManager>
     
 
     [Header("Debug")]
-    public GameObject currentSelectedBuilding = null; 
-
+    public GameObject currentSelectedBuilding = null;
+    [Space]
+    [Header("Building Menu variables")]
+    public Image currentLevelSprite;
+    public Image nextLevelSprite;
+    public TMP_Text BuildingName1;
+    public TMP_Text BuildingName2;
+    public TMP_Text CurrentLevelValue;
+    public TMP_Text StatText1;
+    public TMP_Text StatText2;
+    public TMP_Text StatText3;
+    public TMP_Text StatText4;
+    public TMP_Text StatValue1;
+    public TMP_Text StatValue2;
+    public TMP_Text StatValue3;
+    public TMP_Text StatValue4;
+    public TMP_Text SellPriceValue;
+    public TMP_Text NextLevelValue;
+    public TMP_Text UpgradedStatText1;
+    public TMP_Text UpgradedStatText2;
+    public TMP_Text UpgradedStatText3;
+    public TMP_Text UpgradedStatText4;
+    public TMP_Text UpgradedStatValue1;
+    public TMP_Text UpgradedStatValue2;
+    public TMP_Text UpgradedStatValue3;
+    public TMP_Text UpgradedStatValue4;
+    public TMP_Text UpgradeCostValue;
 
     void Start()
     {
@@ -110,10 +135,14 @@ public class UIManager : Singleton<UIManager>
     //    btc = baseTower;
     //    UpgradeTowerUIMenu.SetActive(true);
     //}
-    public void ShowUpgradeMenu(TowerLevelSwitch towerLevelSwitch)
+    public void ShowUpgradeMenu(TowerLevelSwitch tls)
     {
-        //tls = towerLevelSwitch;
         UpgradeTowerUIMenu.SetActive(true);
+        //BuildingShopManager.Instance.buildingUpgradeUIMenu.SetActive(true);
+        //if (tls.ArcherTower)
+        //{
+        //    tls.DisplayCurrentTowerStats(tls.currentTowerLevel, tls.currentTowerLevel + 1, tls.baseSellingPrice, tls.baseUpgradePrice, tls.baseDamage, tls.baseFireRate, tls.baseFiringRange, tls.baseDamage + tls.towerData.upgrades[tls.currentTowerLevel - 1].damageBoost, tls.baseFireRate - tls.towerData.upgrades[tls.currentTowerLevel - 1].fireRateBoost, tls.baseFiringRange + tls.towerData.upgrades[tls.currentTowerLevel - 1].firingRangeBoost);
+        //}
     }
     private void SetupButtons()
     {
@@ -151,6 +180,7 @@ public class UIManager : Singleton<UIManager>
         {
             currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
             tls.UpgradeTowerPrefab();
+
             if (tls.WizardTower == true) { SwitchElementUIMenu.gameObject.SetActive(true); }
             else { SwitchElementUIMenu.gameObject.SetActive(false); }
             //print("Upgraded tower!");

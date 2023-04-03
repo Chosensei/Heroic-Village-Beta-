@@ -13,7 +13,7 @@ public class ArrowTowerController : BaseTowerController
         while (isShooting)
         {
             GameObject projectile = Instantiate(projectilePrefab);
-            projectile.GetComponent<TowerProjectile>().Initialize(target, bulletSpeed, tls.baseDamage);
+            projectile.GetComponent<TowerProjectile>().Initialize(target, tls.baseFireRate, tls.baseDamage);
             projectile.transform.position = shootingPoint.position;
             projectile.transform.rotation = shootingPoint.rotation;
             yield return new WaitForSeconds(tls.baseFireRate);

@@ -51,6 +51,8 @@ MonoBehaviour:
   baseDamage: 0
   baseFireRate: 0
   baseFiringRange: 0
+  baseSellingPrice: 0
+  baseUpgradePrice: 0
   baseAoeRadius: 0
   baseAoeBlastForce: 0
   baseDot: 0
@@ -61,10 +63,13 @@ MonoBehaviour:
   - {fileID: 1059608602668929886}
   - {fileID: 3481141789364861548}
   - {fileID: 8612103317183635470}
-  isWizard: 0
+  VillageHouse: 1
+  ArcherTower: 0
+  CatapultTower: 0
+  WizardTower: 0
   counter: 0
   currentTowerLevel: 1
-  maxTowerLevel: 5
+  maxTowerLevel: 3
 --- !u!65 &2936267902456285653
 BoxCollider:
   m_ObjectHideFlags: 0
