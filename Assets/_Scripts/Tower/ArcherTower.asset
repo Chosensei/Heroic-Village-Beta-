@@ -46,8 +46,8 @@ MonoBehaviour:
     incomeBoost: 0
     saleAmount: 125
     upgradeAmount: 250
-  - damageBoost: 6
-    fireRateBoost: 3
+  - damageBoost: 8
+    fireRateBoost: 4
     firingRangeBoost: 25
     aoeRangeBoost: 0
     aoeBlastBoost: 0
@@ -57,3 +57,14 @@ MonoBehaviour:
     incomeBoost: 0
     saleAmount: 250
     upgradeAmount: 500
+  - damageBoost: 10
+    fireRateBoost: 5
+    firingRangeBoost: 25
+    aoeRangeBoost: 0
+    aoeBlastBoost: 0
+    dotBoost: 0
+    slowMvtBoost: 0
+    stunDurationBoost: 0
+    incomeBoost: 0
+    saleAmount: 350
+    upgradeAmount: 750

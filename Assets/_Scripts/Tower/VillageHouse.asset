@@ -21,7 +21,9 @@ MonoBehaviour:
     dotBoost: 0
     slowMvtBoost: 0
     stunDurationBoost: 0
-    incomeBoost: 2
+    incomeBoost: 0
+    saleAmount: 12
+    upgradeAmount: 30
   - damageBoost: 0
     fireRateBoost: 0
     firingRangeBoost: 0
@@ -30,4 +32,17 @@ MonoBehaviour:
     dotBoost: 0
     slowMvtBoost: 0
     stunDurationBoost: 0
-    incomeBoost: 0
+    incomeBoost: 50
+    saleAmount: 24
+    upgradeAmount: 60
+  - damageBoost: 0
+    fireRateBoost: 0
+    firingRangeBoost: 0
+    aoeRangeBoost: 0
+    aoeBlastBoost: 0
+    dotBoost: 0
+    slowMvtBoost: 0
+    stunDurationBoost: 0
+    incomeBoost: 100
+    saleAmount: 48
+    upgradeAmount: 90

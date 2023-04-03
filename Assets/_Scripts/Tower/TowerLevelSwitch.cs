@@ -42,7 +42,7 @@ public class TowerLevelSwitch : MonoBehaviour
     private void Start()
     {
         //towerUpgrade = GetComponent<TowerUpgrade>();
-        upgradedIncomeAmount = baseIncome * towerData.upgrades[currentTowerLevel - 1].incomeBoost;
+        upgradedIncomeAmount = baseIncome + towerData.upgrades[currentTowerLevel - 1].incomeBoost;
         upgradedDamageAmount = baseDamage + towerData.upgrades[currentTowerLevel - 1].damageBoost;
         upgradedFireRateAmount = baseFireRate - towerData.upgrades[currentTowerLevel - 1].fireRateBoost;
         upgradedFiringRangeAmount = baseFiringRange + towerData.upgrades[currentTowerLevel - 1].firingRangeBoost;
@@ -70,6 +70,10 @@ public class TowerLevelSwitch : MonoBehaviour
     }
     public void UpgradeTowerPrefab()
     {
+        // Update Money in bank
+        GameManager.Instance.MoneyInBank -= baseUpgradePrice;
+        UIManager.Instance.moneyText.text = GameManager.Instance.MoneyInBank.ToString();
+
         // Check if we're safe to upgrade (We haven't reached the last level)
         if (counter < towerLevelUpPrefabs.Length - 1)
         {
@@ -90,6 +94,7 @@ public class TowerLevelSwitch : MonoBehaviour
     public void SellTowerPrefab()
     {
         GameManager.Instance.MoneyInBank += baseSellingPrice;
+        UIManager.Instance.moneyText.text = GameManager.Instance.MoneyInBank.ToString(); 
         Destroy(this.gameObject);
     }
     public void ChangeWizardElementType(string elementType)
@@ -191,9 +196,6 @@ public class TowerLevelSwitch : MonoBehaviour
             UIManager.Instance.UpgradedStatValue4.text = "";
             UIManager.Instance.SellPriceValue.text = sellPrice.ToString();
             UIManager.Instance.UpgradeCostValue.text = upgradeCost.ToString();
-
-
-
         }
         if (ArcherTower == true) 
         {
@@ -245,69 +247,5 @@ public class TowerLevelSwitch : MonoBehaviour
 
         // Don't forget to account for village house too! It doesn't have damage/ firerate / range, except income value
     }
-    //public void DisplayCurrentTowerStats(int currentTowerLevel, int nextLevel, int sellPrice, int upgradeCost, float baseDamage, float baseFireRate, float baseFiringRange, float upgradedDamage, float upgradedFireRate, float upgradedFiringRange)
-    //{
-    //    BuildingShopManager.Instance.CurrentLevelValue.text = currentTowerLevel.ToString();
-    //    BuildingShopManager.Instance.NextLevelValue.text = nextLevel.ToString();
 
-    //    //if (currentTowerLevel <= maxTowerLevel) { BuildingShopManager.Instance.NextLevelValue.text = currentTowerLevel++.ToString(); }
-
-    //    if (VillageHouse == true)
-    //    {
-    //        BuildingShopManager.Instance.BuildingName1.text = "VILLAGE HOUSE";
-    //        BuildingShopManager.Instance.BuildingName2.text = "VILLAGE HOUSE";
-    //        BuildingShopManager.Instance.StatText1.text = "INCOME:";
-    //        BuildingShopManager.Instance.StatText2.text = "";
-    //        BuildingShopManager.Instance.StatText3.text = "";
-    //        BuildingShopManager.Instance.StatText4.text = "";
-    //    }
-    //    if (ArcherTower == true)
-    //    {
-    //        // Set texts
-    //        BuildingShopManager.Instance.BuildingName1.text = "ARCHER TOWER";
-    //        BuildingShopManager.Instance.BuildingName2.text = "ARCHER TOWER";
-    //        BuildingShopManager.Instance.StatText1.text = "DAMAGE:";
-    //        BuildingShopManager.Instance.StatText2.text = "FIRE RATE:";
-    //        BuildingShopManager.Instance.StatText3.text = "RANGE:";
-    //        BuildingShopManager.Instance.StatText4.text = "";
-    //        BuildingShopManager.Instance.UpgradedStatText1.text = "NEW DAMAGE:";
-    //        BuildingShopManager.Instance.UpgradedStatText2.text = "NEW FIRE RATE:";
-    //        BuildingShopManager.Instance.UpgradedStatText3.text = "NEW RANGE:";
-    //        BuildingShopManager.Instance.UpgradedStatText4.text = "";
-
-    //        // Set values
-    //        BuildingShopManager.Instance.StatValue1.text = baseDamage.ToString();
-    //        BuildingShopManager.Instance.StatValue2.text = baseFireRate.ToString();
-    //        BuildingShopManager.Instance.StatValue3.text = baseFiringRange.ToString();
-    //        BuildingShopManager.Instance.StatValue4.text = "";
-    //        BuildingShopManager.Instance.UpgradedStatValue1.text = upgradedDamage.ToString();
-    //        BuildingShopManager.Instance.UpgradedStatValue2.text = upgradedFireRate.ToString();
-    //        BuildingShopManager.Instance.UpgradedStatValue3.text = upgradedFiringRange.ToString();
-    //        BuildingShopManager.Instance.UpgradedStatValue4.text = "";
-
-    //        BuildingShopManager.Instance.SellPriceValue.text = sellPrice.ToString();
-    //        BuildingShopManager.Instance.UpgradeCostValue.text = upgradeCost.ToString();
-    //    }
-    //    if (CatapultTower == true)
-    //    {
-    //        //BuildingShopManager.Instance.BuildingName1.text = "CATAPULT TOWER";
-    //        //BuildingShopManager.Instance.BuildingName2.text = "CATAPULT TOWER";
-    //        //BuildingShopManager.Instance.StatText1.text = "DAMAGE:";
-    //        //BuildingShopManager.Instance.StatText2.text = "FIRE RATE";
-    //        //BuildingShopManager.Instance.StatText3.text = "AOE RANGE";
-    //        //BuildingShopManager.Instance.StatText4.text = "IMPACT";
-    //    }
-    //    if (WizardTower == true)
-    //    {
-    //        //BuildingShopManager.Instance.BuildingName1.text = "WIZARD TOWER";
-    //        //BuildingShopManager.Instance.BuildingName2.text = "WIZARD TOWER";
-    //        //BuildingShopManager.Instance.StatText1.text = "";
-    //        //BuildingShopManager.Instance.StatText2.text = "";
-    //        //BuildingShopManager.Instance.StatText3.text = "";
-    //        //BuildingShopManager.Instance.StatText4.text = "";
-    //    }
-
-
-    //    // Don't forget to account for village house too! It doesn't have damage/ firerate / range, except income value
-    //}
 }

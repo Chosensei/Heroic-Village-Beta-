@@ -33,7 +33,7 @@ public class UIManager : Singleton<UIManager>
     //private TowerLevelSwitch tls;
 
     [Header("Player UI")]
-    public TextMeshProUGUI moneyText;
+    public TMP_Text moneyText;
     [SerializeField] private Image healthbar;
     [SerializeField] private Image manabar;
 
@@ -41,11 +41,14 @@ public class UIManager : Singleton<UIManager>
     public GameObject[] WallUIObjects;
     [SerializeField] private Image[] wallHP;
     
-
     [Header("Debug")]
     public GameObject currentSelectedBuilding = null;
     [Space]
     [Header("Building Menu variables")]
+    [SerializeField] int villageHouseBuildCost = 25;
+    [SerializeField] int archerTowerBuildCost = 50;
+    [SerializeField] int catapultBuildCost = 120;
+    [SerializeField] int wizardTowerBuildCost = 200;
     public Image currentLevelSprite;
     public Image nextLevelSprite;
     public TMP_Text BuildingName1;
@@ -73,6 +76,7 @@ public class UIManager : Singleton<UIManager>
 
     void Start()
     {
+        moneyText.text = GameManager.Instance.MoneyInBank.ToString(); 
         SetupButtons();
 
         // Default health & mana to maximum in UI 
@@ -88,6 +92,18 @@ public class UIManager : Singleton<UIManager>
 
     void Update()
     {
+        if (currentSelectedBuilding != null)
+        {
+            if (GameManager.Instance.MoneyInBank < currentSelectedBuilding.GetComponent<TowerLevelSwitch>().baseUpgradePrice)
+            {
+                // disable upgrade button
+                UpgradeBuildingButton.interactable = false;
+            }
+            else
+            {
+                UpgradeBuildingButton.interactable = true;
+            }
+        }
 
     }
 
@@ -151,6 +167,8 @@ public class UIManager : Singleton<UIManager>
             GameObject house = Instantiate(villageHousePrefab);
             house.transform.position = tpc.transform.position;
             tpc.TowerPlaced(house.GetComponent<BaseTowerController>());
+            GameManager.Instance.MoneyInBank -= villageHouseBuildCost;
+            moneyText.text = GameManager.Instance.MoneyInBank.ToString();
             CloseBuildTowerMenu();
         });
         ArrowTowerButton.onClick.AddListener(() =>
@@ -158,6 +176,8 @@ public class UIManager : Singleton<UIManager>
             GameObject tower = Instantiate(arrowTowerPrefab);
             tower.transform.position = tpc.transform.position;
             tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
+            GameManager.Instance.MoneyInBank -= archerTowerBuildCost;
+            moneyText.text = GameManager.Instance.MoneyInBank.ToString();
             CloseBuildTowerMenu();
         });
         CatapultTowerButton.onClick.AddListener(() =>
@@ -165,6 +185,8 @@ public class UIManager : Singleton<UIManager>
             GameObject tower = Instantiate(catapultTowerPrefab);
             tower.transform.position = tpc.transform.position;
             tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
+            GameManager.Instance.MoneyInBank -= catapultBuildCost;
+            moneyText.text = GameManager.Instance.MoneyInBank.ToString();
             CloseBuildTowerMenu();
         });
         WizardTowerButton.onClick.AddListener(() =>
@@ -172,6 +194,8 @@ public class UIManager : Singleton<UIManager>
             GameObject tower = Instantiate(wizardTowerPrefab);
             tower.transform.position = tpc.transform.position;
             tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
+            GameManager.Instance.MoneyInBank -= wizardTowerBuildCost;
+            moneyText.text = GameManager.Instance.MoneyInBank.ToString();
             CloseBuildTowerMenu();
         });
 
@@ -180,6 +204,7 @@ public class UIManager : Singleton<UIManager>
         {
             currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
             tls.UpgradeTowerPrefab();
+            
 
             if (tls.WizardTower == true) { SwitchElementUIMenu.gameObject.SetActive(true); }
             else { SwitchElementUIMenu.gameObject.SetActive(false); }
@@ -191,6 +216,8 @@ public class UIManager : Singleton<UIManager>
             currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
             tls.SellTowerPrefab();
             currentSelectedBuilding = null;
+            CloseBuildTowerMenu();
+            tpc.TowerRemoved(); 
             //print("Sold tower!");
         });
         switchElementButtons[0].onClick.AddListener(() =>
