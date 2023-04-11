@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class CatapultTowerController : BaseTowerController
 {
-    private float bulletSpeed = 0.5f;
+    //private TowerLevelSwitch tls; 
+    private Animator animator;
+
     public override IEnumerator Shoot(Transform target)
     {
+        animator = transform.GetChild(1).GetComponent<Animator>();
         isShooting = true;
+        yield return new WaitForSeconds(1.5f);
 
+        // TODO: Handle aniamtions for catapult
         while (isShooting)
         {
             GameObject projectile = Instantiate(projectilePrefab);
+            projectile.GetComponent<TowerProjectile>().Initialize(target, tls.baseFireRate, tls.baseDamage);
             projectile.transform.position = shootingPoint.position;
             projectile.transform.rotation = shootingPoint.rotation;
-            projectile.GetComponent<TowerProjectile>().Initialize(target, bulletSpeed, tls.baseDamage);
+            animator.SetTrigger("throw");
+            animator.speed = tls.baseAnimationSpeed;
             yield return new WaitForSeconds(tls.baseFireRate);
         }
         yield return null;
+        animator.ResetTrigger("throw");
     }
 }

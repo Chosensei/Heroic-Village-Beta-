@@ -15,7 +15,8 @@ public class TowerProjectile : MonoBehaviour
     private Vector3 forceDirection;
     private TowerLevelSwitch tls; 
     public ProjectileType projectileType;
-
+    public float launchForce;
+    public float projectileSpeed = 10f;
     [Header("Cannon Tower Setting")]
     public float explosionRadius = 25;  // the radius of the explosion that deals damage to enemies
     public float cannonForce = 1000f; // the force with which the cannonball hits enemies
@@ -25,7 +26,7 @@ public class TowerProjectile : MonoBehaviour
         initialPosition = transform.position;
         rb = GetComponent<Rigidbody>(); 
         // Auto destroy spell gameobject after 10s
-        Destroy(this.gameObject, 10f);
+        Destroy(this.gameObject, 20f);
     }
     private void Update()
     {
@@ -46,7 +47,12 @@ public class TowerProjectile : MonoBehaviour
                 {
                     DealAOEDamage(tls.baseAoeRadius);
                 }
-            }             
+            }
+            else if (projectileType == ProjectileType.Iceball)
+            {
+                if (targetPosition == null) Destroy(gameObject);
+                FireArrow();
+            }
         }
              
     }
@@ -66,27 +72,49 @@ public class TowerProjectile : MonoBehaviour
         startTime = Time.time;
         hasInitialized = true;
     }
-
-    private void FireCannon()
-    {
-        Vector3 direction = (target.transform.position - transform.position).normalized;
-        rb.velocity = direction * speed;
-        forceDirection = direction;
-        transform.rotation = Quaternion.LookRotation(direction);
-
-        //transform.position = Vector3.MoveTowards(transform.position, target.position, 50 * speed * Time.deltaTime);
-
-    }
     private void FireArrow()
     {
         // Calculate direction towards target
         Vector3 direction = (target.transform.position - transform.position).normalized;
         // Move arrow towards target using rigidbody
-        rb.velocity = direction * speed;
+        rb.velocity = direction * projectileSpeed;
         transform.rotation = Quaternion.LookRotation(direction);
         //transform.position = Vector3.MoveTowards(transform.position, target.position, 50 * speed * Time.deltaTime);
         //transform.LookAt(target); 
     }
+    private void FireCannon()
+    {
+        // Calculate direction towards target
+        Vector3 direction = (target.transform.position - transform.position).normalized;
+        // Calculate distance to target
+        float distance = Vector3.Distance(transform.position, target.transform.position);
+
+        // Calculate initial velocity and angle for cannonball
+        float projectileAngle = 45f; 
+
+        Vector3 projectileVelocity = Quaternion.AngleAxis(projectileAngle, transform.right) * transform.up * projectileSpeed;
+        transform.rotation = Quaternion.LookRotation(direction);
+
+        // Fire cannonball
+        rb.velocity = projectileVelocity;
+        rb.useGravity = true;
+        rb.mass = 100;
+
+        // Start descending when cannonball is close to target
+        if (distance < 20f)
+        {
+            float timeToTarget = distance / projectileSpeed;
+            float gravity = Physics.gravity.y;
+            float initialVerticalVelocity = (target.transform.position.y - transform.position.y - 0.5f * gravity * timeToTarget * timeToTarget) / timeToTarget;
+
+            Vector3 newProjectileVelocity = direction * projectileSpeed + Vector3.up * initialVerticalVelocity;
+            rb.velocity = newProjectileVelocity;
+
+            // Apply gravity to the cannonball
+            rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+        }
+    }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
@@ -98,7 +126,7 @@ public class TowerProjectile : MonoBehaviour
             else if (projectileType == ProjectileType.Cannonball)
             {
                 DealAOEDamage(tls.baseAoeRadius);
-                other.GetComponent<Rigidbody>().AddForce(forceDirection * tls.baseAoeBlastForce, ForceMode.Impulse);
+                //other.GetComponent<Rigidbody>().AddForce(forceDirection * tls.baseAoeBlastForce, ForceMode.Impulse);
             }
         } 
     }

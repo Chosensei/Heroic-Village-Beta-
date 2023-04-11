@@ -17,7 +17,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     public EnemyData enemyData;
     [SerializeField] private HealthBarController HealthBar; 
     private bool targetWithinRange => Vector3.Distance(transform.position, currentTarget.transform.position) <= enemyData.atkRange;
-    private bool isDead = false;
+    public static bool isDead = false;
     private bool isAttacking = false;
     private float maxHealth, currentHealth; 
     private float attackRate, attackCooldown;  
@@ -58,7 +58,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         else
         {
             animator.SetBool("isWalking", true);
-           agent.isStopped = false;
+            agent.isStopped = false;
         }
             
 

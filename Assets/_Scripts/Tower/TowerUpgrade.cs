@@ -13,6 +13,7 @@ public class TowerUpgrade : ScriptableObject
         [Header("Catapult")]
         public float aoeRangeBoost;
         public float aoeBlastBoost;
+        public float animSpeedBoost;
         [Header("Wizard")]
         public float dotBoost;
         public float slowMvtBoost;

@@ -16,6 +16,7 @@ public class TowerLevelSwitch : MonoBehaviour
     [Header("Catapult")]
     public float baseAoeRadius;
     public float baseAoeBlastForce;
+    public float baseAnimationSpeed; 
     [Header("Wizard")]
     public float baseDot;
     public float baseSlowMvt;
@@ -39,6 +40,8 @@ public class TowerLevelSwitch : MonoBehaviour
     private float upgradedDamageAmount;
     private float upgradedFireRateAmount;
     private float upgradedFiringRangeAmount;
+    private float upgradedAoeRangeAmount;
+    private float upgradedAoeBlastForceAmount; 
     private void Start()
     {
         //towerUpgrade = GetComponent<TowerUpgrade>();
@@ -47,8 +50,9 @@ public class TowerLevelSwitch : MonoBehaviour
         upgradedFireRateAmount = baseFireRate - towerData.upgrades[currentTowerLevel - 1].fireRateBoost;
         upgradedFiringRangeAmount = baseFiringRange + towerData.upgrades[currentTowerLevel - 1].firingRangeBoost;
         baseSellingPrice = towerData.upgrades[currentTowerLevel - 1].saleAmount;
-        baseUpgradePrice = towerData.upgrades[currentTowerLevel - 1].upgradeAmount; 
-
+        baseUpgradePrice = towerData.upgrades[currentTowerLevel - 1].upgradeAmount;
+        upgradedAoeRangeAmount = towerData.upgrades[currentTowerLevel - 1].aoeRangeBoost;
+        upgradedAoeBlastForceAmount = towerData.upgrades[currentTowerLevel - 1].aoeBlastBoost; 
     }
     private void OnMouseDown()
     {
@@ -56,7 +60,7 @@ public class TowerLevelSwitch : MonoBehaviour
         //BuildingShopManager.Instance.buildingUpgradeUIMenu.SetActive(true);
         UIManager.Instance.currentSelectedBuilding = this.gameObject;
 
-        DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount, baseDamage, baseFireRate, baseFiringRange, upgradedDamageAmount, upgradedFireRateAmount, upgradedFiringRangeAmount);
+        DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount, baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount, upgradedFiringRangeAmount, upgradedAoeRangeAmount, upgradedAoeBlastForceAmount);
         //if (ArcherTower)
         //{
         //    print("current tower level: " + currentTowerLevel + "\n");
@@ -94,7 +98,7 @@ public class TowerLevelSwitch : MonoBehaviour
     public void SellTowerPrefab()
     {
         GameManager.Instance.MoneyInBank += baseSellingPrice;
-        UIManager.Instance.moneyText.text = GameManager.Instance.MoneyInBank.ToString(); 
+        UIManager.Instance.moneyText.text = GameManager.Instance.MoneyInBank.ToString();
         Destroy(this.gameObject);
     }
     public void ChangeWizardElementType(string elementType)
@@ -136,8 +140,9 @@ public class TowerLevelSwitch : MonoBehaviour
         float damageBoost = towerData.upgrades[currentLevel - 1].damageBoost;
         float fireRateBoost = towerData.upgrades[currentLevel - 1].fireRateBoost;
         float rangeBoost = towerData.upgrades[currentLevel - 1].firingRangeBoost;
-        //float aoeRangeBoost = towerData.upgrades[currentLevel - 1].aoeRangeBoost;
-        //float aoeBlastBoost = towerData.upgrades[currentLevel - 1].aoeBlastBoost;
+        float aoeRangeBoost = towerData.upgrades[currentLevel - 1].aoeRangeBoost;
+        float aoeBlastBoost = towerData.upgrades[currentLevel - 1].aoeBlastBoost;
+        float catapultAnimBoost = towerData.upgrades[currentLevel - 1].animSpeedBoost; 
         //int incomeBoost = towerData.upgrades[currentLevel - 1].incomeBoost;
 
         int resellValue = towerData.upgrades[currentLevel - 1].saleAmount;
@@ -145,26 +150,26 @@ public class TowerLevelSwitch : MonoBehaviour
         baseSellingPrice = resellValue;
         baseUpgradePrice = upgradeValue;
 
-        //baseIncome *= incomeBoost; 
-        //baseAoeRadius += aoeRangeBoost;
-        //baseAoeBlastForce *= aoeBlastBoost;
-        //baseDamage += damageBoost;
-        //baseFireRate -= fireRateBoost;
-        //baseFiringRange += rangeBoost;
+        // FOR CATAPULT ONLY
+        baseAnimationSpeed = catapultAnimBoost; 
+
         upgradedIncomeAmount = baseIncome + incomeboost; 
         upgradedDamageAmount = baseDamage + damageBoost;
         upgradedFireRateAmount = baseFireRate - fireRateBoost;
         upgradedFiringRangeAmount = baseFiringRange + rangeBoost;
-
+        upgradedAoeRangeAmount = baseAoeRadius + aoeRangeBoost;
+        upgradedAoeBlastForceAmount = baseAoeBlastForce + aoeBlastBoost; 
         //int nextLevel = currentTowerLevel++;
-        DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount, baseDamage, baseFireRate, baseFiringRange, upgradedDamageAmount, upgradedFireRateAmount, upgradedFiringRangeAmount);
+        DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount, baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount, upgradedFiringRangeAmount, upgradedAoeRangeAmount, upgradedAoeBlastForceAmount);
         baseIncome = upgradedIncomeAmount; 
         baseDamage = upgradedDamageAmount;
         baseFireRate = upgradedFireRateAmount;
         baseFiringRange = upgradedFiringRangeAmount;
+        baseAoeRadius = upgradedAoeRangeAmount;
+        baseAoeBlastForce = upgradedAoeBlastForceAmount; 
         
     }
-    public void DisplayCurrentTowerStats(int currentTowerLevel, int nextLevel, int sellPrice, int upgradeCost, int income, int upgradedIncome, float baseDamage, float baseFireRate, float baseFiringRange, float upgradedDamage, float upgradedFireRate, float upgradedFiringRange)
+    public void DisplayCurrentTowerStats(int currentTowerLevel, int nextLevel, int sellPrice, int upgradeCost, int income, int upgradedIncome, float baseDamage, float baseFireRate, float baseFiringRange, float baseAoeRange, float baseAoeBlastForce, float upgradedDamage, float upgradedFireRate, float upgradedFiringRange, float upgradedAoeRange, float upgradedAoeBlastForce)
     {
         UIManager.Instance.CurrentLevelValue.text = currentTowerLevel.ToString();
         //UIManager.Instance.NextLevelValue.text = nextLevel.ToString();
@@ -227,12 +232,31 @@ public class TowerLevelSwitch : MonoBehaviour
         }
         if (CatapultTower == true) 
         {
-            //BuildingShopManager.Instance.BuildingName1.text = "CATAPULT TOWER";
-            //BuildingShopManager.Instance.BuildingName2.text = "CATAPULT TOWER";
-            //BuildingShopManager.Instance.StatText1.text = "DAMAGE:";
-            //BuildingShopManager.Instance.StatText2.text = "FIRE RATE";
-            //BuildingShopManager.Instance.StatText3.text = "AOE RANGE";
-            //BuildingShopManager.Instance.StatText4.text = "IMPACT";
+            // Set texts
+            UIManager.Instance.BuildingName1.text = "CATAPULT CANNON";
+            UIManager.Instance.BuildingName2.text = "CATAPULT CANNON";
+            UIManager.Instance.StatText1.text = "DAMAGE:";
+            UIManager.Instance.StatText2.text = "FIRE RATE:";
+            UIManager.Instance.StatText3.text = "AOE RANGE";
+            UIManager.Instance.StatText4.text = "IMPACT";
+            UIManager.Instance.UpgradedStatText1.text = "DAMAGE:";
+            UIManager.Instance.UpgradedStatText2.text = "FIRE RATE:";
+            UIManager.Instance.UpgradedStatText3.text = "AOE RANGE";
+            UIManager.Instance.UpgradedStatText4.text = "IMPACT";
+
+
+            // Set values
+            UIManager.Instance.StatValue1.text = baseDamage.ToString();
+            UIManager.Instance.StatValue2.text = baseFireRate.ToString();
+            UIManager.Instance.StatValue3.text = baseAoeRadius.ToString();
+            UIManager.Instance.StatValue4.text = baseAoeBlastForce.ToString();
+            UIManager.Instance.UpgradedStatValue1.text = upgradedDamage.ToString();
+            UIManager.Instance.UpgradedStatValue2.text = upgradedFireRate.ToString();
+            UIManager.Instance.UpgradedStatValue3.text = upgradedAoeRange.ToString();
+            UIManager.Instance.UpgradedStatValue4.text = upgradedAoeBlastForce.ToString();
+
+            UIManager.Instance.SellPriceValue.text = sellPrice.ToString();
+            UIManager.Instance.UpgradeCostValue.text = upgradeCost.ToString();
         }
         if (WizardTower == true) 
         {

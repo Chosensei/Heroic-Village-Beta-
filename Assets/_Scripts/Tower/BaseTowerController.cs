@@ -7,11 +7,10 @@ public class BaseTowerController : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public Transform shootingPoint;
-
+    public float launchForce;
     protected Coroutine shootRoutine;
     protected bool isShooting;
     protected Collider targetCollider;
-
     protected TowerLevelSwitch tls;
 
     /// <summary>
@@ -59,11 +58,6 @@ public class BaseTowerController : MonoBehaviour
         }
     }
 
-    // For tower upgrades
-    //protected virtual void OnMouseDown()
-    //{
-    //    UIManager.Instance.ShowBuildingUpgradeMenu(this);
-    //}
     protected virtual void StopShooting()
     {
         StopCoroutine(shootRoutine);

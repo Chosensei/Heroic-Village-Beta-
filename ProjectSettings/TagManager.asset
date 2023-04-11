@@ -12,6 +12,7 @@ TagManager:
   - Wall 1
   - Wall 2
   - Terrain
+  - Village Zone
   layers:
   - Default
   - TransparentFX

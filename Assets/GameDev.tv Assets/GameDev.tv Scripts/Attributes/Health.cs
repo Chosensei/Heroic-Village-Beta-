@@ -66,6 +66,7 @@ namespace RPG.Attributes
 
             if (IsDead())
             {
+                // Play death anim
                 onDie.Invoke();
                 // Find another way later to give exp to player
                 //AwardExperience(instigator);

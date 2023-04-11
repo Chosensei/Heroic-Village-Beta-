@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4070411770829238967}
   - component: {fileID: 4070411770829238966}
+  - component: {fileID: 1224352904}
   m_Layer: 0
   m_Name: Catapult Parent
   m_TagString: Untagged
@@ -24,9 +25,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4070411770829238968}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 3820226728049262216}
   - {fileID: 3820226726312179233}
@@ -35,7 +36,7 @@ Transform:
   - {fileID: 3820226727736989400}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &4070411770829238966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,10 +51,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerData: {fileID: 11400000, guid: 54a1795fbd20b3442a872510ab466321, type: 2}
   baseDamage: 5
-  baseFireRate: 1
+  baseFireRate: 2
   baseFiringRange: 100
+  baseSellingPrice: 10
+  baseUpgradePrice: 0
   baseAoeRadius: 5
   baseAoeBlastForce: 100
+  baseAnimationSpeed: 1
   baseDot: 0
   baseSlowMvt: 0
   baseStunDuration: 0
@@ -64,10 +68,26 @@ MonoBehaviour:
   - {fileID: 4490083722054282917}
   - {fileID: 4490083722215517915}
   - {fileID: 4490083723760831586}
-  isWizard: 0
+  VillageHouse: 0
+  ArcherTower: 0
+  CatapultTower: 1
+  WizardTower: 0
   counter: 0
   currentTowerLevel: 1
   maxTowerLevel: 5
+--- !u!65 &1224352904
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4070411770829238968}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 5, z: 5}
+  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!1001 &4070411771251835936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75,6 +95,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4070411770829238967}
     m_Modifications:
+    - target: {fileID: 869296241, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 446694928519768827, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
       propertyPath: m_Name
       value: Catapult_Level_4
@@ -139,19 +163,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 970853404829282369, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
   m_PrefabInstance: {fileID: 4070411771251835936}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &4902555814958995800
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490083722215517915}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4070411771363230814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -159,6 +170,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4070411770829238967}
     m_Modifications:
+    - target: {fileID: 869296241, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 446694928519768827, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
       propertyPath: m_Name
       value: Catapult_Level_3
@@ -223,19 +238,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 970853404829282369, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
   m_PrefabInstance: {fileID: 4070411771363230814}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &3948964068047264979
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490083722054282917}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4070411771546535520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -246,6 +248,10 @@ PrefabInstance:
     - target: {fileID: 869296241, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 869296241, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 446694928519768827, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
       propertyPath: m_Name
@@ -311,19 +317,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 970853404829282369, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
   m_PrefabInstance: {fileID: 4070411771546535520}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &4667912483340961318
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490083722006768795}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4070411772004443801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -331,6 +324,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4070411770829238967}
     m_Modifications:
+    - target: {fileID: 869296241, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 446694928519768827, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
       propertyPath: m_Name
       value: Catapult_Level_5
@@ -395,19 +392,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 970853404829282369, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
   m_PrefabInstance: {fileID: 4070411772004443801}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &2949897724809047568
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490083723760831586}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4070411772224851657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -415,6 +399,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4070411770829238967}
     m_Modifications:
+    - target: {fileID: 869296241, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 869296241, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 446694928519768827, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
       propertyPath: m_Name
       value: 'Catapult_Level_1 '
@@ -475,16 +467,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 970853404829282369, guid: 81d80be9a058f534f9edf535469f27d4, type: 3}
   m_PrefabInstance: {fileID: 4070411772224851657}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &7938612841307729792
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490083723456570418}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}

@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro; 
-
 
 public class UIManager : Singleton<UIManager>
 {
@@ -32,10 +30,20 @@ public class UIManager : Singleton<UIManager>
     private TowerPlacementController tpc;
     //private TowerLevelSwitch tls;
 
+    [Header("Game Manager UI")]
+    public TMP_Text CurrentDayValue;
+    public TMP_Text CurrentWaveValue;
+    public TMP_Text EnemyRemainingValue;
+    public GameObject WinDayMenu;
+    public GameObject LoseDayMenu;
+
+
     [Header("Player UI")]
     public TMP_Text moneyText;
     [SerializeField] private Image healthbar;
     [SerializeField] private Image manabar;
+
+
 
     [Header("Base Wall UI")]
     public GameObject[] WallUIObjects;
@@ -204,8 +212,7 @@ public class UIManager : Singleton<UIManager>
         {
             currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
             tls.UpgradeTowerPrefab();
-            
-
+           
             if (tls.WizardTower == true) { SwitchElementUIMenu.gameObject.SetActive(true); }
             else { SwitchElementUIMenu.gameObject.SetActive(false); }
             //print("Upgraded tower!");
@@ -216,8 +223,8 @@ public class UIManager : Singleton<UIManager>
             currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
             tls.SellTowerPrefab();
             currentSelectedBuilding = null;
-            CloseBuildTowerMenu();
             tpc.TowerRemoved(); 
+            UpgradeTowerUIMenu.SetActive(false);
             //print("Sold tower!");
         });
         switchElementButtons[0].onClick.AddListener(() =>
