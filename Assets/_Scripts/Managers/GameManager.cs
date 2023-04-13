@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
     public bool hasLeftVillage = false; // Whether player has left outside the village (To be applied to portal) 
     public bool hasReturnedToVillage = false;   // Whether player has returned to village (To be applied to portal) 
     public bool hasBeatenCurrentWave = false;   // Whether player has beaten all enemies in the current wave  
-
+    public SkyboxController skyboxController;
     // Spawner variables
     public GameObject playervillageSpawnPoint; // the point where player will respawn at when they return from battle 
     public GameObject[] enemyPrefabs; // an array of different enemy prefabs to spawn
@@ -38,6 +38,7 @@ public class GameManager : Singleton<GameManager>
     private int currentDay = 0;  // current day in the game
     private int maxDays = 50;    // Max day in the game  
     private GameObject player; 
+ 
     void Start()
     {
         player = GameObject.FindWithTag("Player"); 
@@ -59,6 +60,7 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
+
         // When player is in town start the rest phase
         if (hasReturnedToVillage && !isRestPhase)
         {
