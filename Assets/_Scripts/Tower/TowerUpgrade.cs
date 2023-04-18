@@ -15,9 +15,8 @@ public class TowerUpgrade : ScriptableObject
         public float aoeBlastBoost;
         public float animSpeedBoost;
         [Header("Wizard")]
+        public float effectDurationBoost;
         public float dotBoost;
-        public float slowMvtBoost;
-        public float stunDurationBoost;
         [Header("Village House")]
         public int incomeBoost;
         [Header("Others")]

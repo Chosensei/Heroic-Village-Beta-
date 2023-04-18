@@ -9,8 +9,10 @@ public class ApplyVillageContraints : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Add restrictions
-            GameManager.Instance.hasReturnedToVillage = true;
-            GameManager.Instance.hasLeftVillage = false;
+            GMDebug.Instance.battleStarted = false;
+            GMDebug.Instance.isInTown = true;
+            //GameManager.Instance.hasReturnedToVillage = true;
+            //GameManager.Instance.hasLeftVillage = false;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -18,7 +20,10 @@ public class ApplyVillageContraints : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Add restrictions
-            GameManager.Instance.hasReturnedToVillage = false;
+            GMDebug.Instance.battleStarted = true;
+            GMDebug.Instance.isInTown = false;
+
+            //GameManager.Instance.hasReturnedToVillage = false;
         }
     }
 

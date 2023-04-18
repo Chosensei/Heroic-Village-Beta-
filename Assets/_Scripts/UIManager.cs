@@ -85,7 +85,7 @@ public class UIManager : Singleton<UIManager>
     void Start()
     {
         SetupButtons();
-        moneyText.text = GameManager.Instance.MoneyInBank.ToString(); 
+        //moneyText.text = GameManager.Instance.MoneyInBank.ToString(); 
 
         // Default health & mana to maximum in UI 
         healthbar.fillAmount = 1;

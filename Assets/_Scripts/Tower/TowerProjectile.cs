@@ -41,17 +41,29 @@ public class TowerProjectile : MonoBehaviour
             else if (projectileType == ProjectileType.Cannonball)
             {
                 if (targetPosition == null) Destroy(gameObject);
+                // Fire projectile in an arc trajectory manner
                 FireCannon();
-
-                if (transform.position == targetPosition)
+                // Old way
+                //if (transform.position == targetPosition)
+                //{
+                //    DealAOEDamage(tls.baseAoeRadius);
+                //}
+                // New way
+                if (Vector3.Distance(transform.position, target.position) < 0.25f)
                 {
                     DealAOEDamage(tls.baseAoeRadius);
                 }
             }
-            else if (projectileType == ProjectileType.Iceball)
+            else if (projectileType == ProjectileType.Fireball || projectileType == ProjectileType.Iceball
+                || projectileType == ProjectileType.Thunderball)
             {
                 if (targetPosition == null) Destroy(gameObject);
                 FireArrow();
+                // Apply AOE damage upon collision 
+                if (Vector3.Distance(transform.position, target.position) < 0.25f)
+                {
+                    DealAOEDamage(tls.baseAoeRadius);
+                }
             }
         }
              
@@ -114,7 +126,6 @@ public class TowerProjectile : MonoBehaviour
             rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
         }
     }
-
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
@@ -146,6 +157,18 @@ public class TowerProjectile : MonoBehaviour
             if (hit.TryGetComponent(out IDamageable targetDamagable))
             {
                 targetDamagable.TakeDamage(gameObject, damage);
+                if (projectileType == ProjectileType.Fireball)
+                {
+                    hit.GetComponent<EnemyBehavior>().FireBurn(tls.baseEffectDuration, tls.baseDot);
+                }
+                if (projectileType == ProjectileType.Iceball)
+                {
+                    hit.GetComponent<EnemyBehavior>().IceSlow(tls.baseEffectDuration); 
+                }
+                if (projectileType == ProjectileType.Thunderball)
+                {
+                    hit.GetComponent<EnemyBehavior>().ThunderStun(tls.baseEffectDuration, tls.baseDot, tls.stunCircleZone);
+                }
             }
         }
         Destroy(gameObject);

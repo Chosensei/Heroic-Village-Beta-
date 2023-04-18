@@ -24,11 +24,19 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     private List<GameObject> targetsInRange = new List<GameObject>();
     private NavMeshAgent agent;
     private Animator animator;
+    private Coroutine burned;
+    private Coroutine slowed;
+    private Coroutine stunned;
+    private Renderer renderer;
+    private float remainingBurnTime, remainingSlowTime, remainingStunTime; 
+
+
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        renderer = GetComponent<Renderer>();
         SetupAIFromSOConfig(); 
     }
     void Start()
@@ -82,7 +90,21 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
                 agent.SetDestination(currentTarget.transform.position);
             }
         }
-
+        //Fire Burn DOT
+        //if (remainingBurnTime > 0)
+        //{
+        //    remainingBurnTime -= Time.deltaTime;
+        //}
+        //// Ice Slow
+        //if (remainingSlowTime > 0)
+        //{
+        //    agent.speed = enemyData.moveSpeed / 2;
+        //    remainingSlowTime -= Time.deltaTime;
+        //}
+        //else
+        //{
+        //    agent.speed = enemyData.moveSpeed;
+        //}
     }
     private IEnumerator Attack()
     {
@@ -101,51 +123,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         isAttacking = false;
         animator.ResetTrigger("attack");
     }
-    private void StartAttack()
-    {
-        isAttacking = true;
-        agent.isStopped = true;
-        animator.SetTrigger("attack");
 
-        //IDamageable targetDamagable = currentTarget.GetComponent<IDamageable>();
-        //if (targetDamagable != null)
-        //{
-        //    targetDamagable.TakeDamage(CalculateDmg());
-        //}
-        //if (currentTarget.TryGetComponent(out IDamageable targetDamagable))
-        //{
-        //    targetDamagable.TakeDamage(CalculateDmg());
-        //}
-
-
-        // Probably need to check if it's the player or building that we're attacking
-        // in order to send the correct info to the health script underlying the object
-        //currentTarget.GetComponent<BuildingHealth>().TakeDamage(attackDamage);
-        //currentTarget.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
-
-
-    }
-    private void EndAttack()
-    {
-        isAttacking = false;
-        agent.isStopped = false;
-        //animator.ResetTrigger("attack");
-    }
-    private void FindNewTargetWithList()
-    {
-        // Clear previous targets list
-        targetsInRange.Clear();
-
-        // Find all targets within range and add them to the list
-        Collider[] colliders = Physics.OverlapSphere(transform.position, searchRadius, targetLayer);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Target"))
-            {
-                targetsInRange.Add(collider.gameObject);
-            }
-        }
-    }
     private void FindNewTargetWithArray()
     {
         Collider[] targetsInRange = Physics.OverlapSphere(transform.position, searchRadius, targetLayer);
@@ -218,10 +196,139 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         agent.isStopped = true;
         Destroy(gameObject, deathDuration);
     }
+    IEnumerator DamageOverTime(float duration, float damagePerTick)
+    {
+        float timeRemaining = duration;
+        Color originalColor = renderer.material.color;  
+        while (timeRemaining > 0)
+        {
+            currentHealth -= damagePerTick;
+            renderer.material.color = Color.red; // Change the material color to red
+            //animator.SetTrigger("hit");
+            if (currentHealth <= 0)
+            {
+                HealthBar.gameObject.SetActive(false);
+                Die();
+                yield break;
+            }
+            // Update Health Bar UI 
+            HealthBar.UpdateHealthBar(currentHealth, maxHealth);
+            timeRemaining -= Time.deltaTime;
+            yield return null;
+        }
+        renderer.material.color = originalColor; // Restore the original material color
+    }
+    private IEnumerator ApplySlowEffect(float duration)
+    {
+        float originalSpeed = agent.speed; // Store the original movement speed
+        Color originalColor = renderer.material.color;  // Store the original color
+        agent.speed /= 2f; // Reduce the movement speed by half
+        renderer.material.color = Color.blue; // Change the material color to blue
+        yield return new WaitForSeconds(duration); // Wait for the slow effect duration to expire
+        agent.speed = originalSpeed; // Restore the original movement speed
+        renderer.material.color = originalColor; // Restore the original material color
+    }
+    private IEnumerator ApplyStunEffect(float duration, float dot, GameObject magicCirclePrefab)
+    {
+        // Apply damage over Time
+        StartCoroutine(DamageOverTime(duration, dot));
+        GameObject stunMagicCircle = Instantiate(magicCirclePrefab, transform.position, Quaternion.identity);
+
+        float originalSpeed = agent.speed; // Store the original movement speed
+        Color originalColor = renderer.material.color;  // Store the original color
+        agent.speed = 0; // Halt movement speed 
+        renderer.material.color = Color.yellow; // Change the material color to blue
+        yield return new WaitForSeconds(duration); // Wait for the stun effect duration to expire
+        agent.speed = originalSpeed; // Restore the original movement speed
+        renderer.material.color = originalColor; // Restore the original material color
+    }
+    public void FireBurn(float duration, float damagePerTick)
+    {
+        if (isDead) return;
+        StartCoroutine(DamageOverTime(duration, damagePerTick));
+    }
+    public void IceSlow(float slowTime)
+    {
+        if (isDead) return;
+        StartCoroutine(ApplySlowEffect(slowTime));
+    }
+    public void ThunderStun(float stunTime, float damage, GameObject spawnObj)
+    {
+        if (isDead) return;
+        StartCoroutine(ApplyStunEffect(stunTime, damage, spawnObj));
+    }
+
+    private IEnumerator SlowRoutine(float time)
+    {
+        while (remainingSlowTime > 0)
+        {
+            agent.speed = enemyData.moveSpeed / 2;
+            remainingSlowTime -= Time.deltaTime;
+        }
+        slowed = null; 
+        yield return null; 
+    }
+    private void StartAttack()
+    {
+        isAttacking = true;
+        agent.isStopped = true;
+        animator.SetTrigger("attack");
+
+        //IDamageable targetDamagable = currentTarget.GetComponent<IDamageable>();
+        //if (targetDamagable != null)
+        //{
+        //    targetDamagable.TakeDamage(CalculateDmg());
+        //}
+        //if (currentTarget.TryGetComponent(out IDamageable targetDamagable))
+        //{
+        //    targetDamagable.TakeDamage(CalculateDmg());
+        //}
+
+
+        // Probably need to check if it's the player or building that we're attacking
+        // in order to send the correct info to the health script underlying the object
+        //currentTarget.GetComponent<BuildingHealth>().TakeDamage(attackDamage);
+        //currentTarget.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
+
+
+    }
+    private void EndAttack()
+    {
+        isAttacking = false;
+        agent.isStopped = false;
+        //animator.ResetTrigger("attack");
+    }
+    private void FindNewTargetWithList()
+    {
+        // Clear previous targets list
+        targetsInRange.Clear();
+
+        // Find all targets within range and add them to the list
+        Collider[] colliders = Physics.OverlapSphere(transform.position, searchRadius, targetLayer);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Target"))
+            {
+                targetsInRange.Add(collider.gameObject);
+            }
+        }
+    }
     // Draw the search radius in editor
     //void OnDrawGizmosSelected()
     //{
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawWireSphere(transform.position, searchRadius);
     //}
+
+    // IceSlow
+    //remainingSlowTime += slowTime;
+    //if (slowed == null)
+    //{
+    //    slowed = StartCoroutine(SlowRoutine(slowTime)); 
+    //}
+    //else
+    //{
+    //    agent.speed = enemyData.moveSpeed;
+    //}
+
 }

@@ -16,11 +16,13 @@ public class TowerLevelSwitch : MonoBehaviour
     [Header("Catapult")]
     public float baseAoeRadius;
     public float baseAoeBlastForce;
-    public float baseAnimationSpeed; 
+    public float baseAnimationSpeed;
     [Header("Wizard")]
+    public float baseEffectDuration; 
     public float baseDot;
     public float baseSlowMvt;
-    public float baseStunDuration;
+    public float baseStun;
+    public GameObject stunCircleZone; 
     [Header("Village")]
     public int baseIncome = 100;
 
@@ -30,7 +32,11 @@ public class TowerLevelSwitch : MonoBehaviour
     public bool VillageHouse = false; 
     public bool ArcherTower = false;
     public bool CatapultTower = false; 
-    public bool WizardTower = false;  
+    public bool WizardTower = false;
+    private bool fireType = false;
+    private bool lightningType = false;
+    private bool iceType = false;
+
     // Can transfer these into another script responsible for handling tower upgrades 
     public int counter = 0;
     public int currentTowerLevel = 1;
@@ -41,7 +47,10 @@ public class TowerLevelSwitch : MonoBehaviour
     private float upgradedFireRateAmount;
     private float upgradedFiringRangeAmount;
     private float upgradedAoeRangeAmount;
-    private float upgradedAoeBlastForceAmount; 
+    private float upgradedAoeBlastForceAmount;
+    private float upgradedEffectDurationAmount;
+    private float upgradedDOTAmount; 
+
     private void Start()
     {
         //towerUpgrade = GetComponent<TowerUpgrade>();
@@ -51,8 +60,10 @@ public class TowerLevelSwitch : MonoBehaviour
         upgradedFiringRangeAmount = baseFiringRange + towerData.upgrades[currentTowerLevel - 1].firingRangeBoost;
         baseSellingPrice = towerData.upgrades[currentTowerLevel - 1].saleAmount;
         baseUpgradePrice = towerData.upgrades[currentTowerLevel - 1].upgradeAmount;
-        upgradedAoeRangeAmount = towerData.upgrades[currentTowerLevel - 1].aoeRangeBoost;
-        upgradedAoeBlastForceAmount = towerData.upgrades[currentTowerLevel - 1].aoeBlastBoost; 
+        upgradedAoeRangeAmount = baseAoeRadius + towerData.upgrades[currentTowerLevel - 1].aoeRangeBoost;
+        upgradedAoeBlastForceAmount = baseAoeBlastForce + towerData.upgrades[currentTowerLevel - 1].aoeBlastBoost;
+        upgradedEffectDurationAmount = baseEffectDuration - towerData.upgrades[currentTowerLevel - 1].effectDurationBoost;
+        upgradedDOTAmount = baseDot + towerData.upgrades[currentTowerLevel - 1].dotBoost; 
     }
     private void OnMouseDown()
     {
@@ -60,7 +71,9 @@ public class TowerLevelSwitch : MonoBehaviour
         //BuildingShopManager.Instance.buildingUpgradeUIMenu.SetActive(true);
         UIManager.Instance.currentSelectedBuilding = this.gameObject;
 
-        DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount, baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount, upgradedFiringRangeAmount, upgradedAoeRangeAmount, upgradedAoeBlastForceAmount);
+        DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount, 
+            baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount, 
+            upgradedFiringRangeAmount, upgradedAoeRangeAmount, upgradedAoeBlastForceAmount, upgradedEffectDurationAmount, upgradedDOTAmount);
         //if (ArcherTower)
         //{
         //    print("current tower level: " + currentTowerLevel + "\n");
@@ -106,13 +119,22 @@ public class TowerLevelSwitch : MonoBehaviour
         switch (elementType)
         {
             case "Fire":
-                SwitchObject(0);   
+                SwitchObject(0);
+                fireType = true; 
+                lightningType = false;
+                iceType = false;
                 break;
             case "Lightning":
-                SwitchObject(1);    
+                SwitchObject(1);
+                fireType = false;
+                lightningType = true;
+                iceType = false;
                 break;
             case "Ice":
-                SwitchObject(2);   
+                SwitchObject(2);
+                fireType = false;
+                lightningType = false;
+                iceType = true;
                 break;
         }
     }
@@ -142,8 +164,9 @@ public class TowerLevelSwitch : MonoBehaviour
         float rangeBoost = towerData.upgrades[currentLevel - 1].firingRangeBoost;
         float aoeRangeBoost = towerData.upgrades[currentLevel - 1].aoeRangeBoost;
         float aoeBlastBoost = towerData.upgrades[currentLevel - 1].aoeBlastBoost;
-        float catapultAnimBoost = towerData.upgrades[currentLevel - 1].animSpeedBoost; 
-        //int incomeBoost = towerData.upgrades[currentLevel - 1].incomeBoost;
+        float catapultAnimBoost = towerData.upgrades[currentLevel - 1].animSpeedBoost;
+        float effectDurationBoost = towerData.upgrades[currentTowerLevel - 1].effectDurationBoost;
+        float dotBoost = towerData.upgrades[currentTowerLevel - 1].dotBoost; 
 
         int resellValue = towerData.upgrades[currentLevel - 1].saleAmount;
         int upgradeValue = towerData.upgrades[currentLevel - 1].upgradeAmount;
@@ -158,18 +181,24 @@ public class TowerLevelSwitch : MonoBehaviour
         upgradedFireRateAmount = baseFireRate - fireRateBoost;
         upgradedFiringRangeAmount = baseFiringRange + rangeBoost;
         upgradedAoeRangeAmount = baseAoeRadius + aoeRangeBoost;
-        upgradedAoeBlastForceAmount = baseAoeBlastForce + aoeBlastBoost; 
+        upgradedAoeBlastForceAmount = baseAoeBlastForce + aoeBlastBoost;
+        upgradedEffectDurationAmount = baseEffectDuration - effectDurationBoost;
+        upgradedDOTAmount = baseDot + dotBoost;
         //int nextLevel = currentTowerLevel++;
-        DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount, baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount, upgradedFiringRangeAmount, upgradedAoeRangeAmount, upgradedAoeBlastForceAmount);
+        DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount,
+        baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount,
+        upgradedFiringRangeAmount, upgradedAoeRangeAmount, upgradedAoeBlastForceAmount, upgradedEffectDurationAmount, upgradedDOTAmount);
+        //DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount, baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount, upgradedFiringRangeAmount, upgradedAoeRangeAmount, upgradedAoeBlastForceAmount);
         baseIncome = upgradedIncomeAmount; 
         baseDamage = upgradedDamageAmount;
         baseFireRate = upgradedFireRateAmount;
         baseFiringRange = upgradedFiringRangeAmount;
         baseAoeRadius = upgradedAoeRangeAmount;
-        baseAoeBlastForce = upgradedAoeBlastForceAmount; 
-        
+        baseAoeBlastForce = upgradedAoeBlastForceAmount;
+        baseEffectDuration = upgradedEffectDurationAmount;
+        baseDot = upgradedDOTAmount; 
     }
-    public void DisplayCurrentTowerStats(int currentTowerLevel, int nextLevel, int sellPrice, int upgradeCost, int income, int upgradedIncome, float baseDamage, float baseFireRate, float baseFiringRange, float baseAoeRange, float baseAoeBlastForce, float upgradedDamage, float upgradedFireRate, float upgradedFiringRange, float upgradedAoeRange, float upgradedAoeBlastForce)
+    public void DisplayCurrentTowerStats(int currentTowerLevel, int nextLevel, int sellPrice, int upgradeCost, int income, int upgradedIncome, float baseDamage, float baseFireRate, float baseFiringRange, float baseAoeRange, float baseAoeBlastForce, float upgradedDamage, float upgradedFireRate, float upgradedFiringRange, float upgradedAoeRange, float upgradedAoeBlastForce, float upgradedFxDuration, float upgradedDot)
     {
         UIManager.Instance.CurrentLevelValue.text = currentTowerLevel.ToString();
         //UIManager.Instance.NextLevelValue.text = nextLevel.ToString();
@@ -260,12 +289,30 @@ public class TowerLevelSwitch : MonoBehaviour
         }
         if (WizardTower == true) 
         {
-            //BuildingShopManager.Instance.BuildingName1.text = "WIZARD TOWER";
-            //BuildingShopManager.Instance.BuildingName2.text = "WIZARD TOWER";
-            //BuildingShopManager.Instance.StatText1.text = "";
-            //BuildingShopManager.Instance.StatText2.text = "";
-            //BuildingShopManager.Instance.StatText3.text = "";
-            //BuildingShopManager.Instance.StatText4.text = "";
+            // Set texts
+            UIManager.Instance.BuildingName1.text = "WIZARD TOWER";
+            UIManager.Instance.BuildingName2.text = "WIZARD TOWER";
+            UIManager.Instance.StatText1.text = "DAMAGE OVER TIME:";
+            UIManager.Instance.StatText2.text = "EFFECT DURATION:";
+            UIManager.Instance.StatText3.text = "SPECIAL EFFECT:";
+            UIManager.Instance.UpgradedStatText1.text = "DAMAGE OVER TIME:";
+            UIManager.Instance.UpgradedStatText2.text = "EFFECT DURATION:";
+            UIManager.Instance.UpgradedStatText3.text = "SPECIAL EFFECT:";
+
+            // Set values
+            UIManager.Instance.StatValue1.text = baseDot.ToString();
+            UIManager.Instance.StatValue2.text = baseEffectDuration.ToString();
+            if (fireType) { UIManager.Instance.StatValue3.text = "DEALS BURNING"; 
+                UIManager.Instance.UpgradedStatValue3.text = "DEALS BURNING"; 
+            }
+            if (lightningType) { UIManager.Instance.StatValue3.text = "SLOWS ENEMIES";
+                UIManager.Instance.StatValue3.text = "SLOWS ENEMIES";
+            }
+            if (iceType) { UIManager.Instance.StatValue3.text = "STUNS AND DAMAGE ENEMIES IN ZONE";
+                UIManager.Instance.StatValue3.text = "STUNS AND DAMAGE ENEMIES IN ZONE";
+            }
+            UIManager.Instance.UpgradedStatValue1.text = upgradedFxDuration.ToString();
+            UIManager.Instance.UpgradedStatValue2.text = upgradedDot.ToString();
         }
 
 

@@ -43,7 +43,7 @@ public class GameManager : Singleton<GameManager>
     {
         player = GameObject.FindWithTag("Player"); 
         // Initialize game state
-        Init();
+        InitializeDay1();
 
         // Start the game loop
         //GameLoop();
@@ -60,7 +60,6 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
-
         // When player is in town start the rest phase
         if (hasReturnedToVillage && !isRestPhase)
         {
@@ -93,8 +92,7 @@ public class GameManager : Singleton<GameManager>
         // maintaining the Game Loop
         GameLoop();
     }
-    //// Initialize 
-    void Init()
+    void InitializeDay1()
     {
         currentDay = 1;
         currentWave = 1;
@@ -112,6 +110,7 @@ public class GameManager : Singleton<GameManager>
     public void StartNewDay()
     {
         //FadeToBlack(); 
+
         // update Day value text 
         hasBeatenCurrentWave = false;
         playerCurHealth = playerMaxHealth;
@@ -123,10 +122,15 @@ public class GameManager : Singleton<GameManager>
     }
     void GameLoop()
     {
-        //enemiesRemaining = (maxWaves - currentWave + 1) * enemiesPerWave;
+        enemiesRemaining = (maxWaves - currentWave + 1) * enemiesPerWave;
 
         // Update enemies count when enemies killed
-        enemiesRemaining = currentEnemies - enemiesDefeated;
+
+        // missing the number of enemies spawned in the current wave?
+        //enemiesRemaining = currentEnemies - enemiesDefeated;
+        // maybe this works?
+        //enemiesRemaining = currentEnemies - enemiesDefeated + (enemiesPerWave * (maxWaves - currentWave));
+
         UIManager.Instance.EnemyRemainingValue.text = enemiesRemaining.ToString();
 
         //check if a wave is cleared
@@ -217,7 +221,6 @@ public class GameManager : Singleton<GameManager>
         isBattlePhase = false;
         isRestPhase = true;
         // TODO: Add any necessary logic for ending battle phase
-
     }
     // Start next wave
     void StartNextWave()

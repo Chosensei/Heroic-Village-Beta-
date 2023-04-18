@@ -18,10 +18,10 @@ public class SkyboxController : MonoBehaviour
     private void Update()
     {
         // For Debug purposes 
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            ToggleSkybox();
-        }
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    ToggleSkybox();
+        //}
     }
     public void ToggleSkybox()
     {

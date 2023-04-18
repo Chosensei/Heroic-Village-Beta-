@@ -6,6 +6,8 @@ public enum ProjectileType
 {
     Arrow, 
     Cannonball, 
+    Fireball,
     Iceball,
+    Thunderball
 };
 
