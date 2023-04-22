@@ -17,7 +17,7 @@ public class CatapultTowerController : BaseTowerController
         while (isShooting)
         {
             GameObject projectile = Instantiate(projectilePrefab);
-            projectile.GetComponent<TowerProjectile>().Initialize(target, tls.baseFireRate, tls.baseDamage);
+            projectile.GetComponent<TowerProjectile>().Initialize(target, tls.baseFireRate, tls.baseDamage, tls.baseAoeRadius, tls.baseAoeBlastForce);
             projectile.transform.position = shootingPoint.position;
             projectile.transform.rotation = shootingPoint.rotation;
             animator.SetTrigger("throw");

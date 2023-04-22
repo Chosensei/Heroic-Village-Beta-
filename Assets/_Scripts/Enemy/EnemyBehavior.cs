@@ -17,16 +17,14 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     public EnemyData enemyData;
     [SerializeField] private HealthBarController HealthBar; 
     private bool targetWithinRange => Vector3.Distance(transform.position, currentTarget.transform.position) <= enemyData.atkRange;
-    public static bool isDead = false;
+    //public static bool isDead = false;
+    public bool isDead = false;
     private bool isAttacking = false;
     private float maxHealth, currentHealth; 
     private float attackRate, attackCooldown;  
     private List<GameObject> targetsInRange = new List<GameObject>();
     private NavMeshAgent agent;
     private Animator animator;
-    private Coroutine burned;
-    private Coroutine slowed;
-    private Coroutine stunned;
     private Renderer renderer;
     private float remainingBurnTime, remainingSlowTime, remainingStunTime; 
 
@@ -36,7 +34,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        renderer = GetComponent<Renderer>();
+        renderer = transform.GetChild(0).GetComponent<Renderer>();
         SetupAIFromSOConfig(); 
     }
     void Start()
@@ -52,8 +50,8 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         if (Input.GetKeyDown(KeyCode.J))
         {
             TakeDamage(null, 10);
-            Debug.Log(currentHealth);
-            //HealthBar.UpdateDamageUI(); 
+            //Debug.Log(currentHealth);
+            HealthBar.UpdateHealthBar(currentHealth, maxHealth);
         }
 
         if (isDead) return;
@@ -173,6 +171,11 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     {
         return Random.Range(enemyData.minDamage, enemyData.maxDamage + 1);
     }
+    /// <summary>
+    /// Interface method
+    /// </summary>
+    /// <param name="instigator"></param>
+    /// <param name="damage"></param>
     public void TakeDamage(GameObject instigator, float damage)
     {
         if (isDead) return;
@@ -187,7 +190,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         // Update Health Bar UI 
         HealthBar.UpdateHealthBar(currentHealth, maxHealth);
     }
-    private void Die()
+    public void Die()
     {
         isDead = true;
         animator.SetTrigger("death");
@@ -196,17 +199,19 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         agent.isStopped = true;
         Destroy(gameObject, deathDuration);
     }
-    IEnumerator DamageOverTime(float duration, float damagePerTick)
+    private IEnumerator DamageOverTime(float duration, float damagePerTick)
     {
         float timeRemaining = duration;
         Color originalColor = renderer.material.color;  
         while (timeRemaining > 0)
         {
+            Debug.Log("DOT trigger");
             currentHealth -= damagePerTick;
             renderer.material.color = Color.red; // Change the material color to red
             //animator.SetTrigger("hit");
             if (currentHealth <= 0)
             {
+                Debug.Log("HP reduced!");
                 HealthBar.gameObject.SetActive(false);
                 Die();
                 yield break;
@@ -265,7 +270,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
             agent.speed = enemyData.moveSpeed / 2;
             remainingSlowTime -= Time.deltaTime;
         }
-        slowed = null; 
+        //slowed = null; 
         yield return null; 
     }
     private void StartAttack()

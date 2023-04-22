@@ -6,7 +6,7 @@ using UnityEngine;
 public class GMDebug : Singleton<GMDebug>
 {
     // Clean 
-    //public int MoneyInBank = 1000;   // Player's money in the game
+    public int MoneyInBank = 1000;   // Player's money in the game
     private int currentDay = 0;  // current day in the game
     private int maxDays = 10;    // Max day in the game  
     private GameObject player;

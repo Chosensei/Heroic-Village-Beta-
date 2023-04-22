@@ -1,5 +1,95 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &874488204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 874488205}
+  m_Layer: 0
+  m_Name: 'ShootingPoint '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &874488205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874488204}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 9.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1574184326288667516}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &917820576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 917820577}
+  m_Layer: 0
+  m_Name: 'ShootingPoint '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &917820577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917820576}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 9.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1574184325068259777}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1884473564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1884473565}
+  m_Layer: 0
+  m_Name: ShootingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1884473565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884473564}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 9.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 48819759247131987}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6037237917790633214
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,6 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6037237917790633184}
   - component: {fileID: 6037237917790633215}
+  - component: {fileID: 59288358524570230}
   m_Layer: 0
   m_Name: Wizard_Tower_Parent
   m_TagString: Untagged
@@ -51,20 +142,40 @@ MonoBehaviour:
   baseFireRate: 5
   baseFiringRange: 100
   baseSellingPrice: 0
+  baseUpgradePrice: 0
   baseAoeRadius: 0
   baseAoeBlastForce: 0
+  baseAnimationSpeed: 0
+  baseEffectDuration: 0
   baseDot: 0
   baseSlowMvt: 0
-  baseStunDuration: 0
+  baseStun: 0
+  stunCircleZone: {fileID: 0}
   baseIncome: 0
   towerLevelUpPrefabs:
   - {fileID: 857550777223372777}
   - {fileID: 2203228755325803387}
   - {fileID: 2203228756294511046}
-  isWizard: 1
+  VillageHouse: 0
+  ArcherTower: 0
+  CatapultTower: 0
+  WizardTower: 1
   counter: 0
   currentTowerLevel: 1
   maxTowerLevel: 5
+--- !u!65 &59288358524570230
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6037237917790633214}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.6504745, y: 13.529563, z: 7.1431274}
+  m_Center: {x: -0.12544632, y: 6.2647815, z: -0.3347168}
 --- !u!1001 &5097303901767121811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -157,6 +268,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 50
   m_Center: {x: -0.09905696, y: 0.065365806, z: 5.4299264}
+--- !u!114 &1196973255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857550777223372777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2117e48139f5a144592547ab935cfb55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 6080190910765868734, guid: 1a08e39f31977e449be776c482fda9b0, type: 3}
+  shootingPoint: {fileID: 1884473565}
+  launchForce: 0
 --- !u!1001 &6037237916748889857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -220,6 +346,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wizard_Tower_Lighting
       objectReference: {fileID: 0}
+    - target: {fileID: 5574298583882589306, guid: 78d2bf5d2c106b64a808c1882c4fcc87, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78d2bf5d2c106b64a808c1882c4fcc87, type: 3}
 --- !u!1 &2203228755325803387 stripped
@@ -245,6 +375,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 50
   m_Center: {x: -0.09905696, y: 0.065365806, z: 5.4299264}
+--- !u!114 &1626813957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203228755325803387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2117e48139f5a144592547ab935cfb55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 4402981576260302909, guid: 7f8856c12c343584d82d125f447a9799, type: 3}
+  shootingPoint: {fileID: 917820577}
+  launchForce: 0
 --- !u!1001 &6037237917709290940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -308,6 +453,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wizard_Tower_Ice
       objectReference: {fileID: 0}
+    - target: {fileID: 5574298583882589306, guid: 94d4a8f9671d9f34ab282167636b365a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6222601906152752559, guid: 94d4a8f9671d9f34ab282167636b365a, type: 3}
       propertyPath: m_Materials.Array.data[4]
       value: 
@@ -337,3 +486,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 50
   m_Center: {x: -0.09905696, y: 0.065365806, z: 5.4299264}
+--- !u!114 &129745028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203228756294511046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2117e48139f5a144592547ab935cfb55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 344413608760314677, guid: 6e286f7578cebf84d874f92886b93984, type: 3}
+  shootingPoint: {fileID: 874488205}
+  launchForce: 0

@@ -7,7 +7,6 @@ public class BaseTowerController : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public Transform shootingPoint;
-    public float launchForce;
     protected Coroutine shootRoutine;
     protected bool isShooting;
     protected Collider targetCollider;
@@ -24,8 +23,14 @@ public class BaseTowerController : MonoBehaviour
     }
     protected virtual void Awake()
     {
-        tls = new TowerLevelSwitch();
-        tls.baseFiringRange = GetComponent<SphereCollider>().radius;
+        // WTF DID YOU FUCKED UP HERE? 
+        //tls = new TowerLevelSwitch();
+
+        // The correct way 
+        tls = GetComponentInParent<TowerLevelSwitch>();
+
+        // WHAT IS THIS FOR?
+        //tls.baseFiringRange = GetComponent<SphereCollider>().radius;
     }
     protected virtual void Update()
     {
@@ -33,6 +38,7 @@ public class BaseTowerController : MonoBehaviour
         {
             StopShooting();
         }
+
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
@@ -55,6 +61,13 @@ public class BaseTowerController : MonoBehaviour
         {
             targetCollider = other;
             shootRoutine = StartCoroutine(Shoot(other.transform));
+
+            // STOP shooting at enemy that are DEAD
+            if (targetCollider.GetComponent<EnemyBehavior>().isDead)
+            {
+                //Debug.Log("Enemy Dead!");
+                StopShooting();
+            }
         }
     }
 

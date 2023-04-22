@@ -21,6 +21,7 @@ public class UIManager : Singleton<UIManager>
     public Button SellBuildingButton;
     public Button UpgradeBuildingButton;
     public Button[] switchElementButtons;
+    public Button CloseUpgradeMenuButton; 
     [Space]
     public GameObject PlacementTowerUIMenu1;
     public GameObject PlacementTowerUIMenu2;
@@ -102,7 +103,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (currentSelectedBuilding != null)
         {
-            if (GameManager.Instance.MoneyInBank < currentSelectedBuilding.GetComponent<TowerLevelSwitch>().baseUpgradePrice)
+            if (GMDebug.Instance.MoneyInBank < currentSelectedBuilding.GetComponent<TowerLevelSwitch>().baseUpgradePrice)
             {
                 // disable upgrade button
                 UpgradeBuildingButton.interactable = false;
@@ -175,8 +176,8 @@ public class UIManager : Singleton<UIManager>
             GameObject house = Instantiate(villageHousePrefab);
             house.transform.position = tpc.transform.position;
             tpc.TowerPlaced(house.GetComponent<BaseTowerController>());
-            GameManager.Instance.MoneyInBank -= villageHouseBuildCost;
-            moneyText.text = GameManager.Instance.MoneyInBank.ToString();
+            GMDebug.Instance.MoneyInBank -= villageHouseBuildCost;
+            moneyText.text = GMDebug.Instance.MoneyInBank.ToString();
             CloseBuildTowerMenu();
         });
         ArrowTowerButton.onClick.AddListener(() =>
@@ -184,8 +185,8 @@ public class UIManager : Singleton<UIManager>
             GameObject tower = Instantiate(arrowTowerPrefab);
             tower.transform.position = tpc.transform.position;
             tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
-            GameManager.Instance.MoneyInBank -= archerTowerBuildCost;
-            moneyText.text = GameManager.Instance.MoneyInBank.ToString();
+            GMDebug.Instance.MoneyInBank -= archerTowerBuildCost;
+            moneyText.text = GMDebug.Instance.MoneyInBank.ToString();
             CloseBuildTowerMenu();
         });
         CatapultTowerButton.onClick.AddListener(() =>
@@ -193,8 +194,8 @@ public class UIManager : Singleton<UIManager>
             GameObject tower = Instantiate(catapultTowerPrefab);
             tower.transform.position = tpc.transform.position;
             tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
-            GameManager.Instance.MoneyInBank -= catapultBuildCost;
-            moneyText.text = GameManager.Instance.MoneyInBank.ToString();
+            GMDebug.Instance.MoneyInBank -= catapultBuildCost;
+            moneyText.text = GMDebug.Instance.MoneyInBank.ToString();
             CloseBuildTowerMenu();
         });
         WizardTowerButton.onClick.AddListener(() =>
@@ -202,8 +203,8 @@ public class UIManager : Singleton<UIManager>
             GameObject tower = Instantiate(wizardTowerPrefab);
             tower.transform.position = tpc.transform.position;
             tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
-            GameManager.Instance.MoneyInBank -= wizardTowerBuildCost;
-            moneyText.text = GameManager.Instance.MoneyInBank.ToString();
+            GMDebug.Instance.MoneyInBank -= wizardTowerBuildCost;
+            moneyText.text = GMDebug.Instance.MoneyInBank.ToString();
             CloseBuildTowerMenu();
         });
 
@@ -213,7 +214,7 @@ public class UIManager : Singleton<UIManager>
             currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
             tls.UpgradeTowerPrefab();
            
-            if (tls.WizardTower == true) { SwitchElementUIMenu.gameObject.SetActive(true); }
+            if (tls.WizardTower == true) { Debug.Log("Wizard tower selected"); }//SwitchElementUIMenu.gameObject.SetActive(true); 
             else { SwitchElementUIMenu.gameObject.SetActive(false); }
             //print("Upgraded tower!");
             //tls.UpgradeTestMessage();
@@ -242,5 +243,10 @@ public class UIManager : Singleton<UIManager>
             currentSelectedBuilding.TryGetComponent(out TowerLevelSwitch tls);
             tls.ChangeWizardElementType("Ice");
         });
+        CloseUpgradeMenuButton.onClick.AddListener(() =>
+        {
+            UpgradeTowerUIMenu.SetActive(false);
+            SwitchElementUIMenu.SetActive(false); 
+        }); 
     }
 }

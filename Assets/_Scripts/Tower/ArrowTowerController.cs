@@ -13,41 +13,13 @@ public class ArrowTowerController : BaseTowerController
         while (isShooting)
         {
             GameObject projectile = Instantiate(projectilePrefab);
-            projectile.GetComponent<TowerProjectile>().Initialize(target, tls.baseFireRate, tls.baseDamage);
+            projectile.GetComponent<TowerProjectile>().InitializeArrow(target, tls.baseFireRate, tls.baseDamage);
             projectile.transform.position = shootingPoint.position;
             projectile.transform.rotation = shootingPoint.rotation;
             yield return new WaitForSeconds(tls.baseFireRate);
         }
         yield return null;
     }
-
-    //protected override void OnTriggerEnter(Collider other)
-    //{
-       
-    //}
-
-    //protected override void OnTriggerStay(Collider other)
-    //{
-       
-    //}
-
-    //protected override void OnTriggerExit(Collider other)
-    //{
-        
-    //}
-
-    //protected override void StopShooting()
-    //{
-        
-    //}
-
-    //private void OnDrawGizmosSelected()
-    //{
-    //    // Draw range gizmo in editor
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawWireSphere(transform.position, tls.baseFiringRange);
-    //}
-
 
 }
 

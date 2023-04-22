@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
 
 public class TowerProjectile : MonoBehaviour
 {
     private Transform target;
     private Vector3 initialPosition, targetPosition;
     private float speed;
-    private float damage; 
+    private float damage;
+    private float aoeFxRadius;
+    private float aoeImpactForce;
+    private float effectDuration;
+    private float damageOT;
     private float startTime;
     private bool hasInitialized = false;
     private Rigidbody rb;
@@ -16,17 +19,18 @@ public class TowerProjectile : MonoBehaviour
     private TowerLevelSwitch tls; 
     public ProjectileType projectileType;
     public float launchForce;
-    public float projectileSpeed = 10f;
+    public float projectileSpeed = 20f;
     [Header("Cannon Tower Setting")]
     public float explosionRadius = 25;  // the radius of the explosion that deals damage to enemies
     public float cannonForce = 1000f; // the force with which the cannonball hits enemies
-
+    [Header("FOR DEBUG ONLY")]
+    public GameObject currentTarget = null;
     private void Start()
     {
         initialPosition = transform.position;
         rb = GetComponent<Rigidbody>(); 
-        // Auto destroy spell gameobject after 10s
-        Destroy(this.gameObject, 20f);
+        // Auto destroy spell gameobject after 15s
+        Destroy(this.gameObject, 15f);
     }
     private void Update()
     {
@@ -49,9 +53,9 @@ public class TowerProjectile : MonoBehaviour
                 //    DealAOEDamage(tls.baseAoeRadius);
                 //}
                 // New way
-                if (Vector3.Distance(transform.position, target.position) < 0.25f)
+                if (Vector3.Distance(transform.position, targetPosition) < 0.25f)
                 {
-                    DealAOEDamage(tls.baseAoeRadius);
+                    DealAOEDamage(aoeFxRadius);
                 }
             }
             else if (projectileType == ProjectileType.Fireball || projectileType == ProjectileType.Iceball
@@ -59,28 +63,51 @@ public class TowerProjectile : MonoBehaviour
             {
                 if (targetPosition == null) Destroy(gameObject);
                 FireArrow();
-                // Apply AOE damage upon collision 
+                // Apply AOE damage upon collision (PROBLEM HERE)
                 if (Vector3.Distance(transform.position, target.position) < 0.25f)
                 {
-                    DealAOEDamage(tls.baseAoeRadius);
+                    // test
+                    DealAOEDamage(aoeFxRadius);
+                    //DealAOEDamage(5);
+                    //DealAOEDamage(tls.baseAoeRadius);
                 }
             }
         }
              
     }
-    public void Initialize(Transform target, float speed, float damage)
+    public void InitializeArrow(Transform target, float speed, float damage)
     {
         this.target = target;
         this.speed = speed;
-        this.damage = damage; 
+        this.damage = damage;
         startTime = Time.time;
         hasInitialized = true;
+    }
+    public void Initialize(Transform target, float speed, float damage, float aoeFxRadius, float aoeImpactForce)
+    {
+        this.target = target;
+        this.speed = speed;
+        this.damage = damage;
+        this.aoeFxRadius = aoeFxRadius;
+        this.aoeImpactForce = aoeImpactForce;
+        startTime = Time.time;
+        hasInitialized = true; 
     }
     public void Initialize(Vector3 target, float speed, float damage)
     {
         targetPosition = target;
         this.speed = speed;
         this.damage = damage;
+        startTime = Time.time;
+        hasInitialized = true;
+    }
+    public void InitializeWizard(Transform target, float speed, float damage, float effectDuration, float damageOT)
+    {
+        this.target = target;
+        this.speed = speed;
+        this.damage = damage;
+        this.effectDuration = effectDuration;
+        this.damageOT = damageOT; 
         startTime = Time.time;
         hasInitialized = true;
     }
@@ -123,12 +150,28 @@ public class TowerProjectile : MonoBehaviour
             rb.velocity = newProjectileVelocity;
 
             // Apply gravity to the cannonball
-            rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+            rb.AddForce(Vector3.down * gravity , ForceMode.Acceleration);
         }
     }
+    //protected virtual void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.tag == "Enemy")
+    //    {
+    //        if (projectileType == ProjectileType.Arrow)
+    //        {
+    //            DealNormalDamage(other);
+    //        }
+    //        else if (projectileType == ProjectileType.Cannonball)
+    //        {
+    //            //DealAOEDamage(5); 
+    //            DealAOEDamage(aoeFxRadius);
+    //            other.GetComponent<Rigidbody>().AddForce(forceDirection * aoeImpactForce, ForceMode.Impulse);
+    //        }
+    //    } 
+    //}
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" && target != null)
         {
             if (projectileType == ProjectileType.Arrow)
             {
@@ -136,10 +179,18 @@ public class TowerProjectile : MonoBehaviour
             }
             else if (projectileType == ProjectileType.Cannonball)
             {
-                DealAOEDamage(tls.baseAoeRadius);
-                //other.GetComponent<Rigidbody>().AddForce(forceDirection * tls.baseAoeBlastForce, ForceMode.Impulse);
+                //DealAOEDamage(5); 
+                DealAOEDamage(aoeFxRadius);
+                other.GetComponent<Rigidbody>().AddForce(forceDirection * aoeImpactForce, ForceMode.Impulse);
             }
-        } 
+
+            // Check if this is the first enemy hit
+            //if (other.transform == target || targetPosition == other.transform.position)
+            //{
+            //    target = null;
+            //    Destroy(gameObject);
+            //}
+        }
     }
     private void DealNormalDamage(Collider hit)
     {
@@ -157,17 +208,21 @@ public class TowerProjectile : MonoBehaviour
             if (hit.TryGetComponent(out IDamageable targetDamagable))
             {
                 targetDamagable.TakeDamage(gameObject, damage);
+
+                // Check for other special types projectiles
                 if (projectileType == ProjectileType.Fireball)
                 {
-                    hit.GetComponent<EnemyBehavior>().FireBurn(tls.baseEffectDuration, tls.baseDot);
+                    hit.GetComponent<EnemyBehavior>().FireBurn(effectDuration, damageOT);
+                    Debug.Log("Fire hit!");
                 }
                 if (projectileType == ProjectileType.Iceball)
                 {
-                    hit.GetComponent<EnemyBehavior>().IceSlow(tls.baseEffectDuration); 
+                    Debug.Log("Ice hit!");
+                    hit.GetComponent<EnemyBehavior>().IceSlow(effectDuration); 
                 }
                 if (projectileType == ProjectileType.Thunderball)
                 {
-                    hit.GetComponent<EnemyBehavior>().ThunderStun(tls.baseEffectDuration, tls.baseDot, tls.stunCircleZone);
+                    //hit.GetComponent<EnemyBehavior>().ThunderStun(tls.baseEffectDuration, tls.baseDot, tls.stunCircleZone);
                 }
             }
         }

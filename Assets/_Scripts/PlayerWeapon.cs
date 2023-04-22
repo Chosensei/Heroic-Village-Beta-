@@ -8,7 +8,7 @@ public class PlayerWeapon : MonoBehaviour
     public float damage = 10f;
     public BoxCollider weaponCollider;
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         // If the collider hits an enemy, damage it
         if (other.tag == "Enemy")

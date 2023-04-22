@@ -12,7 +12,8 @@ public class WizardTowerController : BaseTowerController
         while (isShooting)
         {
             GameObject projectile = Instantiate(projectilePrefab);
-            projectile.GetComponent<TowerProjectile>().Initialize(target, tls.baseFireRate, tls.baseDamage);
+            //projectile.GetComponent<TowerProjectile>().InitializeArrow(target, tls.baseFireRate, tls.baseDamage);
+            projectile.GetComponent<TowerProjectile>().InitializeWizard(target, tls.baseFireRate, tls.baseDamage, tls.baseEffectDuration, tls.baseDot);
             projectile.transform.position = shootingPoint.position;
             projectile.transform.rotation = shootingPoint.rotation;
             yield return new WaitForSeconds(tls.baseFireRate);

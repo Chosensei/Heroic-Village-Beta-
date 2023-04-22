@@ -14,7 +14,7 @@ public class TowerLevelSwitch : MonoBehaviour
     public int baseSellingPrice = 0;
     public int baseUpgradePrice = 0; 
     [Header("Catapult")]
-    public float baseAoeRadius;
+    public float baseAoeRadius = 5;
     public float baseAoeBlastForce;
     public float baseAnimationSpeed;
     [Header("Wizard")]
@@ -22,7 +22,7 @@ public class TowerLevelSwitch : MonoBehaviour
     public float baseDot;
     public float baseSlowMvt;
     public float baseStun;
-    public GameObject stunCircleZone; 
+    public GameObject stunCircleZone = null; 
     [Header("Village")]
     public int baseIncome = 100;
 
@@ -63,13 +63,25 @@ public class TowerLevelSwitch : MonoBehaviour
         upgradedAoeRangeAmount = baseAoeRadius + towerData.upgrades[currentTowerLevel - 1].aoeRangeBoost;
         upgradedAoeBlastForceAmount = baseAoeBlastForce + towerData.upgrades[currentTowerLevel - 1].aoeBlastBoost;
         upgradedEffectDurationAmount = baseEffectDuration - towerData.upgrades[currentTowerLevel - 1].effectDurationBoost;
-        upgradedDOTAmount = baseDot + towerData.upgrades[currentTowerLevel - 1].dotBoost; 
+        upgradedDOTAmount = baseDot + towerData.upgrades[currentTowerLevel - 1].dotBoost;
+        Debug.Log($"baseIncome: {baseIncome}"); 
+        Debug.Log($"baseDamage: {baseDamage}");
+        Debug.Log($"baseFirerate: {baseFireRate}");
+        Debug.Log($"baseEffectDuration: {baseEffectDuration}");
+        Debug.Log($"baseDOT: {baseDot}");
+
     }
     private void OnMouseDown()
     {
         UIManager.Instance.ShowUpgradeMenu(this); 
-        //BuildingShopManager.Instance.buildingUpgradeUIMenu.SetActive(true);
         UIManager.Instance.currentSelectedBuilding = this.gameObject;
+
+        if (WizardTower == true)
+        {
+            UIManager.Instance.SwitchElementUIMenu.gameObject.SetActive(true); 
+            Debug.Log("Wizard tower selected");
+        } 
+        else { UIManager.Instance.SwitchElementUIMenu.gameObject.SetActive(false); }
 
         DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount, 
             baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount, 
@@ -88,8 +100,8 @@ public class TowerLevelSwitch : MonoBehaviour
     public void UpgradeTowerPrefab()
     {
         // Update Money in bank
-        GameManager.Instance.MoneyInBank -= baseUpgradePrice;
-        UIManager.Instance.moneyText.text = GameManager.Instance.MoneyInBank.ToString();
+        GMDebug.Instance.MoneyInBank -= baseUpgradePrice;
+        UIManager.Instance.moneyText.text = GMDebug.Instance.MoneyInBank.ToString();
 
         // Check if we're safe to upgrade (We haven't reached the last level)
         if (counter < towerLevelUpPrefabs.Length - 1)
@@ -110,8 +122,8 @@ public class TowerLevelSwitch : MonoBehaviour
     }
     public void SellTowerPrefab()
     {
-        GameManager.Instance.MoneyInBank += baseSellingPrice;
-        UIManager.Instance.moneyText.text = GameManager.Instance.MoneyInBank.ToString();
+        GMDebug.Instance.MoneyInBank += baseSellingPrice;
+        UIManager.Instance.moneyText.text = GMDebug.Instance.MoneyInBank.ToString();
         Destroy(this.gameObject);
     }
     public void ChangeWizardElementType(string elementType)
@@ -313,10 +325,11 @@ public class TowerLevelSwitch : MonoBehaviour
             }
             UIManager.Instance.UpgradedStatValue1.text = upgradedFxDuration.ToString();
             UIManager.Instance.UpgradedStatValue2.text = upgradedDot.ToString();
+
+            UIManager.Instance.SellPriceValue.text = sellPrice.ToString();
+            UIManager.Instance.UpgradeCostValue.text = upgradeCost.ToString();
         }
 
-
-        // Don't forget to account for village house too! It doesn't have damage/ firerate / range, except income value
     }
 
 }
