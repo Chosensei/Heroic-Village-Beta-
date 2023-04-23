@@ -7,15 +7,6 @@ namespace GameDevTV.Inventories
     /// </summary>
     public enum EquipLocation
     {
-        Helmet,
-        Necklace,
-        Body,
-        Trousers,
-        Boots,
-        Weapon,
-        Shield,
-        Gloves,
-
         FireSkill_Level01,
         FireSkill_Level02,
         FireSkill_Level03,
@@ -25,5 +16,13 @@ namespace GameDevTV.Inventories
         ShockSkill_Level01,
         ShockSkill_Level02,
         ShockSkill_Level03,
+        Helmet,
+        Necklace,
+        Body,
+        Trousers,
+        Boots,
+        Weapon,
+        Shield,
+        Gloves
     }
 }

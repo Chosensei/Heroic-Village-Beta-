@@ -38,6 +38,9 @@ public class UIManager : Singleton<UIManager>
     public GameObject WinDayMenu;
     public GameObject LoseDayMenu;
 
+    [Header("Shop Menu UI")]
+    public GameObject WeaponShopMenu;
+    public GameObject MagicShopMenu;
 
     [Header("Player UI")]
     public TMP_Text moneyText;
