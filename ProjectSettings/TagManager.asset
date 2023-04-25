@@ -13,6 +13,7 @@ TagManager:
   - Wall 2
   - Terrain
   - Village Zone
+  - Sword
   layers:
   - Default
   - TransparentFX

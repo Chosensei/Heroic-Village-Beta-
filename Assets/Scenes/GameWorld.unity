@@ -2759,7 +2759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa4b90f3cac398a4e84135eb048def0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoneyInBank: 1000
+  MoneyInBank: 1000000
   playerTownSpawnPoint: {fileID: 425187140}
   battleStarted: 0
   isInTown: 1
@@ -3557,7 +3557,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -12370,7 +12370,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: + 10%
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -40968,7 +40968,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1206151106}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1627882287}
+        m_TargetAssemblyTypeName: WeaponSmithShop, Assembly-CSharp
+        m_MethodName: UpgradeAttackPower
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1206151106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56091,11 +56103,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9550075f9865d4aa68ce0e70a0daef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUpgradePrice: 10
+  baseUpgradePrice: 200
   upgradePriceMultiplier: 2
   maxUpgrades: 10
-  upgradePriceText: {fileID: 0}
-  buyButton: {fileID: 0}
+  currentPowerText: {fileID: 1888956324}
+  upgradePriceText: {fileID: 1567377127}
+  currentLevelText: {fileID: 92375807}
+  upgradeDamagePercentAmt: {fileID: 360679976}
+  buyButton: {fileID: 1206151105}
 --- !u!1001 &1629627571
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61260,6 +61275,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1272474463252822357, guid: 8bdea9325cc39464294b268a94ab9687, type: 3}
+      propertyPath: m_TagString
+      value: Sword
+      objectReference: {fileID: 0}
     - target: {fileID: 1937511443606348937, guid: 8bdea9325cc39464294b268a94ab9687, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -66012,7 +66031,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}

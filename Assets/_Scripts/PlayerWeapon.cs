@@ -21,7 +21,7 @@ public class PlayerWeapon : MonoBehaviour
             EnemyBehavior enemy = other.gameObject.GetComponent<EnemyBehavior>();
             if (enemy != null)
             {
-                enemy.TakeDamage(gameObject, IncreaseAttackPower(swordDamage));
+                enemy.TakeDamage(gameObject, swordDamage);
             }
         }
     }

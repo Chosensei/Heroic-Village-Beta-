@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6662282461434647735}
   m_Layer: 0
   m_Name: Sword
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,5 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e671219cafea03945952690cc98d8b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  swordDamage: 10
   weaponCollider: {fileID: 9223021732586231999}
