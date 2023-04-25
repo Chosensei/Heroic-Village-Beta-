@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    [Header("Temporary Stat")]
-    public float damage = 10f;
+    [Header("Attack Stat")]
+    public float swordDamage = 10f;
     public BoxCollider weaponCollider;
 
+    public float IncreaseAttackPower(float damageInc)
+    {
+        return swordDamage + damageInc; 
+    }
     private void OnTriggerEnter(Collider other)
     {
         // If the collider hits an enemy, damage it
@@ -17,7 +21,7 @@ public class PlayerWeapon : MonoBehaviour
             EnemyBehavior enemy = other.gameObject.GetComponent<EnemyBehavior>();
             if (enemy != null)
             {
-                enemy.TakeDamage(gameObject, damage);
+                enemy.TakeDamage(gameObject, IncreaseAttackPower(swordDamage));
             }
         }
     }

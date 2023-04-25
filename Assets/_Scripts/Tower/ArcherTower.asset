@@ -18,31 +18,31 @@ MonoBehaviour:
     firingRangeBoost: 25
     aoeRangeBoost: 0
     aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
     dotBoost: 0
-    slowMvtBoost: 0
-    stunDurationBoost: 0
     incomeBoost: 0
-    saleAmount: 25
-    upgradeAmount: 50
+    saleAmount: 35
+    upgradeAmount: 75
   - damageBoost: 4
     fireRateBoost: 2
     firingRangeBoost: 25
     aoeRangeBoost: 0
     aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
     dotBoost: 0
-    slowMvtBoost: 0
-    stunDurationBoost: 0
     incomeBoost: 0
-    saleAmount: 50
-    upgradeAmount: 100
+    saleAmount: 60
+    upgradeAmount: 125
   - damageBoost: 6
     fireRateBoost: 3
     firingRangeBoost: 25
     aoeRangeBoost: 0
     aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
     dotBoost: 0
-    slowMvtBoost: 0
-    stunDurationBoost: 0
     incomeBoost: 0
     saleAmount: 125
     upgradeAmount: 250
@@ -51,9 +51,9 @@ MonoBehaviour:
     firingRangeBoost: 25
     aoeRangeBoost: 0
     aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
     dotBoost: 0
-    slowMvtBoost: 0
-    stunDurationBoost: 0
     incomeBoost: 0
     saleAmount: 250
     upgradeAmount: 500
@@ -62,9 +62,9 @@ MonoBehaviour:
     firingRangeBoost: 25
     aoeRangeBoost: 0
     aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
     dotBoost: 0
-    slowMvtBoost: 0
-    stunDurationBoost: 0
     incomeBoost: 0
     saleAmount: 350
     upgradeAmount: 750
