@@ -158,19 +158,10 @@ public class UIManager : Singleton<UIManager>
             PlacementTowerUIMenu2.SetActive(false);
         }
     }
-    //public void ShowUpgradeMenu(BaseTowerController baseTower)
-    //{
-    //    btc = baseTower;
-    //    UpgradeTowerUIMenu.SetActive(true);
-    //}
+
     public void ShowUpgradeMenu(TowerLevelSwitch tls)
     {
         UpgradeTowerUIMenu.SetActive(true);
-        //BuildingShopManager.Instance.buildingUpgradeUIMenu.SetActive(true);
-        //if (tls.ArcherTower)
-        //{
-        //    tls.DisplayCurrentTowerStats(tls.currentTowerLevel, tls.currentTowerLevel + 1, tls.baseSellingPrice, tls.baseUpgradePrice, tls.baseDamage, tls.baseFireRate, tls.baseFiringRange, tls.baseDamage + tls.towerData.upgrades[tls.currentTowerLevel - 1].damageBoost, tls.baseFireRate - tls.towerData.upgrades[tls.currentTowerLevel - 1].fireRateBoost, tls.baseFiringRange + tls.towerData.upgrades[tls.currentTowerLevel - 1].firingRangeBoost);
-        //}
     }
     private void SetupButtons()
     {

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,9 +28,11 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     private NavMeshAgent agent;
     private Animator animator;
     private Renderer renderer;
-    private float remainingBurnTime, remainingSlowTime, remainingStunTime; 
+    private float remainingBurnTime, remainingSlowTime, remainingStunTime;
 
-
+    // Wall
+    public GameObject[] CageWall;
+    public int wallIndex;
 
     void Awake()
     {
@@ -42,6 +46,17 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
         FindNewTargetWithArray();
         animator.SetBool("isWalking", true);
+
+        // Add walls
+        int numWalls = 3;
+        CageWall = new GameObject[numWalls];
+        // Find all wall objects and add them to the array
+        for (int i = 0; i < numWalls; i++)
+        {
+            CageWall[i] = GameObject.FindWithTag("Wall " + i);
+        }
+        // Set the current wall index variable to the number of wall objects that could be found
+        wallIndex = CageWall.Length - 1;
     }
 
     void Update()
@@ -117,6 +132,24 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
             {
                 targetDamagable.TakeDamage(this.gameObject, CalculateDmg());
             }
+            else if (currentTarget.TryGetComponent(out CageWall cw))
+            {
+
+                cw.TakeDamage(CalculateDmg(), wallIndex);
+                cw.isUnderAtk = true;
+
+                // Find the index of the destroyed wall in the CageWall array
+                int index = Array.IndexOf(CageWall, cw.gameObject);
+                Debug.Log(index);
+                if (cw.isDestroyed)
+                {
+                    // Disable the wall layer 
+                    CageWall[wallIndex].SetActive(false);
+                    // Disable destroyed wall HP UI 
+                    UIManager.Instance.WallUIObjects[wallIndex].SetActive(false);
+
+                }
+            }
         }
         isAttacking = false;
         animator.ResetTrigger("attack");
@@ -169,7 +202,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     #endregion
     private int CalculateDmg()
     {
-        return Random.Range(enemyData.minDamage, enemyData.maxDamage + 1);
+        return UnityEngine.Random.Range(enemyData.minDamage, enemyData.maxDamage + 1);
     }
     /// <summary>
     /// Interface method

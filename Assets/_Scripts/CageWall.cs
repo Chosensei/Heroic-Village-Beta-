@@ -21,7 +21,7 @@ public class CageWall : MonoBehaviour
     void Start()
     {
         currentWallHP = maxWallHP;
-        enemyTarget = GetComponent<EnemyTarget>();
+        //enemyTarget = GetComponent<EnemyTarget>();
         //this.wallIndex = enemyTarget.wallTargetIndex;
     }
 
@@ -29,11 +29,14 @@ public class CageWall : MonoBehaviour
     {
         if (isUnderAtk && isInvincible)
         {
+            // Enable wall HP UI 
+            //UIManager.Instance.WallUIObjects[wallIndex].SetActive(true);
             invisibleTimer -= Time.deltaTime;
             if (invisibleTimer < 0)
                 isInvincible = false;
         }
-
+        // decrement wall index     
+        wallIndex--;
     }
     public bool IsDead()
     {

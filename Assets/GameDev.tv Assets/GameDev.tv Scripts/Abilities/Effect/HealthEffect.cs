@@ -11,7 +11,8 @@ namespace RPG.Abilities.Effects
     {
         // This value can be +ve / -ve depending on if you want to use it for damage or heal
         [Range(-1000f, 1000f)]
-        [SerializeField] float healthChange; 
+        [SerializeField] float healthChange;
+        Ability ability;
         public override void StartEffect(AbilityData data, Action finished)
         { 
             foreach (var target in data.GetTargets())
@@ -22,6 +23,7 @@ namespace RPG.Abilities.Effects
                     if (healthChange < 0)
                     {
                         targetDamagable.TakeDamage(data.GetUser(), -healthChange);
+                        targetDamagable.TakeDamage(data.GetUser(), ability.Damage);
                     }
                 }
             }

@@ -28,6 +28,8 @@ public class SwitchSceneOnKeyTrigger : MonoBehaviour
             {
                 // Load the selected scene
                 SceneManager.LoadScene(sceneName);
+                //CameraManager.Instance.LoadScene(sceneName); 
+                
             }
             else
             {

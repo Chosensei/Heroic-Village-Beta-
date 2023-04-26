@@ -17,6 +17,25 @@ namespace RPG.Abilities
         [SerializeField] EffectStrategy[] effectStrategies;
         [SerializeField] float cooldownTime = 0;
         [SerializeField] float manaCost = 0;
+        [SerializeField] float damage = 0;
+
+        public float CooldownTime
+        {
+            get { return cooldownTime; }
+            set { cooldownTime = value; }
+        }
+
+        public float ManaCost
+        {
+            get { return manaCost; }
+            set { manaCost = value; }
+        }
+
+        public float Damage
+        {
+            get { return damage; }
+            set { damage = value; }
+        }
 
         public override void Use(GameObject user)
         {
