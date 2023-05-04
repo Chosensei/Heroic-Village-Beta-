@@ -9,20 +9,26 @@ public class CageWall : MonoBehaviour
     [SerializeField] private float currentWallHP;
     [SerializeField] private float maxWallHP;
     [SerializeField] private int wallIndex;
-    
+
     public bool isUnderAtk { get; set; } = false;
     public bool isDestroyed { get; set; } = false;
+    public float CurrentWallHP { get => currentWallHP; set => currentWallHP = value; }
+    public float MaxWallHP { get => maxWallHP; set => maxWallHP = value; }
+    public int UpgradeLevel { get => upgradeLevel; set => upgradeLevel = value; }
+    public int MaxLevel { get => maxUpgradeLevel; private set => maxUpgradeLevel = value; }
 
     public float timeInvincible = 2.0f;
     bool isInvincible;
     float invisibleTimer;
-
+    int upgradeLevel = 0;
+    int maxUpgradeLevel = 5; 
     // Coroutine to handle showing and hiding the wall HP UI
     Coroutine hpCoroutine;
 
+
     void Start()
     {
-        currentWallHP = maxWallHP;
+        CurrentWallHP = MaxWallHP;
     }
 
     void Update()
@@ -30,15 +36,16 @@ public class CageWall : MonoBehaviour
         if (isUnderAtk && isInvincible)
         {
             // Enable wall HP UI 
-            //UIManager.Instance.WallUIObjects[wallIndex].SetActive(true);
+            UIManager.Instance.WallUIObjects[wallIndex].SetActive(true);
             invisibleTimer -= Time.deltaTime;
             if (invisibleTimer < 0)
                 isInvincible = false;
         }
+
     }
     public bool IsDead()
     {
-        return currentWallHP <= 0;
+        return CurrentWallHP <= 0;
     }
     public void TakeDamage(int amount, int index)
     {
@@ -46,7 +53,7 @@ public class CageWall : MonoBehaviour
         {
             isInvincible = true;
             invisibleTimer = timeInvincible; // reset timer for invulnerability
-            currentWallHP -= amount;
+            CurrentWallHP -= amount;
             // show the HP bar for the wall currently being attacked
             if (hpCoroutine == null)
             {
@@ -57,11 +64,12 @@ public class CageWall : MonoBehaviour
                 StopCoroutine(hpCoroutine);
                 hpCoroutine = StartCoroutine(ShowWallHP(index));
             }
-            UIManager.Instance.UpdateWallHP(index, currentWallHP, maxWallHP);
+            UIManager.Instance.UpdateWallHP(index, CurrentWallHP, MaxWallHP);
             isUnderAtk = false;
         }
-        if (currentWallHP <= 0)
+        if (CurrentWallHP <= 0)
         {
+            CurrentWallHP = 0; 
             isDestroyed = true; 
             isUnderAtk = false;
             // Maybe can call the enemies clear target mwthod here?

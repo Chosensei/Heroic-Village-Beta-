@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject shopOptionPanel;
     public GameObject weaponShopMenu;
     public GameObject magicShopMenu;
+    // TO DO :extend for wall repairs and upgrades
     Button continueButton;
     Button closeButton;
     Button shopButton; 

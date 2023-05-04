@@ -134,6 +134,7 @@ public class GMDebug : Singleton<GMDebug>
         currentWave = 1; 
         maxWaves = 5;
         enemiesPerWave = 3;
+        UIManager.Instance.moneyText.text = MoneyInBank.ToString(); // Set starting money 
         UIManager.Instance.CurrentDayValue.text = currentDay.ToString();
         UIManager.Instance.CurrentWaveValue.text = "-";
         UIManager.Instance.EnemyRemainingValue.text = "-";
