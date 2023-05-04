@@ -21,8 +21,8 @@ public class TowerUpgrade : ScriptableObject
         public int incomeBoost;
         [Header("Others")]
         public int saleAmount;
-        public int upgradeAmount; 
-
+        public int upgradeAmount;
+        public int wallHPBuffAmount; 
     }
 
     public Upgrade[] upgrades;

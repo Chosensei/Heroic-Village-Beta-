@@ -10,6 +10,8 @@ public class BaseTowerController : MonoBehaviour
     protected Coroutine shootRoutine;
     protected bool isShooting;
     protected Collider targetCollider;
+    //FOR DEBUG ONLY
+    public Collider[] targets; 
     protected TowerLevelSwitch tls;
 
     /// <summary>
@@ -29,8 +31,8 @@ public class BaseTowerController : MonoBehaviour
         // The correct way 
         tls = GetComponentInParent<TowerLevelSwitch>();
 
-        // WHAT IS THIS FOR?
-        //tls.baseFiringRange = GetComponent<SphereCollider>().radius;
+        // sets the radius of the sphere collider to the baseFiringRange 
+        GetComponent<SphereCollider>().radius = tls.baseFiringRange;
     }
     protected virtual void Update()
     {
@@ -61,14 +63,10 @@ public class BaseTowerController : MonoBehaviour
         {
             targetCollider = other;
             shootRoutine = StartCoroutine(Shoot(other.transform));
-
-            // STOP shooting at enemy that are DEAD
-            if (targetCollider.GetComponent<EnemyBehavior>().isDead)
-            {
-                //Debug.Log("Enemy Dead!");
-                StopShooting();
-            }
+            // Stop shooting at enemy that are DEAD?
+            // already handled in TowerProjectile            
         }
+
     }
 
     protected virtual void StopShooting()
@@ -77,5 +75,11 @@ public class BaseTowerController : MonoBehaviour
         isShooting = false;
         targetCollider = null;
         shootRoutine = null;
+    }
+    // Draw gizmos for the tower's trigger sphere
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, tls.baseFiringRange);
     }
 }

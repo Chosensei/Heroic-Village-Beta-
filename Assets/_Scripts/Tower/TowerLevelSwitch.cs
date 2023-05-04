@@ -10,7 +10,7 @@ public class TowerLevelSwitch : MonoBehaviour
     [Header("General")]
     public float baseDamage = 10f;
     public float baseFireRate = 5f;
-    public float baseFiringRange = 100f;
+    public float baseFiringRange = 50f;
     public int baseSellingPrice = 0;
     public int baseUpgradePrice = 0; 
     [Header("Catapult")]
@@ -86,11 +86,6 @@ public class TowerLevelSwitch : MonoBehaviour
         DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount, 
             baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount, 
             upgradedFiringRangeAmount, upgradedAoeRangeAmount, upgradedAoeBlastForceAmount, upgradedEffectDurationAmount, upgradedDOTAmount);
-        //if (ArcherTower)
-        //{
-        //    print("current tower level: " + currentTowerLevel + "\n");
-        //    DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseDamage, baseFireRate, baseFiringRange, baseDamage + towerData.upgrades[currentTowerLevel - 1].damageBoost, baseFireRate - towerData.upgrades[currentTowerLevel - 1].fireRateBoost, baseFiringRange + towerData.upgrades[currentTowerLevel - 1].firingRangeBoost);
-        //}
 
     }
     public void UpgradeTestMessage()

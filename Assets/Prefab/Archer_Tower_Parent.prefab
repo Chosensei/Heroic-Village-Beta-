@@ -3897,16 +3897,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerData: {fileID: 11400000, guid: ff5cfd92da7012849be459f3ad768e6e, type: 2}
-  baseDamage: 10
+  baseDamage: 100
   baseFireRate: 5
-  baseFiringRange: 100
+  baseFiringRange: 50
   baseSellingPrice: 5
   baseUpgradePrice: 0
   baseAoeRadius: 0
   baseAoeBlastForce: 0
+  baseAnimationSpeed: 0
+  baseEffectDuration: 0
   baseDot: 0
   baseSlowMvt: 0
-  baseStunDuration: 0
+  baseStun: 0
+  stunCircleZone: {fileID: 0}
   baseIncome: 0
   towerLevelUpPrefabs:
   - {fileID: 1888282643259648955}
@@ -4994,6 +4997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 3723325365943407189, guid: 10f6d52bc4e5e9745bfbb1d6c2be0cef, type: 3}
   shootingPoint: {fileID: 8621373162431869895}
+  targets: []
   bulletSpeed: 30
 --- !u!1001 &7955881650595785451
 PrefabInstance:
@@ -5169,6 +5173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 3723325365943407189, guid: 10f6d52bc4e5e9745bfbb1d6c2be0cef, type: 3}
   shootingPoint: {fileID: 5753053855722676270}
+  targets: []
   bulletSpeed: 30
 --- !u!1001 &7955881651682799725
 PrefabInstance:
@@ -5273,6 +5278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 3723325365943407189, guid: 10f6d52bc4e5e9745bfbb1d6c2be0cef, type: 3}
   shootingPoint: {fileID: 4379932347997181917}
+  targets: []
   bulletSpeed: 30
 --- !u!1001 &7955881652119854875
 PrefabInstance:
@@ -5377,4 +5383,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 3723325365943407189, guid: 10f6d52bc4e5e9745bfbb1d6c2be0cef, type: 3}
   shootingPoint: {fileID: 6586234868751202793}
+  targets: []
   bulletSpeed: 30

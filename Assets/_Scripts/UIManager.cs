@@ -52,7 +52,12 @@ public class UIManager : Singleton<UIManager>
     [Header("Base Wall UI")]
     public GameObject[] WallUIObjects;
     [SerializeField] private Image[] wallHP;
-    
+
+    [Header("Repair Mini Wall UI")]
+    public Image firstWall;
+    public Image secondWall;
+    public Image lastWall;
+
     [Header("Debug")]
     public GameObject currentSelectedBuilding = null;
     [Space]
@@ -85,6 +90,7 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text UpgradedStatValue3;
     public TMP_Text UpgradedStatValue4;
     public TMP_Text UpgradeCostValue;
+
 
     void Start()
     {

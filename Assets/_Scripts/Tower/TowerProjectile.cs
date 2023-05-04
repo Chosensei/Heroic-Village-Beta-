@@ -72,6 +72,12 @@ public class TowerProjectile : MonoBehaviour
                     //DealAOEDamage(tls.baseAoeRadius);
                 }
             }
+            // check if the target is dead and destroy the projectile if it is
+            //if (target.TryGetComponent(out EnemyBehavior enemy) && enemy.isDead)
+            //{
+            //    Destroy(gameObject);
+            //    return;
+            //}
         }
              
     }

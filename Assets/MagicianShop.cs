@@ -65,10 +65,10 @@ public class MagicianShop : MonoBehaviour
     }
     private void SetupSelectionButtons()
     {
-        magicBuffButton.onClick.AddListener(() =>
-        { 
+        //magicBuffButton.onClick.AddListener(() =>
+        //{ 
 
-        });
+        //});
 
         FireT1Button.onClick.AddListener(() =>
         {

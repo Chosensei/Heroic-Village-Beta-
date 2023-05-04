@@ -28,12 +28,45 @@ public class GMDebug : Singleton<GMDebug>
     // Dirty 
     public GameObject[] enemyPrefabs;
     public GameObject[] spawnPoints; 
-    public List<Enemy> enemiesPrefabs = new List<Enemy>();
-    public List<Enemy> enemiesToSpawn = new List<Enemy>();
-    // currWave = current wave, waveValue = enemiesRemaining
 
+    //Added function to calculate income from village houses
+    public void CalculateVillageHouseIncome()
+    {
+        GameObject[] villageHouses = GameObject.FindGameObjectsWithTag("VillageHouse");
+        villageHouses = GameObject.FindGameObjectsWithTag("VillageHouse");
 
+        if (villageHouses == null) return;
+        else
+        {
+            foreach (GameObject villageHouse in villageHouses)
+            {
+                var vh = villageHouse.GetComponent<TowerLevelSwitch>();
+                MoneyInBank += vh.baseIncome;
+                UIManager.Instance.moneyText.text = MoneyInBank.ToString();
+            }
+        }
 
+    }
+
+    /* BUTTON REFERENCE METHODS */
+    public void StartBattle()
+    {
+        Debug.Log("Battle Started!");
+        battleStarted = true;
+
+        // set current wave to 1
+        currentWave = 1;
+        // update UI to reflect current wave 
+        UIManager.Instance.CurrentWaveValue.text = currentWave.ToString();
+        // set numbers defeated to zero
+        enemiesDefeated = 0;
+        // enemies remaining to enemies per wave minus enemies defeated 
+        enemiesRemaining = enemiesPerWave - enemiesDefeated;
+        UIManager.Instance.EnemyRemainingValue.text = enemiesRemaining.ToString();
+
+        // WORKS! - TEST TO TRY SPAWNING STRAIGHTAWAY 
+        StartCoroutine(SpawnWave());
+    }
     public void ReturnToTown()
     {
         // Transport player back to town 
@@ -43,7 +76,7 @@ public class GMDebug : Singleton<GMDebug>
         UIManager.Instance.WinDayMenu.SetActive(false);
 
     }
-
+    /* AFTER SAVING */
     public void StartRest()
     {
         if (Input.GetKeyDown(KeyCode.M))
@@ -61,17 +94,14 @@ public class GMDebug : Singleton<GMDebug>
     void Update()
     {
         // For Debug purposes 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            StartBattle(); 
-        }
         if (Input.GetKeyDown(KeyCode.N))
         {
             MinusEnemiesCount();
         }
 
 
-        if (!isInTown && battleStarted)
+        //if (!isInTown && battleStarted)
+        if (battleStarted)
         {
             startSpawn = true; 
             // enemies remaining to enemies per wave minus enemies defeated 
@@ -81,20 +111,16 @@ public class GMDebug : Singleton<GMDebug>
             currentWaveCount = currentWave;
             UIManager.Instance.CurrentWaveValue.text = currentWaveCount.ToString();
 
-            // test
-       
-            // spawn first set of enemies
-            //StartCoroutine(SpawnWave());
             // check for if final wave is cleared & all enemies in world are dead
-            if (currentWave > maxWaves)
+            if (currentWave == maxWaves)
             {
                 EndBattle();
             }
         }
         else 
         {
-            StartRest();
             startSpawn = false;
+            //StartRest();
         }
         StartNextWave();
 
@@ -124,23 +150,11 @@ public class GMDebug : Singleton<GMDebug>
         if (currentDay > 7 && currentDay <= 11) { maxWaves = 7; enemiesPerWave = 5; }
         if (currentDay > 11 && currentDay <= 16) { maxWaves = 8; enemiesPerWave = 6; }
 
-        StartBattle(); 
+        // We want the player to leave the town first
+        // then a button called "Start Battle" will appear to begin the fight
+        //StartBattle(); 
     }
-    public void StartBattle()
-    {
-        Debug.Log("Battle Started!");
-        //battleStarted = true; 
-        // set current wave to 1
-        currentWave = 1;
-        // update UI to reflect current wave 
-        UIManager.Instance.CurrentWaveValue.text = currentWave.ToString();
-        // set numbers defeated to zero
-        enemiesDefeated = 0;
-        // enemies remaining to enemies per wave minus enemies defeated 
-        enemiesRemaining = enemiesPerWave - enemiesDefeated;
-        UIManager.Instance.EnemyRemainingValue.text = enemiesRemaining.ToString();
 
-    }
     public void EndBattle()
     {
         battleStarted = false;
@@ -149,33 +163,44 @@ public class GMDebug : Singleton<GMDebug>
         UIManager.Instance.CurrentWaveValue.text = "-";
         UIManager.Instance.EnemyRemainingValue.text = "-";
 
-        if (!isInTown)
-            // Activate Win menu
-            UIManager.Instance.WinDayMenu.SetActive(true);
+        // ignore this for now
+        //if (!isInTown)
+        //{
+
+        //}
+        // Activate Win menu
+        UIManager.Instance.WinDayMenu.SetActive(true);
+        // Add all income from village houses into bank 
+        CalculateVillageHouseIncome();
 
         if (firstDay) { firstDay = false; }
     }
 
     public void StartNextWave()
     {
-        // check if the player has defeated all the enemies in the current wave
-        if (enemiesDefeated == enemiesPerWave)
+        // TESTING
+        if (startSpawn)
         {
-            Debug.Log($"Wave {currentWave} started!"); 
-            // Increment current wave
-            currentWave++;
-            // reset numbers of enemies defeated to zero
-            enemiesDefeated = 0;
-            // Reset enemies remaining 
-            enemiesRemaining = enemiesPerWave - enemiesDefeated;
+            // check if the player has defeated all the enemies in the current wave
+            if (enemiesDefeated == enemiesPerWave)
+            {
+                Debug.Log($"Wave {currentWave} started!");
+                // Increment current wave
+                currentWave++;
+                // reset numbers of enemies defeated to zero
+                enemiesDefeated = 0;
+                // Reset enemies remaining 
+                enemiesRemaining = enemiesPerWave - enemiesDefeated;
+                
+                // Spawn enemies for next wave
+                StartCoroutine(SpawnWave());
 
-            // Spawn enemies for next wave
-            StartCoroutine(SpawnWave());
-
-            // update UI to reflect current wave and enemies remaining
-            UIManager.Instance.CurrentWaveValue.text = currentWave.ToString();
-            UIManager.Instance.EnemyRemainingValue.text = enemiesRemaining.ToString();
+                // update UI to reflect current wave and enemies remaining
+                UIManager.Instance.CurrentWaveValue.text = currentWave.ToString();
+                UIManager.Instance.EnemyRemainingValue.text = enemiesRemaining.ToString();
+            }
         }
+        
     }
     IEnumerator SpawnWave()
     {
@@ -187,30 +212,7 @@ public class GMDebug : Singleton<GMDebug>
             yield return new WaitForSeconds(Random.Range(spawnIntervalLower, spawnIntervalUpper));
         }
     }
-    private void GenerateEnemies()
-    {
-        // Create a temporary list of enemies to generate
-        // in a loop to grab random enemy
-        // check if can afford it, if so add it to our list & deduct the cost
-        List<GameObject> generatedEnemies = new List<GameObject>(); 
 
-        if (enemiesRemaining > 0)
-        {
-            int randEnemyId = Random.Range(0, enemiesPrefabs.Count);
-            int randEnemyCost = enemiesPrefabs[randEnemyId].cost;
-
-            if (enemiesRemaining - randEnemyCost >= 0)
-            {
-                generatedEnemies.Add(enemiesPrefabs[randEnemyId].enemyPrefab);
-                enemiesRemaining -= randEnemyCost;
-            }
-            else if (enemiesRemaining <= 0)
-            {
- 
-            }
-            enemiesToSpawn.Clear();
-        }
-    }
     private void SpawnEnemy()
     {
         // create a list to hold the allowed enemies and their probabilities
@@ -261,6 +263,38 @@ public class GMDebug : Singleton<GMDebug>
         // spawn the random enemy from a random spawn point with the random offset
         Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity);
     }
+   
+    // Call this on enemies that are dead
+    public void MinusEnemiesCount()
+    {
+        enemiesDefeated++;
+        enemiesRemaining = enemiesPerWave - enemiesDefeated;
+        UIManager.Instance.EnemyRemainingValue.text = enemiesRemaining.ToString();
+    }
+
+    public void CheckWin()
+    {
+        if (currentDay > maxDays)
+        {
+            Debug.Log("You win!");
+        }
+    }
+    public void CheckLose()
+    {
+        // If the last wall is destroyed
+        // Then Game Over
+    }
+
+
+
+    [System.Serializable]
+    public class Enemy
+    {
+        public GameObject enemyPrefab;
+        public int cost;
+    }
+    
+    // Object pooling way
     //private void SpawnEnemy()
     //{
     //    List<GameObject> allowedEnemies = new List<GameObject>();
@@ -296,24 +330,29 @@ public class GMDebug : Singleton<GMDebug>
     //    // spawn a random enemy from a random spawn point
     //    Instantiate(allowedEnemies[randomMonsterIndex], spawnPosition, Quaternion.identity);
     //}
-    public void MinusEnemiesCount()
-    {
-        enemiesDefeated++;
-        enemiesRemaining = enemiesPerWave - enemiesDefeated;
-        UIManager.Instance.EnemyRemainingValue.text = enemiesRemaining.ToString();
-    }
-    public void CheckWin()
-    {
-        if (currentDay > maxDays)
-        {
-            Debug.Log("You win!");
-        }
-    }
 
-    [System.Serializable]
-    public class Enemy
-    {
-        public GameObject enemyPrefab;
-        public int cost;
-    }
+    //private void GenerateEnemies()
+    //{
+    //    // Create a temporary list of enemies to generate
+    //    // in a loop to grab random enemy
+    //    // check if can afford it, if so add it to our list & deduct the cost
+    //    List<GameObject> generatedEnemies = new List<GameObject>();
+
+    //    if (enemiesRemaining > 0)
+    //    {
+    //        int randEnemyId = Random.Range(0, enemiesPrefabs.Count);
+    //        int randEnemyCost = enemiesPrefabs[randEnemyId].cost;
+
+    //        if (enemiesRemaining - randEnemyCost >= 0)
+    //        {
+    //            generatedEnemies.Add(enemiesPrefabs[randEnemyId].enemyPrefab);
+    //            enemiesRemaining -= randEnemyCost;
+    //        }
+    //        else if (enemiesRemaining <= 0)
+    //        {
+
+    //        }
+    //        enemiesToSpawn.Clear();
+    //    }
+    //}
 }

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8344672471339100220}
   - component: {fileID: 6064884352577510646}
   - component: {fileID: 2420509868137222181}
-  - component: {fileID: 2821860923564771931}
   m_Layer: 8
   m_Name: Wood_Wall
   m_TagString: Untagged
@@ -98,19 +97,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.986269, y: 7.103062, z: 14.180271}
   m_Center: {x: -0.00000038743025, y: 0.00003015995, z: 7.235894}
---- !u!114 &2821860923564771931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5704425063833058595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b50a9832d811cc64197a5834ee02d44a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentWallHP: 0
-  maxWallHP: 100
-  wallIndex: 2
-  timeInvincible: 2

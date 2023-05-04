@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2936267902456285653}
   m_Layer: 0
   m_Name: Village_House_Parent
-  m_TagString: Untagged
+  m_TagString: VillageHouse
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,9 +55,12 @@ MonoBehaviour:
   baseUpgradePrice: 0
   baseAoeRadius: 0
   baseAoeBlastForce: 0
+  baseAnimationSpeed: 0
+  baseEffectDuration: 0
   baseDot: 0
   baseSlowMvt: 0
-  baseStunDuration: 0
+  baseStun: 0
+  stunCircleZone: {fileID: 0}
   baseIncome: 100
   towerLevelUpPrefabs:
   - {fileID: 1059608602668929886}

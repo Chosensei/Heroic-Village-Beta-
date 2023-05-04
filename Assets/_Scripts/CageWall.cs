@@ -9,8 +9,7 @@ public class CageWall : MonoBehaviour
     [SerializeField] private float currentWallHP;
     [SerializeField] private float maxWallHP;
     [SerializeField] private int wallIndex;
-
-    private EnemyTarget enemyTarget;
+    
     public bool isUnderAtk { get; set; } = false;
     public bool isDestroyed { get; set; } = false;
 
@@ -18,11 +17,12 @@ public class CageWall : MonoBehaviour
     bool isInvincible;
     float invisibleTimer;
 
+    // Coroutine to handle showing and hiding the wall HP UI
+    Coroutine hpCoroutine;
+
     void Start()
     {
         currentWallHP = maxWallHP;
-        //enemyTarget = GetComponent<EnemyTarget>();
-        //this.wallIndex = enemyTarget.wallTargetIndex;
     }
 
     void Update()
@@ -35,8 +35,6 @@ public class CageWall : MonoBehaviour
             if (invisibleTimer < 0)
                 isInvincible = false;
         }
-        // decrement wall index     
-        wallIndex--;
     }
     public bool IsDead()
     {
@@ -49,6 +47,16 @@ public class CageWall : MonoBehaviour
             isInvincible = true;
             invisibleTimer = timeInvincible; // reset timer for invulnerability
             currentWallHP -= amount;
+            // show the HP bar for the wall currently being attacked
+            if (hpCoroutine == null)
+            {
+                hpCoroutine = StartCoroutine(ShowWallHP(index));
+            }
+            else
+            {
+                StopCoroutine(hpCoroutine);
+                hpCoroutine = StartCoroutine(ShowWallHP(index));
+            }
             UIManager.Instance.UpdateWallHP(index, currentWallHP, maxWallHP);
             isUnderAtk = false;
         }
@@ -61,4 +69,14 @@ public class CageWall : MonoBehaviour
         }
 
     }
+    IEnumerator ShowWallHP(int index)
+    {
+        UIManager.Instance.WallUIObjects[index].SetActive(true);
+
+        yield return new WaitForSeconds(5f);
+
+        UIManager.Instance.WallUIObjects[index].SetActive(false);
+        hpCoroutine = null;
+    }
+
 }

@@ -33,7 +33,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     // Wall
     public GameObject[] CageWall;
     public int wallIndex;
-
+    CageWall wallComponent;
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -56,7 +56,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
             CageWall[i] = GameObject.FindWithTag("Wall " + i);
         }
         // Set the current wall index variable to the number of wall objects that could be found
-        wallIndex = CageWall.Length - 1;
+        wallIndex = numWalls - CageWall.Length;
     }
 
     void Update()
@@ -132,22 +132,19 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
             {
                 targetDamagable.TakeDamage(this.gameObject, CalculateDmg());
             }
-            else if (currentTarget.TryGetComponent(out CageWall cw))
+            // CageWall cw = GetComponentInParent<CageWall>();
+            if (CageWall[wallIndex].TryGetComponent(out wallComponent))
             {
+                // wallComponent now contains a reference to the CageWall component on the "Wall 0" object
+                wallComponent.TakeDamage(CalculateDmg(), wallIndex);
+                wallComponent.isUnderAtk = true;
 
-                cw.TakeDamage(CalculateDmg(), wallIndex);
-                cw.isUnderAtk = true;
-
-                // Find the index of the destroyed wall in the CageWall array
-                int index = Array.IndexOf(CageWall, cw.gameObject);
-                Debug.Log(index);
-                if (cw.isDestroyed)
+                if (wallComponent.isDestroyed)
                 {
-                    // Disable the wall layer 
-                    CageWall[wallIndex].SetActive(false);
+                    wallComponent.gameObject.SetActive(false);
                     // Disable destroyed wall HP UI 
                     UIManager.Instance.WallUIObjects[wallIndex].SetActive(false);
-
+                    wallIndex++; 
                 }
             }
         }
@@ -226,11 +223,13 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     public void Die()
     {
         isDead = true;
-        animator.SetTrigger("death");
+        animator.SetTrigger("death"); 
         agent.ResetPath();
         //AudioSource.PlayClipAtPoint(deathSound, transform.position);
         agent.isStopped = true;
         Destroy(gameObject, deathDuration);
+        // Deduct enemy count in UI
+        GMDebug.Instance.MinusEnemiesCount();
     }
     private IEnumerator DamageOverTime(float duration, float damagePerTick)
     {
@@ -336,28 +335,6 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         agent.isStopped = false;
         //animator.ResetTrigger("attack");
     }
-    private void FindNewTargetWithList()
-    {
-        // Clear previous targets list
-        targetsInRange.Clear();
-
-        // Find all targets within range and add them to the list
-        Collider[] colliders = Physics.OverlapSphere(transform.position, searchRadius, targetLayer);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Target"))
-            {
-                targetsInRange.Add(collider.gameObject);
-            }
-        }
-    }
-    // Draw the search radius in editor
-    //void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(transform.position, searchRadius);
-    //}
-
     // IceSlow
     //remainingSlowTime += slowTime;
     //if (slowed == null)

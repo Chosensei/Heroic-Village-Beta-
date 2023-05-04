@@ -13,7 +13,7 @@ public class WeaponSmithShop : MonoBehaviour
     [SerializeField] private TMP_Text upgradeDamagePercentAmt;
 
     [SerializeField] private Button buyButton;
-
+    [SerializeField] private NPC npc; 
     private int currentUpgradeLevel = 1;
     private int currentUpgradePrice;
     private int currentUpgradePower = 0;
@@ -59,6 +59,10 @@ public class WeaponSmithShop : MonoBehaviour
                 UpdateCurrentUpgradePowerPercentage();
                 UpdateLevelText();
                 UpdatePowerText();
+
+                npc.GetComponent<Animator>().SetTrigger("AfterBuying");
+                npc.GetComponent<Animator>().SetTrigger("Idle");
+                DialogueManager.Instance.ShowThankYouMessage(); 
             }
         }
     }
