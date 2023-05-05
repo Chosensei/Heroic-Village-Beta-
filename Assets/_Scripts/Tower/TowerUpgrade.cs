@@ -22,7 +22,6 @@ public class TowerUpgrade : ScriptableObject
         [Header("Others")]
         public int saleAmount;
         public int upgradeAmount;
-        public int wallHPBuffAmount; 
     }
 
     public Upgrade[] upgrades;

@@ -29275,6 +29275,7 @@ MonoBehaviour:
   projectileSpeed: 10
   explosionRadius: 25
   cannonForce: 1000
+  currentTarget: {fileID: 0}
 --- !u!54 &288764386748204059
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29299,7 +29300,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344413608760314677}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

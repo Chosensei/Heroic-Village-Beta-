@@ -697,7 +697,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3392736880424463964}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &4416394526554463170
 SkinnedMeshRenderer:
@@ -947,7 +947,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3392736880424463964
 Transform:
   m_ObjectHideFlags: 0
@@ -959,8 +959,8 @@ Transform:
   m_LocalPosition: {x: -177.49095, y: -3.9003482, z: -67.59875}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
-  - {fileID: 7153192831541006024}
   - {fileID: 5860630174360874399}
+  - {fileID: 7153192831541006024}
   - {fileID: 1826758309}
   - {fileID: 3813660741873698415}
   m_Father: {fileID: 0}
@@ -1027,6 +1027,9 @@ MonoBehaviour:
   deathDuration: 5
   enemyData: {fileID: 11400000, guid: f6ae554473d01c44e89e68a64942860a, type: 2}
   HealthBar: {fileID: 3813660741873698408}
+  isDead: 0
+  CageWall: []
+  wallIndex: 0
 --- !u!54 &6524471835872835554
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1118,7 +1121,7 @@ Transform:
   - {fileID: 6467361640260893175}
   - {fileID: 7434817552663264603}
   m_Father: {fileID: 3392736880424463964}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2936136245387298638
 GameObject:

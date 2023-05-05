@@ -100,6 +100,9 @@ MonoBehaviour:
   deathDuration: 5
   enemyData: {fileID: 11400000, guid: 1c6a1a86ad155264ca8b30eb7040f9b3, type: 2}
   HealthBar: {fileID: 3813660742398507463}
+  isDead: 0
+  CageWall: []
+  wallIndex: 0
 --- !u!54 &8400524043749286294
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class TowerLevelSwitch : MonoBehaviour
     public float baseFireRate = 5f;
     public float baseFiringRange = 50f;
     public int baseSellingPrice = 0;
-    public int baseUpgradePrice = 0; 
+    public int baseUpgradePrice = 0;
     [Header("Catapult")]
     public float baseAoeRadius = 5;
     public float baseAoeBlastForce;
@@ -49,7 +49,8 @@ public class TowerLevelSwitch : MonoBehaviour
     private float upgradedAoeRangeAmount;
     private float upgradedAoeBlastForceAmount;
     private float upgradedEffectDurationAmount;
-    private float upgradedDOTAmount; 
+    private float upgradedDOTAmount;
+    
 
     private void Start()
     {
@@ -177,9 +178,9 @@ public class TowerLevelSwitch : MonoBehaviour
 
         int resellValue = towerData.upgrades[currentLevel - 1].saleAmount;
         int upgradeValue = towerData.upgrades[currentLevel - 1].upgradeAmount;
+
         baseSellingPrice = resellValue;
         baseUpgradePrice = upgradeValue;
-
         // FOR CATAPULT ONLY
         baseAnimationSpeed = catapultAnimBoost; 
 
@@ -218,11 +219,11 @@ public class TowerLevelSwitch : MonoBehaviour
             UIManager.Instance.BuildingName1.text = "VILLAGE HOUSE";
             UIManager.Instance.BuildingName2.text = "VILLAGE HOUSE";
             UIManager.Instance.StatText1.text = "INCOME:";
-            UIManager.Instance.StatText2.text = "";
+            UIManager.Instance.StatText2.text = "HEALTH";
             UIManager.Instance.StatText3.text = "";
             UIManager.Instance.StatText4.text = "";
             UIManager.Instance.UpgradedStatText1.text = "INCOME:";
-            UIManager.Instance.UpgradedStatText2.text = "";
+            UIManager.Instance.UpgradedStatText2.text = "HEALTH";
             UIManager.Instance.UpgradedStatText3.text = "";
             UIManager.Instance.UpgradedStatText4.text = "";
 
@@ -312,11 +313,11 @@ public class TowerLevelSwitch : MonoBehaviour
             if (fireType) { UIManager.Instance.StatValue3.text = "DEALS BURNING"; 
                 UIManager.Instance.UpgradedStatValue3.text = "DEALS BURNING"; 
             }
-            if (lightningType) { UIManager.Instance.StatValue3.text = "SLOWS ENEMIES";
+            if (iceType) { UIManager.Instance.StatValue3.text = "SLOWS ENEMIES";
                 UIManager.Instance.StatValue3.text = "SLOWS ENEMIES";
             }
-            if (iceType) { UIManager.Instance.StatValue3.text = "STUNS AND DAMAGE ENEMIES IN ZONE";
-                UIManager.Instance.StatValue3.text = "STUNS AND DAMAGE ENEMIES IN ZONE";
+            if (lightningType) { UIManager.Instance.StatValue3.text = "STUNS ENEMIES";
+                UIManager.Instance.StatValue3.text = "STUNS ENEMIES";
             }
             UIManager.Instance.UpgradedStatValue1.text = upgradedFxDuration.ToString();
             UIManager.Instance.UpgradedStatValue2.text = upgradedDot.ToString();

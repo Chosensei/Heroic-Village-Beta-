@@ -135,7 +135,7 @@ public class TowerProjectile : MonoBehaviour
         float distance = Vector3.Distance(transform.position, target.transform.position);
 
         // Calculate initial velocity and angle for cannonball
-        float projectileAngle = 45f; 
+        float projectileAngle = 45f;
 
         Vector3 projectileVelocity = Quaternion.AngleAxis(projectileAngle, transform.right) * transform.up * projectileSpeed;
         transform.rotation = Quaternion.LookRotation(direction);
@@ -159,6 +159,8 @@ public class TowerProjectile : MonoBehaviour
             rb.AddForce(Vector3.down * gravity , ForceMode.Acceleration);
         }
     }
+
+
     //protected virtual void OnTriggerEnter(Collider other)
     //{
     //    if (other.tag == "Enemy")
@@ -224,11 +226,11 @@ public class TowerProjectile : MonoBehaviour
                 if (projectileType == ProjectileType.Iceball)
                 {
                     Debug.Log("Ice hit!");
-                    hit.GetComponent<EnemyBehavior>().IceSlow(effectDuration); 
+                    hit.GetComponent<EnemyBehavior>().IceSlow(effectDuration);
                 }
                 if (projectileType == ProjectileType.Thunderball)
                 {
-                    //hit.GetComponent<EnemyBehavior>().ThunderStun(tls.baseEffectDuration, tls.baseDot, tls.stunCircleZone);
+                    hit.GetComponent<EnemyBehavior>().ThunderStun(effectDuration, damageOT);
                 }
             }
         }

@@ -9,8 +9,8 @@ public class ApplyVillageContraints : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Add restrictions
-            GMDebug.Instance.battleStarted = false;
-            GMDebug.Instance.isInTown = true;
+            //GMDebug.Instance.battleStarted = false;
+            //GMDebug.Instance.hasLeftTown = true;
             //GameManager.Instance.hasReturnedToVillage = true;
             //GameManager.Instance.hasLeftVillage = false;
         }
@@ -20,8 +20,8 @@ public class ApplyVillageContraints : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Add restrictions
-            GMDebug.Instance.battleStarted = true;
-            GMDebug.Instance.isInTown = false;
+            //GMDebug.Instance.battleStarted = true;
+            //GMDebug.Instance.hasLeftTown = false;
 
             //GameManager.Instance.hasReturnedToVillage = false;
         }

@@ -35,9 +35,12 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text CurrentDayValue;
     public TMP_Text CurrentWaveValue;
     public TMP_Text EnemyRemainingValue;
+    public TMP_Text MoneyEarnedValue;
+    public TMP_Text TotalKillsValue;
+    public GameObject BattleMenu; 
     public GameObject WinDayMenu;
     public GameObject LoseDayMenu;
-
+    public GameObject StartBattleButton; 
     [Header("Shop Menu UI")]
     public GameObject WeaponShopMenu;
     public GameObject MagicShopMenu;
@@ -47,16 +50,9 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Image healthbar;
     [SerializeField] private Image manabar;
 
-
-
     [Header("Base Wall UI")]
     public GameObject[] WallUIObjects;
     [SerializeField] private Image[] wallHP;
-
-    [Header("Repair Mini Wall UI")]
-    public Image firstWall;
-    public Image secondWall;
-    public Image lastWall;
 
     [Header("Debug")]
     public GameObject currentSelectedBuilding = null;
@@ -90,7 +86,6 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text UpgradedStatValue3;
     public TMP_Text UpgradedStatValue4;
     public TMP_Text UpgradeCostValue;
-
 
     void Start()
     {
@@ -226,6 +221,8 @@ public class UIManager : Singleton<UIManager>
             currentSelectedBuilding = null;
             tpc.TowerRemoved(); 
             UpgradeTowerUIMenu.SetActive(false);
+            if (tls.WizardTower)
+                SwitchElementUIMenu.SetActive(false);
             //print("Sold tower!");
         });
         switchElementButtons[0].onClick.AddListener(() =>

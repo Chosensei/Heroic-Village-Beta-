@@ -19,11 +19,12 @@ MonoBehaviour:
     aoeRangeBoost: 0
     aoeBlastBoost: 0
     animSpeedBoost: 0
-    effectDurationBoost: 0.1
-    dotBoost: 0.25
+    effectDurationBoost: 0
+    dotBoost: 0
     incomeBoost: 0
     saleAmount: 250
     upgradeAmount: 500
+    wallHPBuffAmount: 0
   - damageBoost: 0
     fireRateBoost: 0
     firingRangeBoost: 0
@@ -35,6 +36,7 @@ MonoBehaviour:
     incomeBoost: 0
     saleAmount: 350
     upgradeAmount: 700
+    wallHPBuffAmount: 0
   - damageBoost: 0
     fireRateBoost: 0
     firingRangeBoost: 0
@@ -46,6 +48,7 @@ MonoBehaviour:
     incomeBoost: 0
     saleAmount: 450
     upgradeAmount: 900
+    wallHPBuffAmount: 0
   - damageBoost: 0
     fireRateBoost: 0
     firingRangeBoost: 0
@@ -57,6 +60,7 @@ MonoBehaviour:
     incomeBoost: 0
     saleAmount: 600
     upgradeAmount: 1200
+    wallHPBuffAmount: 0
   - damageBoost: 0
     fireRateBoost: 0
     firingRangeBoost: 0
@@ -67,4 +71,5 @@ MonoBehaviour:
     dotBoost: 0.65
     incomeBoost: 0
     saleAmount: 750
-    upgradeAmount: 1500
+    upgradeAmount: 0
+    wallHPBuffAmount: 0

@@ -1,3 +1,4 @@
+using RPG.Attributes;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ public class GMDebug : Singleton<GMDebug>
     private GameObject player;
     public Transform playerTownSpawnPoint;  // player spawn position in town
     public bool battleStarted = false;
-    public bool isInTown = false;
+    public bool hasLeftTown = false;    // Used to enable battle button
     public bool firstDay = false;
     public bool startSpawn = false; 
     public int currentWave = 0; // Current wave the player is fighting
@@ -27,8 +28,8 @@ public class GMDebug : Singleton<GMDebug>
 
     // Dirty 
     public GameObject[] enemyPrefabs;
-    public GameObject[] spawnPoints; 
-
+    public GameObject[] spawnPoints;
+    public CageWall lastWall; 
     //Added function to calculate income from village houses
     public void CalculateVillageHouseIncome()
     {
@@ -53,7 +54,8 @@ public class GMDebug : Singleton<GMDebug>
     {
         Debug.Log("Battle Started!");
         battleStarted = true;
-
+        // Enable Battle info
+        UIManager.Instance.BattleMenu.SetActive(true); 
         // set current wave to 1
         currentWave = 1;
         // update UI to reflect current wave 
@@ -63,7 +65,6 @@ public class GMDebug : Singleton<GMDebug>
         // enemies remaining to enemies per wave minus enemies defeated 
         enemiesRemaining = enemiesPerWave - enemiesDefeated;
         UIManager.Instance.EnemyRemainingValue.text = enemiesRemaining.ToString();
-
         // WORKS! - TEST TO TRY SPAWNING STRAIGHTAWAY 
         StartCoroutine(SpawnWave());
     }
@@ -71,6 +72,7 @@ public class GMDebug : Singleton<GMDebug>
     {
         // Transport player back to town 
         player.transform.position = playerTownSpawnPoint.position;
+        hasLeftTown = false; 
         Debug.Log("Resting Started!");
         // Deactivate Win menu
         UIManager.Instance.WinDayMenu.SetActive(false);
@@ -89,16 +91,21 @@ public class GMDebug : Singleton<GMDebug>
     {
         InitializeDayOne();
         player = GameObject.FindWithTag("Player");
+        lastWall = GetComponent<CageWall>(); 
+        UIManager.Instance.StartBattleButton.SetActive(false);
+        UIManager.Instance.BattleMenu.SetActive(false);
     }
 
     void Update()
     {
-        // For Debug purposes 
-        if (Input.GetKeyDown(KeyCode.N))
+        if (hasLeftTown && !battleStarted)
         {
-            MinusEnemiesCount();
+            UIManager.Instance.StartBattleButton.SetActive(true); 
         }
-
+        else
+        {
+            UIManager.Instance.StartBattleButton.SetActive(false);
+        }
 
         //if (!isInTown && battleStarted)
         if (battleStarted)
@@ -112,7 +119,7 @@ public class GMDebug : Singleton<GMDebug>
             UIManager.Instance.CurrentWaveValue.text = currentWaveCount.ToString();
 
             // check for if final wave is cleared & all enemies in world are dead
-            if (currentWave == maxWaves)
+            if (currentWave > maxWaves)
             {
                 EndBattle();
             }
@@ -124,7 +131,7 @@ public class GMDebug : Singleton<GMDebug>
         }
         StartNextWave();
 
-        CheckWin(); 
+        CheckWinLoseCondition(); 
     }
     void InitializeDayOne()
     {
@@ -161,25 +168,25 @@ public class GMDebug : Singleton<GMDebug>
         battleStarted = false;
         // How do we know the battle is over? 
         Debug.Log("Battle Ended!");
+        // Disable Battle info
+        UIManager.Instance.BattleMenu.SetActive(false);
         UIManager.Instance.CurrentWaveValue.text = "-";
         UIManager.Instance.EnemyRemainingValue.text = "-";
 
-        // ignore this for now
-        //if (!isInTown)
-        //{
-
-        //}
         // Activate Win menu
         UIManager.Instance.WinDayMenu.SetActive(true);
+
+        // Display money earned and kill score in the win menu
+
         // Add all income from village houses into bank 
         CalculateVillageHouseIncome();
 
+        // Set first day to false
         if (firstDay) { firstDay = false; }
     }
 
     public void StartNextWave()
     {
-        // TESTING
         if (startSpawn)
         {
             // check if the player has defeated all the enemies in the current wave
@@ -273,17 +280,27 @@ public class GMDebug : Singleton<GMDebug>
         UIManager.Instance.EnemyRemainingValue.text = enemiesRemaining.ToString();
     }
 
-    public void CheckWin()
+    public void CheckWinLoseCondition()
     {
+        // If player died respawn back to last save point
+        if (player.GetComponent<Health>().IsDead())
+        {
+            // TO DO 
+        }
+        // If current day exceeds the max day then Win Game 
         if (currentDay > maxDays)
         {
             Debug.Log("You win!");
         }
+        // If the last wall is destroyed then Game Over
+        if (lastWall.IsDead())
+        {
+            UIManager.Instance.LoseDayMenu.SetActive(true);
+        }
     }
     public void CheckLose()
     {
-        // If the last wall is destroyed
-        // Then Game Over
+
     }
 
 

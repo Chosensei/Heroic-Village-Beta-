@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class ExitVillage : MonoBehaviour
 {
-    [SerializeField] GameObject exitLocation;
-    [SerializeField] GameObject player;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("You are at the Exit");
-            // Transport player out of town
-            other.transform.position = exitLocation.transform.position;
-            //GameManager.Instance.hasLeftVillage = true;
-            //GameManager.Instance.isRestPhase = false; 
+            // Check if player has left town door
+            GMDebug.Instance.hasLeftTown = true; 
         }
     }
-    //if (other.CompareTag("Player"))
+
 }

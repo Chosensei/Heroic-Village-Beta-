@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 675578671}
   - component: {fileID: 675578670}
   - component: {fileID: 675578669}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -175,6 +175,9 @@ MonoBehaviour:
   deathDuration: 5
   enemyData: {fileID: 11400000, guid: 6adfda5f7d8a5ac4294712f1c8423d55, type: 2}
   HealthBar: {fileID: 3813660741736632765}
+  isDead: 0
+  CageWall: []
+  wallIndex: 0
 --- !u!54 &675578670
 Rigidbody:
   m_ObjectHideFlags: 0

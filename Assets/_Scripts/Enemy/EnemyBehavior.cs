@@ -17,7 +17,8 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     [Space]
     [Header("Enemy SO")]
     public EnemyData enemyData;
-    [SerializeField] private HealthBarController HealthBar; 
+    [SerializeField] private HealthBarController HealthBar;
+    [SerializeField] private bool isLich = false; 
     private bool targetWithinRange => Vector3.Distance(transform.position, currentTarget.transform.position) <= enemyData.atkRange;
     //public static bool isDead = false;
     public bool isDead = false;
@@ -103,21 +104,10 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
                 agent.SetDestination(currentTarget.transform.position);
             }
         }
-        //Fire Burn DOT
-        //if (remainingBurnTime > 0)
-        //{
-        //    remainingBurnTime -= Time.deltaTime;
-        //}
-        //// Ice Slow
-        //if (remainingSlowTime > 0)
-        //{
-        //    agent.speed = enemyData.moveSpeed / 2;
-        //    remainingSlowTime -= Time.deltaTime;
-        //}
-        //else
-        //{
-        //    agent.speed = enemyData.moveSpeed;
-        //}
+        if (isLich == true)
+        {
+
+        }
     }
     private IEnumerator Attack()
     {
@@ -235,18 +225,18 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     {
         float timeRemaining = duration;
         Color originalColor = renderer.material.color;  
+
         while (timeRemaining > 0)
         {
             Debug.Log("DOT trigger");
-            currentHealth -= damagePerTick;
+            currentHealth -= damagePerTick * Time.deltaTime;
             renderer.material.color = Color.red; // Change the material color to red
             //animator.SetTrigger("hit");
             if (currentHealth <= 0)
             {
-                Debug.Log("HP reduced!");
                 HealthBar.gameObject.SetActive(false);
                 Die();
-                yield break;
+                //yield break;
             }
             // Update Health Bar UI 
             HealthBar.UpdateHealthBar(currentHealth, maxHealth);
@@ -265,17 +255,21 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         agent.speed = originalSpeed; // Restore the original movement speed
         renderer.material.color = originalColor; // Restore the original material color
     }
-    private IEnumerator ApplyStunEffect(float duration, float dot, GameObject magicCirclePrefab)
+    private IEnumerator ApplyStunEffect(float duration, float dot)
     {
-        // Apply damage over Time
-        StartCoroutine(DamageOverTime(duration, dot));
-        GameObject stunMagicCircle = Instantiate(magicCirclePrefab, transform.position, Quaternion.identity);
-
+        float timeRemaining = duration;
         float originalSpeed = agent.speed; // Store the original movement speed
         Color originalColor = renderer.material.color;  // Store the original color
-        agent.speed = 0; // Halt movement speed 
-        renderer.material.color = Color.yellow; // Change the material color to blue
-        yield return new WaitForSeconds(duration); // Wait for the stun effect duration to expire
+        while (timeRemaining > 0)
+        {
+            animator.enabled = false;   // disable animations while stunned
+            agent.speed = 0; // Halt movement speed 
+            currentHealth -= dot * Time.deltaTime;
+            renderer.material.color = Color.yellow; // Change the material color to yellow
+            timeRemaining -= Time.deltaTime;
+            yield return null;
+        }
+        animator.enabled = true;    // reenable animations while stunned
         agent.speed = originalSpeed; // Restore the original movement speed
         renderer.material.color = originalColor; // Restore the original material color
     }
@@ -289,10 +283,10 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         if (isDead) return;
         StartCoroutine(ApplySlowEffect(slowTime));
     }
-    public void ThunderStun(float stunTime, float damage, GameObject spawnObj)
+    public void ThunderStun(float stunTime, float damage)
     {
         if (isDead) return;
-        StartCoroutine(ApplyStunEffect(stunTime, damage, spawnObj));
+        StartCoroutine(ApplyStunEffect(stunTime, damage));
     }
 
     private IEnumerator SlowRoutine(float time)
