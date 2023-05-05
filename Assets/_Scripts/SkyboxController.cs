@@ -13,7 +13,11 @@ public class SkyboxController : MonoBehaviour
 
     private void Start()
     {
+        // Start with daytime
         RenderSettings.skybox = daySkybox;
+        RenderSettings.ambientIntensity = dayAmbientIntensity;
+        sunLight.enabled = true;
+        LightSwitchOn(false);
     }
     private void Update()
     {

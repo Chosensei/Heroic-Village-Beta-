@@ -122,21 +122,24 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
             {
                 targetDamagable.TakeDamage(this.gameObject, CalculateDmg());
             }
-            // CageWall cw = GetComponentInParent<CageWall>();
-            if (CageWall[wallIndex].TryGetComponent(out wallComponent))
+            // Only attack the wall if the current target is a wall
+            if (currentTarget.CompareTag("Cage Wall"))
             {
-                // wallComponent now contains a reference to the CageWall component on the "Wall 0" object
-                wallComponent.TakeDamage(CalculateDmg(), wallIndex);
-                wallComponent.isUnderAtk = true;
-
-                if (wallComponent.isDestroyed)
+                if (CageWall[wallIndex].TryGetComponent(out wallComponent))
                 {
-                    wallComponent.gameObject.SetActive(false);
-                    // Disable destroyed wall HP UI 
-                    UIManager.Instance.WallUIObjects[wallIndex].SetActive(false);
-                    wallIndex++; 
+                    // wallComponent now contains a reference to the CageWall component on the "Wall 0" object
+                    wallComponent.TakeDamage(CalculateDmg(), wallIndex);
+                    wallComponent.isUnderAtk = true;
+
+                    if (wallComponent.isDestroyed)
+                    {
+                        wallComponent.gameObject.SetActive(false);
+                        // Disable destroyed wall HP UI 
+                        UIManager.Instance.WallUIObjects[wallIndex].SetActive(false);
+                        wallIndex++;
+                    }
                 }
-            }
+            }    
         }
         isAttacking = false;
         animator.ResetTrigger("attack");

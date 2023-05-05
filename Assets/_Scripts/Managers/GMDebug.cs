@@ -11,9 +11,11 @@ public class GMDebug : Singleton<GMDebug>
     private int currentDay = 0;  // current day in the game
     private int maxDays = 10;    // Max day in the game  
     private GameObject player;
+    public SkyboxController skyboxController; 
     public Transform playerTownSpawnPoint;  // player spawn position in town
     public bool battleStarted = false;
     public bool hasLeftTown = false;    // Used to enable battle button
+    public bool isBuilding = false;  // Used to change cam perspective 
     public bool firstDay = false;
     public bool startSpawn = false; 
     public int currentWave = 0; // Current wave the player is fighting
@@ -30,6 +32,7 @@ public class GMDebug : Singleton<GMDebug>
     public GameObject[] enemyPrefabs;
     public GameObject[] spawnPoints;
     public CageWall lastWall; 
+    
     //Added function to calculate income from village houses
     public void CalculateVillageHouseIncome()
     {
@@ -55,7 +58,9 @@ public class GMDebug : Singleton<GMDebug>
         Debug.Log("Battle Started!");
         battleStarted = true;
         // Enable Battle info
-        UIManager.Instance.BattleMenu.SetActive(true); 
+        UIManager.Instance.BattleMenu.SetActive(true);
+        // Enable minimap
+        UIManager.Instance.Minimap.SetActive(true);
         // set current wave to 1
         currentWave = 1;
         // update UI to reflect current wave 
@@ -76,7 +81,18 @@ public class GMDebug : Singleton<GMDebug>
         Debug.Log("Resting Started!");
         // Deactivate Win menu
         UIManager.Instance.WinDayMenu.SetActive(false);
-
+        // Deactivate minimap
+        UIManager.Instance.Minimap.SetActive(false);
+        skyboxController.ToggleSkybox();    // Start night time
+    }
+    public void EnterBuildMode()
+    {
+        isBuilding = true;
+    }
+    public void ExitBuildMode()
+    {
+        isBuilding = false;
+        // Change camera back to towncam
     }
     /* AFTER SAVING */
     public void StartRest()
@@ -90,8 +106,8 @@ public class GMDebug : Singleton<GMDebug>
     void Start()
     {
         InitializeDayOne();
-        player = GameObject.FindWithTag("Player");
-        lastWall = GetComponent<CageWall>(); 
+        player = GameObject.FindWithTag("Player"); 
+        //lastWall = GetComponent<CageWall>(); 
         UIManager.Instance.StartBattleButton.SetActive(false);
         UIManager.Instance.BattleMenu.SetActive(false);
     }
@@ -100,11 +116,13 @@ public class GMDebug : Singleton<GMDebug>
     {
         if (hasLeftTown && !battleStarted)
         {
-            UIManager.Instance.StartBattleButton.SetActive(true); 
+            UIManager.Instance.StartBattleButton.SetActive(true);
+            UIManager.Instance.BuildButton.SetActive(false);
         }
         else
         {
             UIManager.Instance.StartBattleButton.SetActive(false);
+            UIManager.Instance.BuildButton.SetActive(true); 
         }
 
         //if (!isInTown && battleStarted)
@@ -158,9 +176,7 @@ public class GMDebug : Singleton<GMDebug>
         if (currentDay > 7 && currentDay <= 11) { maxWaves = 7; enemiesPerWave = 5; }
         if (currentDay > 11 && currentDay <= 16) { maxWaves = 8; enemiesPerWave = 6; }
 
-        // We want the player to leave the town first
-        // then a button called "Start Battle" will appear to begin the fight
-        //StartBattle(); 
+        skyboxController.ToggleSkybox();    // Start a new daytime
     }
 
     public void EndBattle()
@@ -298,12 +314,6 @@ public class GMDebug : Singleton<GMDebug>
             UIManager.Instance.LoseDayMenu.SetActive(true);
         }
     }
-    public void CheckLose()
-    {
-
-    }
-
-
 
     [System.Serializable]
     public class Enemy

@@ -40,12 +40,14 @@ public class UIManager : Singleton<UIManager>
     public GameObject BattleMenu; 
     public GameObject WinDayMenu;
     public GameObject LoseDayMenu;
-    public GameObject StartBattleButton; 
+    public GameObject StartBattleButton;
+    public GameObject BuildButton; 
     [Header("Shop Menu UI")]
     public GameObject WeaponShopMenu;
     public GameObject MagicShopMenu;
 
     [Header("Player UI")]
+    public GameObject Minimap; 
     public TMP_Text moneyText;
     [SerializeField] private Image healthbar;
     [SerializeField] private Image manabar;
