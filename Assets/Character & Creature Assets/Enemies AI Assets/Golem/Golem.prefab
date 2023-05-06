@@ -273,10 +273,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1269525014671872113}
   - component: {fileID: 1591172800033339292}
+  - component: {fileID: 919132147964393026}
   - component: {fileID: 1591172800033339295}
   - component: {fileID: 1591172800033339294}
   - component: {fileID: 1591172800033339289}
-  - component: {fileID: 919132147964393026}
   m_Layer: 0
   m_Name: Golem
   m_TagString: Enemy
@@ -324,6 +324,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &919132147964393026
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933613152340871883}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bb12c04faa0674c4ea16284aceb5bd05, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1591172800033339295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,6 +363,10 @@ MonoBehaviour:
   deathDuration: 5
   enemyData: {fileID: 11400000, guid: d5128d7f46bf98d459a4fdd4092889a6, type: 2}
   HealthBar: {fileID: 2519802500983145633}
+  isLich: 0
+  isDead: 0
+  CageWall: []
+  wallIndex: 0
 --- !u!54 &1591172800033339294
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -373,25 +396,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.5, y: 4.89877, z: 2.5}
   m_Center: {x: 0, y: 2.3506153, z: 0}
---- !u!95 &919132147964393026
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1933613152340871883}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bb12c04faa0674c4ea16284aceb5bd05, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2367088997854241489
 GameObject:
   m_ObjectHideFlags: 0

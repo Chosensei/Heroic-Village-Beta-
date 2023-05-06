@@ -54,11 +54,10 @@ namespace GameDevTV.Saving
 
         // PRIVATE
 
-        private void Load(string saveFile)
+        public void Load(string saveFile)
         {
             RestoreState(LoadFile(saveFile));
         }
-
         private Dictionary<string, object> LoadFile(string saveFile)
         {
             string path = GetPathFromSaveFile(saveFile);
@@ -109,6 +108,17 @@ namespace GameDevTV.Saving
         private string GetPathFromSaveFile(string saveFile)
         {
             return Path.Combine(Application.persistentDataPath, saveFile + ".sav");
+        }
+
+        public IEnumerable<string> ListSaves()
+        {
+            foreach (string path in Directory.EnumerateFiles(Application.persistentDataPath))
+            {
+                if (Path.GetExtension(path) == ".sav")
+                {
+                    yield return Path.GetFileNameWithoutExtension(path);
+                }
+            }
         }
     }
 }

@@ -88,7 +88,8 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text UpgradedStatValue3;
     public TMP_Text UpgradedStatValue4;
     public TMP_Text UpgradeCostValue;
-
+    // TESTING
+    public GameObject towerParentWall1; 
     void Start()
     {
         SetupButtons();
@@ -172,6 +173,7 @@ public class UIManager : Singleton<UIManager>
         {
             GameObject house = Instantiate(villageHousePrefab);
             house.transform.position = tpc.transform.position;
+            house.transform.SetParent(tpc.transform.parent);
             tpc.TowerPlaced(house.GetComponent<BaseTowerController>());
             GMDebug.Instance.MoneyInBank -= villageHouseBuildCost;
             moneyText.text = GMDebug.Instance.MoneyInBank.ToString();
@@ -181,6 +183,7 @@ public class UIManager : Singleton<UIManager>
         {
             GameObject tower = Instantiate(arrowTowerPrefab);
             tower.transform.position = tpc.transform.position;
+            tower.transform.SetParent(tpc.transform.parent);
             tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
             GMDebug.Instance.MoneyInBank -= archerTowerBuildCost;
             moneyText.text = GMDebug.Instance.MoneyInBank.ToString();
@@ -190,6 +193,7 @@ public class UIManager : Singleton<UIManager>
         {
             GameObject tower = Instantiate(catapultTowerPrefab);
             tower.transform.position = tpc.transform.position;
+            tower.transform.SetParent(tpc.transform.parent);
             tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
             GMDebug.Instance.MoneyInBank -= catapultBuildCost;
             moneyText.text = GMDebug.Instance.MoneyInBank.ToString();
@@ -199,6 +203,7 @@ public class UIManager : Singleton<UIManager>
         {
             GameObject tower = Instantiate(wizardTowerPrefab);
             tower.transform.position = tpc.transform.position;
+            tower.transform.SetParent(tpc.transform.parent);
             tpc.TowerPlaced(tower.GetComponent<BaseTowerController>());
             GMDebug.Instance.MoneyInBank -= wizardTowerBuildCost;
             moneyText.text = GMDebug.Instance.MoneyInBank.ToString();

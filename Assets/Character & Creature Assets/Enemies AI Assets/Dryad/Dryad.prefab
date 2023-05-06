@@ -615,10 +615,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3491617043144754187}
   - component: {fileID: 4034678048416244710}
+  - component: {fileID: 919132148305872186}
   - component: {fileID: 4034678048416244709}
   - component: {fileID: 4034678048416244708}
   - component: {fileID: 4034678048416244707}
-  - component: {fileID: 919132148305872186}
   m_Layer: 0
   m_Name: Dryad
   m_TagString: Enemy
@@ -666,6 +666,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &919132148305872186
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269244904752258737}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4f8dc2350a49dd141b01ebfa6e8b2316, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &4034678048416244709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,6 +705,10 @@ MonoBehaviour:
   deathDuration: 5
   enemyData: {fileID: 11400000, guid: 20ea1c7fcc8445c4796e96192afc0668, type: 2}
   HealthBar: {fileID: 221475124553384262}
+  isLich: 0
+  isDead: 0
+  CageWall: []
+  wallIndex: 0
 --- !u!54 &4034678048416244708
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -715,25 +738,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 7, z: 4}
   m_Center: {x: 0.25, y: 4, z: 0}
---- !u!95 &919132148305872186
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4269244904752258737}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4f8dc2350a49dd141b01ebfa6e8b2316, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4493314938768643156
 GameObject:
   m_ObjectHideFlags: 0

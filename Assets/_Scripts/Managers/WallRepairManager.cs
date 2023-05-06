@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -13,7 +11,7 @@ public class WallRepairManager : MonoBehaviour
     public float baseRepairCost = 100f;
     public float baseUpgradeCost = 500f;
     public Button repairButton1, repairButton2, repairButton3; 
-    public Button upgradeButton1, upgradeButton2, upgradeButton3;
+
     public Button confirmRepair;
     public Button confirmUpgrade; 
     public GameObject repairMenu;
@@ -23,7 +21,7 @@ public class WallRepairManager : MonoBehaviour
     public TMP_Text w1MaxHP, w2MaxHP, w3MaxHP;
     public TMP_Text repairPrice; 
     public TMP_Text repairPercentAmount;
-    //private int upgradeLevel = 0;
+    
     private int daysSinceInflation = 0;
     private int repairCost;
     private int goldPerPercent = 10;
@@ -33,13 +31,9 @@ public class WallRepairManager : MonoBehaviour
     void Start()
     {
         // Set up button click events
-        repairButton1.onClick.AddListener(delegate { OpenRepairMenu(walls[0]); });
-        repairButton2.onClick.AddListener(delegate { OpenRepairMenu(walls[1]); });
-        repairButton3.onClick.AddListener(delegate { OpenRepairMenu(walls[2]); });
-
-        //upgradeButton1.onClick.AddListener(delegate { OpenUpgradesMenu(wallOne); });
-        //upgradeButton2.onClick.AddListener(delegate { OpenUpgradesMenu(wallTwo); });
-        //upgradeButton3.onClick.AddListener(delegate { OpenUpgradesMenu(wallThree); });
+        repairButton1.onClick.AddListener(delegate { Init(walls[0]); });
+        repairButton2.onClick.AddListener(delegate { Init(walls[1]); });
+        repairButton3.onClick.AddListener(delegate { Init(walls[2]); });
         
         confirmRepair.onClick.AddListener(delegate { OnConfirmButtonClicked(); });
         //confirmRepair.onClick.AddListener(delegate { RepairWall(); });
@@ -84,20 +78,6 @@ public class WallRepairManager : MonoBehaviour
                 else repairButton1.image.color = Color.white;
             }
 
-
-            // Disable upgrade button if wall is at max upgrade level
-            if (currentWall.UpgradeLevel == currentWall.MaxLevel)
-            {
-                upgradeButton1.interactable = false;
-                upgradeButton2.interactable = false;
-                upgradeButton3.interactable = false;
-            }
-            else
-            {
-                upgradeButton1.interactable = true;
-                upgradeButton2.interactable = true;
-                upgradeButton3.interactable = true;
-            }
         }
         if (!CanAffordRepair() && !CanRepairDamage())
         {
@@ -120,15 +100,15 @@ public class WallRepairManager : MonoBehaviour
         }
     }
 
-    // Function to open repair menu
-    public void OpenRepairMenu(CageWall cw)
+    // Function to set current wall 
+    public void Init(CageWall cw)
     {
         currentWall = cw;
 
         // Set slider value to 0 initially
         repairSlider.value = 0f;
     }
-
+    // Function to update slider info 
     public void OnRepairSliderChanged(CageWall cw)
     {
         UpdateRepairCost(cw);
@@ -175,14 +155,13 @@ public class WallRepairManager : MonoBehaviour
     }
     private void ApplyRepair()
     {
-        //int repairPercent = (int)repairSlider.value;
+        // Calculate repair costs
         int repairAmount = Mathf.RoundToInt(currentWall.MaxWallHP * repairPercent / 100);
         currentWall.CurrentWallHP = Mathf.Min(currentWall.CurrentWallHP + repairAmount, currentWall.MaxWallHP);
         int wallIndex = Array.IndexOf(walls, currentWall);
-        // TODO: Update the wall's health UI element
-        UIManager.Instance.UpdateWallHP(wallIndex, currentWall.CurrentWallHP, currentWall.MaxWallHP);
-        print("current wall HP = " + currentWall.CurrentWallHP);
 
+        // Update the wall's health UI element
+        UIManager.Instance.UpdateWallHP(wallIndex, currentWall.CurrentWallHP, currentWall.MaxWallHP);
     }
     // Function to close repair menu
     public void CloseRepairMenu()

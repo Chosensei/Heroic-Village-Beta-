@@ -50,6 +50,7 @@ namespace RPG.Movement
             {
                 StartMoveAction();
             }
+
         }
 
         public void StartMoveAction()

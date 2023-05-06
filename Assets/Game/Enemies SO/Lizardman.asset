@@ -16,7 +16,7 @@ MonoBehaviour:
   currentHealth: 0
   minDamage: 30
   maxDamage: 45
-  atkRange: 1
+  atkRange: 5
   atkSpeed: 3
   timeBetweenAtks: 3
   armor: 0

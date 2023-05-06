@@ -95,13 +95,15 @@ public class GMDebug : Singleton<GMDebug>
         // Change camera back to towncam
     }
     /* AFTER SAVING */
-    public void StartRest()
+    public void EndCurrentDay()
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
             // After saving the game, start next day 
             InitializeNextDay();
         }
+        // Restore player HP to full 
+        player.GetComponent<Health>().RestoreFullHealth(); 
     }
     void Start()
     {
@@ -114,18 +116,21 @@ public class GMDebug : Singleton<GMDebug>
 
     void Update()
     {
-        if (hasLeftTown && !battleStarted)
+        // Check to enable / disable StartBattle & BuildButton
+        if (hasLeftTown)
         {
-            UIManager.Instance.StartBattleButton.SetActive(true);
+            if (!battleStarted)
+            {
+                UIManager.Instance.StartBattleButton.SetActive(true);
+            }
+            else
+            {
+                UIManager.Instance.StartBattleButton.SetActive(false);
+            }
             UIManager.Instance.BuildButton.SetActive(false);
         }
-        else
-        {
-            UIManager.Instance.StartBattleButton.SetActive(false);
-            UIManager.Instance.BuildButton.SetActive(true); 
-        }
+        else { UIManager.Instance.BuildButton.SetActive(true); }
 
-        //if (!isInTown && battleStarted)
         if (battleStarted)
         {
             startSpawn = true; 
@@ -177,6 +182,8 @@ public class GMDebug : Singleton<GMDebug>
         if (currentDay > 11 && currentDay <= 16) { maxWaves = 8; enemiesPerWave = 6; }
 
         skyboxController.ToggleSkybox();    // Start a new daytime
+
+        
     }
 
     public void EndBattle()

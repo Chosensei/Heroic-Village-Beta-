@@ -20,8 +20,8 @@ public class CageWall : MonoBehaviour
     public float timeInvincible = 2.0f;
     bool isInvincible;
     float invisibleTimer;
-    int upgradeLevel = 0;
-    int maxUpgradeLevel = 5; 
+    int upgradeLevel = 1;
+    int maxUpgradeLevel = 9; 
     // Coroutine to handle showing and hiding the wall HP UI
     Coroutine hpCoroutine;
 
@@ -72,8 +72,6 @@ public class CageWall : MonoBehaviour
             CurrentWallHP = 0; 
             isDestroyed = true; 
             isUnderAtk = false;
-            // Maybe can call the enemies clear target mwthod here?
-
         }
 
     }

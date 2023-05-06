@@ -83,7 +83,10 @@ namespace RPG.Attributes
             healthPoints.value = Mathf.Min(healthPoints.value + healthToRestore, GetMaxHealthPoints());
             UpdateState();
         }
-
+        public float RestoreFullHealth()
+        {
+            return healthPoints.value = GetComponent<BaseStats>().GetStat(Stat.Health);
+        }
         public float GetHealthPoints()
         {
             return healthPoints.value;

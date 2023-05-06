@@ -5070,6 +5070,7 @@ MonoBehaviour:
   weaponSmith: 0
   magicCaster: 0
   guildLady: 0
+  anim: {fileID: 0}
 --- !u!65 &867357325
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6523,7 +6524,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &1082760379
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10081,6 +10082,9 @@ MonoBehaviour:
   dialogueLines: []
   npcName: 
   dialoguePanel: {fileID: 1463558227}
+  shopOptionPanel: {fileID: 0}
+  weaponShopMenu: {fileID: 0}
+  magicShopMenu: {fileID: 0}
 --- !u!4 &1711790897
 Transform:
   m_ObjectHideFlags: 0
@@ -11159,7 +11163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1836467010
 Transform:
   m_ObjectHideFlags: 0

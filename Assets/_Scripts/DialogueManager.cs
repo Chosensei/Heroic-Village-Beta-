@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,12 +15,19 @@ public class DialogueManager : MonoBehaviour
     public string npcName;
     public GameObject dialoguePanel;
     public GameObject shopOptionPanel;
+    public GameObject shopOptionPanel2;
     public GameObject weaponShopMenu;
     public GameObject magicShopMenu;
+    public GameObject repairWallMenu;
+    public GameObject upgradeWallMenu;
+    public TMP_Text shopButtonTxt;
+    public TMP_Text shopButtonTxt2;
+
     // TO DO :extend for wall repairs and upgrades
     Button continueButton;
     Button closeButton;
-    Button shopButton; 
+    Button shopButton;
+    Button shopButton2; 
     Text dialogueText, nameText;
     int dialogueIndex;
     NPC npc;
@@ -31,13 +39,18 @@ public class DialogueManager : MonoBehaviour
         nameText = dialoguePanel.transform.Find("NpcName").GetChild(0).GetComponent<Text>();
         closeButton = dialoguePanel.transform.Find("Close").GetComponent<Button>();
         shopButton = shopOptionPanel.transform.Find("OpenShopButton").GetComponent<Button>();
-
+        shopButton2 = shopOptionPanel2.transform.Find("OpenShopButton2").GetComponent<Button>();
         continueButton.onClick.AddListener(delegate { ContinueDialogue(); });
         closeButton.onClick.AddListener(delegate { EndDialogue(); });
         shopButton.onClick.AddListener(delegate { OpenShopMenu(); });
+        shopButton2.onClick.AddListener(() => { 
+            upgradeWallMenu.SetActive(true);
+            repairWallMenu.SetActive(false);
+        });
 
         dialoguePanel.SetActive(false);
         shopOptionPanel.SetActive(false);
+        shopOptionPanel2.SetActive(false);
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -91,7 +104,9 @@ public class DialogueManager : MonoBehaviour
                 npc.anim.SetTrigger("Welcome");
                 npc.anim.SetTrigger("Idle");
 
-                shopOptionPanel.SetActive(true);
+                //shopOptionPanel.SetActive(true);
+                SetShopUI(); 
+
                 continueButton.gameObject.SetActive(false);
                 closeButton.gameObject.SetActive(true);
             }
@@ -103,9 +118,12 @@ public class DialogueManager : MonoBehaviour
         npc.anim.SetTrigger("Idle");
 
         shopOptionPanel.SetActive(false);
+        shopOptionPanel2.SetActive(false);
         dialoguePanel.SetActive(false);
         weaponShopMenu.SetActive(false);
         magicShopMenu.SetActive(false);
+        repairWallMenu.SetActive(false);
+        upgradeWallMenu.SetActive(false);
     }
     public void OpenShopMenu()
     {
@@ -117,18 +135,42 @@ public class DialogueManager : MonoBehaviour
         }
         else if (npc.magicCaster)
         {
+            npc.anim.SetTrigger("OpenShop");
+            npc.anim.SetTrigger("Idle");
             magicShopMenu.SetActive(true);
         }
         else if (npc.guildLady)
         {
-            // display a message saying the guild lady does not have a shop
-            Debug.Log("I'm sorry, I don't have a shop.");
+            npc.anim.SetTrigger("OpenShop");
+            npc.anim.SetTrigger("Idle");
+            repairWallMenu.SetActive(true);
+            upgradeWallMenu.SetActive(false); 
         }
 
         // Clear the dialogue box 
         dialogueText.text = "";
         // hide the shop button 
         //shopButton.gameObject.SetActive(false);
+    }
+    public void SetShopUI()
+    {
+        if (npc.weaponSmith)
+        {
+            shopOptionPanel.SetActive(true);
+            shopButtonTxt.text = "WEAPON UPGRADE";
+        }
+        else if (npc.magicCaster)
+        {
+            shopOptionPanel.SetActive(true);
+            shopButtonTxt.text = "MAGIC SHOP";
+        }
+        else if (npc.guildLady)
+        {
+            shopOptionPanel.SetActive(true);
+            shopOptionPanel2.SetActive(true);
+            shopButtonTxt.text = "WALL REPAIRS";
+            shopButtonTxt2.text = "WALL UPGRADES";
+        }
     }
     public void ShowThankYouMessage()
     {

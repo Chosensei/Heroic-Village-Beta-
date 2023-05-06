@@ -74,7 +74,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 76d67d779f8659e45863d065e18c4496, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -100,6 +100,7 @@ MonoBehaviour:
   deathDuration: 5
   enemyData: {fileID: 11400000, guid: 1c6a1a86ad155264ca8b30eb7040f9b3, type: 2}
   HealthBar: {fileID: 3813660742398507463}
+  isLich: 0
   isDead: 0
   CageWall: []
   wallIndex: 0
@@ -2333,6 +2334,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 739163258923840360}
     m_Modifications:
+    - target: {fileID: 3813660742541901138, guid: dcf5462c93a98d645b6ba373f88ff7cb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 29
+      objectReference: {fileID: 0}
     - target: {fileID: 3813660742772647754, guid: dcf5462c93a98d645b6ba373f88ff7cb, type: 3}
       propertyPath: m_Name
       value: Mini HP Bar
@@ -2351,11 +2356,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3813660742772647755, guid: dcf5462c93a98d645b6ba373f88ff7cb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.87
+      value: 4.25
       objectReference: {fileID: 0}
     - target: {fileID: 3813660742772647755, guid: dcf5462c93a98d645b6ba373f88ff7cb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.75
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 3813660742772647755, guid: dcf5462c93a98d645b6ba373f88ff7cb, type: 3}
       propertyPath: m_LocalRotation.w
