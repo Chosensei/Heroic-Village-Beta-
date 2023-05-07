@@ -35,19 +35,21 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text CurrentDayValue;
     public TMP_Text CurrentWaveValue;
     public TMP_Text EnemyRemainingValue;
-    public TMP_Text MoneyEarnedValue;
+    public TMP_Text TotalMoneyEarnedValue;
     public TMP_Text TotalKillsValue;
     public GameObject BattleMenu; 
     public GameObject WinDayMenu;
     public GameObject LoseDayMenu;
     public GameObject StartBattleButton;
-    public GameObject BuildButton; 
+    public GameObject BuildButton;
+    public GameObject ExitBuildButton; 
     [Header("Shop Menu UI")]
     public GameObject WeaponShopMenu;
     public GameObject MagicShopMenu;
 
     [Header("Player UI")]
-    public GameObject Minimap; 
+    public GameObject Minimap;  // Only show up in battle
+    public GameObject BankUI; 
     public TMP_Text moneyText;
     [SerializeField] private Image healthbar;
     [SerializeField] private Image manabar;
@@ -88,8 +90,7 @@ public class UIManager : Singleton<UIManager>
     public TMP_Text UpgradedStatValue3;
     public TMP_Text UpgradedStatValue4;
     public TMP_Text UpgradeCostValue;
-    // TESTING
-    public GameObject towerParentWall1; 
+
     void Start()
     {
         SetupButtons();

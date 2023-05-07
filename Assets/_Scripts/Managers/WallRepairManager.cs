@@ -12,8 +12,7 @@ public class WallRepairManager : MonoBehaviour
     public float baseUpgradeCost = 500f;
     public Button repairButton1, repairButton2, repairButton3; 
 
-    public Button confirmRepair;
-    public Button confirmUpgrade; 
+    public Button confirmRepair; 
     public GameObject repairMenu;
     public GameObject upgradeMenu; 
     public Slider repairSlider;
@@ -34,17 +33,11 @@ public class WallRepairManager : MonoBehaviour
         repairButton1.onClick.AddListener(delegate { Init(walls[0]); });
         repairButton2.onClick.AddListener(delegate { Init(walls[1]); });
         repairButton3.onClick.AddListener(delegate { Init(walls[2]); });
-        
         confirmRepair.onClick.AddListener(delegate { OnConfirmButtonClicked(); });
-        //confirmRepair.onClick.AddListener(delegate { RepairWall(); });
 
         // Set up slider event
         repairSlider.onValueChanged.AddListener(delegate { OnRepairSliderChanged(currentWall); });
-        //repairSlider.onValueChanged.AddListener(delegate { UpdateSliderPercentageAndPrice(); });
         
-        // Hide repair and upgrades menu initially
-        //repairMenu.SetActive(false);
-        //upgradeMenu.SetActive(false); 
     }
 
     // Update is called once per frame

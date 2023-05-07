@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86768ad62930bd646b0e6ff936b8e400, type: 3}
+  m_Name: ArcherTower
+  m_EditorClassIdentifier: 
+  upgrades:
+  - damageBoost: 2
+    fireRateBoost: 1
+    firingRangeBoost: 25
+    aoeRangeBoost: 0
+    aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
+    dotBoost: 0
+    incomeBoost: 0
+    saleAmount: 35
+    upgradeAmount: 75
+  - damageBoost: 4
+    fireRateBoost: 2
+    firingRangeBoost: 25
+    aoeRangeBoost: 0
+    aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
+    dotBoost: 0
+    incomeBoost: 0
+    saleAmount: 60
+    upgradeAmount: 125
+  - damageBoost: 6
+    fireRateBoost: 3
+    firingRangeBoost: 25
+    aoeRangeBoost: 0
+    aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
+    dotBoost: 0
+    incomeBoost: 0
+    saleAmount: 125
+    upgradeAmount: 250
+  - damageBoost: 8
+    fireRateBoost: 4
+    firingRangeBoost: 25
+    aoeRangeBoost: 0
+    aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
+    dotBoost: 0
+    incomeBoost: 0
+    saleAmount: 250
+    upgradeAmount: 500
+  - damageBoost: 10
+    fireRateBoost: 5
+    firingRangeBoost: 25
+    aoeRangeBoost: 0
+    aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
+    dotBoost: 0
+    incomeBoost: 0
+    saleAmount: 350
+    upgradeAmount: 750

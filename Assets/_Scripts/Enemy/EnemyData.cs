@@ -18,7 +18,7 @@ public class EnemyData : ScriptableObject
 
     public float timeBetweenAtks;
 
-    public int armor;
+    public int killReward;
 
     public float moveSpeed;
 }

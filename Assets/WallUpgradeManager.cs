@@ -60,7 +60,8 @@ public class WallUpgradeManager : MonoBehaviour
         {
             // Subtract the upgrade cost from the player's gold
             GMDebug.Instance.MoneyInBank -= upgradeCost;
-
+            // Update bank account
+            UIManager.Instance.moneyText.text = GMDebug.Instance.MoneyInBank.ToString(); 
             // Increase the wall's max health by 10%
             wall.GetComponent<CageWall>().MaxWallHP *= 1.1f;
 

@@ -24,7 +24,8 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     public bool isDead = false;
     private bool isAttacking = false;
     private float maxHealth, currentHealth; 
-    private float attackRate, attackCooldown;  
+    private float attackRate, attackCooldown;
+    private int killReward; 
     private List<GameObject> targetsInRange = new List<GameObject>();
     private NavMeshAgent agent;
     private Animator animator;
@@ -106,7 +107,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         }
         if (isLich == true)
         {
-
+            // ADD ON RANGED ATTACK IF GOT TIME
         }
     }
     private IEnumerator Attack()
@@ -169,7 +170,8 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         attackRate = enemyData.atkSpeed; 
         attackCooldown = enemyData.timeBetweenAtks;
         maxHealth = enemyData.maxHealth;
-        currentHealth = enemyData.currentHealth; 
+        currentHealth = enemyData.currentHealth;
+        killReward = enemyData.killReward; 
     }
 
     #region Player detection logic zone
@@ -223,6 +225,10 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         Destroy(gameObject, deathDuration);
         // Deduct enemy count in UI
         GMDebug.Instance.MinusEnemiesCount();
+        // Add kill reward to total bounty
+        GMDebug.Instance.totalBounty += killReward;
+        // Increment the total number of enemies killed
+        GMDebug.Instance.totalEnemiesKilled++;
     }
     private IEnumerator DamageOverTime(float duration, float damagePerTick)
     {

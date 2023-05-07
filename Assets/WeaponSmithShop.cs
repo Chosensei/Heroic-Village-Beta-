@@ -48,6 +48,9 @@ public class WeaponSmithShop : MonoBehaviour
             {
                 // Subtract the gold from the player and upgrade their attack power
                 GMDebug.Instance.MoneyInBank -= currentUpgradePrice;
+                // Update bank account
+                UIManager.Instance.moneyText.text = GMDebug.Instance.MoneyInBank.ToString();
+                // Increment current level
                 currentUpgradeLevel++;
                 currentUpgradePower = Mathf.CeilToInt(sword.GetComponent<PlayerWeapon>().swordDamage * powerPercentageInc);
                 sword.GetComponent<PlayerWeapon>().swordDamage += currentUpgradePower;

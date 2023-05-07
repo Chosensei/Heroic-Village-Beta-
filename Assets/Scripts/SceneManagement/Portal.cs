@@ -6,18 +6,13 @@ namespace RPG.SceneManagement
 {
     public class Portal : MonoBehaviour
     {
-        enum DestinationIdentifier
-        {
-            A, B, C, D, E
-        }
-
-        [SerializeField] KeyCode keyToPress = KeyCode.F; // the key to press to enter/exit the shop
+        [SerializeField] KeyCode keyToPress = KeyCode.E; // the key to press to enter/exit the shop
         [SerializeField] GameObject showInteractTooltip; // the tooltip to display when the player can enter/exit the shop
         [SerializeField] GameObject spawnPoint;          // where the player will spawn at
         [SerializeField] float fadeOutTime = 1f;
         [SerializeField] float fadeInTime = 2f;
         [SerializeField] float fadeWaitTime = 0.5f;
-        [SerializeField] bool magicShop;  // allow for opening menu
+        [SerializeField] bool playerHouse;  
 
         private void OnTriggerEnter(Collider other)
         {
@@ -48,7 +43,16 @@ namespace RPG.SceneManagement
             if (other.CompareTag("Player"))
             {
                 if (Input.GetKeyDown(keyToPress))
+                {
                     StartCoroutine(Transition(other.gameObject));
+                    
+                    if (playerHouse)
+                    {
+                        // Start New Day
+                        GMDebug.Instance.InitializeNextDay();
+                    }
+                }
+
             }
         }
 
