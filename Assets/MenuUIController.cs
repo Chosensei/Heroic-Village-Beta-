@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 public class MenuUIController : Singleton<MenuUIController>
 {
     public GameObject pauseMenuUI, SettingMenuUI;
@@ -82,4 +82,5 @@ public class MenuUIController : Singleton<MenuUIController>
     {
         SoundManager.Instance.SfxVolume(sfxSlider.value);
     }
+
 }
