@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 675578671}
   - component: {fileID: 675578670}
   - component: {fileID: 675578669}
+  - component: {fileID: 1680600761}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Enemy
@@ -111,6 +112,7 @@ Transform:
   - {fileID: 1057894686985615754}
   - {fileID: 91894534}
   - {fileID: 3813660741736632762}
+  - {fileID: 2339560880286377852}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -172,9 +174,10 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  deathDuration: 5
+  deathDuration: 2
   enemyData: {fileID: 11400000, guid: 6adfda5f7d8a5ac4294712f1c8423d55, type: 2}
   HealthBar: {fileID: 3813660741736632765}
+  isLich: 0
   isDead: 0
   CageWall: []
   wallIndex: 0
@@ -207,6 +210,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6827515, y: 1, z: 0.6827515}
   m_Center: {x: -0.012487841, y: 0.48, z: 0.0039001466}
+--- !u!114 &1680600761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5246790344181518143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e40b17a040824d94cb7f0508792251b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tagName: Sword
+  _renderer: {fileID: 5593180770827208923}
+  _feedbackColor: {r: 1, g: 0, b: 0, a: 0}
+  _damageFlashTime: 0.15
 --- !u!1 &6461585197514080093
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,6 +287,88 @@ Transform:
   m_Father: {fileID: 1057894686985615754}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8511857988044742081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2339560880286377852}
+  - component: {fileID: 7495354240350127212}
+  m_Layer: 9
+  m_Name: 'MiniMap Pointer '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2339560880286377852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8511857988044742081}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.26, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_Children: []
+  m_Father: {fileID: 4871637678834308485}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!212 &7495354240350127212
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8511857988044742081}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 05509201f640cd6448f9246539757152, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 7, y: 7}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &8772747686114327620
 GameObject:
   m_ObjectHideFlags: 0

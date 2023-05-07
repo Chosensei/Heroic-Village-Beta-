@@ -8,6 +8,7 @@ public class SkipIntroClip : MonoBehaviour
 {
     private void Start()
     {
+        SoundManager.Instance.musicSource.Stop(); 
         StartCoroutine(ChangeSkipButtonTextAfterDelay());
     }
     public void SkipCutScene()

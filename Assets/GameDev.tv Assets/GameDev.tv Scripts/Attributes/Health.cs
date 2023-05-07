@@ -30,16 +30,30 @@ namespace RPG.Attributes
         private void Update()
         {
             //FOR DEBUGGING ONLY
-            //if (Input.GetKeyDown(KeyCode.K))
-            //{
-            //    TakeDamage(this.gameObject, 10);
-            //}
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                TakeDamage(this.gameObject, 100);
+            }
+
+            // Health Regeneration
+            if (healthPoints.value < GetMaxHealthPoints())
+            {
+                healthPoints.value += GetRegenRate() * Time.deltaTime;
+                if (healthPoints.value > GetMaxHealthPoints())
+                {
+                    healthPoints.value = GetMaxHealthPoints();
+                }
+            }
         }
         private float GetInitialHealth()
         {
             return GetComponent<BaseStats>().GetStat(Stat.Health);
         }
-
+        // Using mana regen rate temporary
+        public float GetRegenRate()
+        {
+            return GetComponent<BaseStats>().GetStat(Stat.ManaRegenRate);
+        }
         private void Start()
         {
             healthPoints.ForceInit();
@@ -67,7 +81,11 @@ namespace RPG.Attributes
             if (IsDead())
             {
                 // Play death anim
+                GetComponent<Animator>().SetTrigger("die");
                 onDie.Invoke();
+                // If player died respawn back to last save point
+                GetComponent<DeathRespawn>().RespawnPlayer();
+                GetComponent<Animator>().SetTrigger("alive");
                 // Find another way later to give exp to player
                 //AwardExperience(instigator);
             }
@@ -81,7 +99,7 @@ namespace RPG.Attributes
         public void Heal(float healthToRestore)
         {
             healthPoints.value = Mathf.Min(healthPoints.value + healthToRestore, GetMaxHealthPoints());
-            UpdateState();
+            //UpdateState();
         }
         public float RestoreFullHealth()
         {
@@ -126,7 +144,8 @@ namespace RPG.Attributes
 
             if (wasDeadLastFrame && !IsDead())
             {
-                animator.Rebind();
+                animator.SetTrigger("alive");
+                //animator.Rebind();
             }
 
             wasDeadLastFrame = IsDead();

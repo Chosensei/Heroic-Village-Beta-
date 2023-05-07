@@ -104,7 +104,7 @@ public class GMDebug : Singleton<GMDebug>
         // Deactivate minimap
         UIManager.Instance.Minimap.SetActive(false);
         SoundManager.Instance.sfxSource.Stop();
-        SoundManager.Instance.PlayMusic("Night_Theme");
+        SoundManager.Instance.PlayMusic("Village_Theme");
         skyboxController.ToggleSkybox();    // Start night time
     }
     public void EnterBuildMode()
@@ -182,16 +182,11 @@ public class GMDebug : Singleton<GMDebug>
             {
                 EndBattle();
             }
-            // Check if its th final wave
-            if (currentWave == maxWaves)
-            {
-                SoundManager.Instance.PlaySfx("FinalWave");
-            }
+
         }
         else 
         {
             startSpawn = false;
-            //StartRest();
         }
         // Start Next Wave
         StartNextWave();
@@ -215,7 +210,7 @@ public class GMDebug : Singleton<GMDebug>
         UIManager.Instance.StartBattleButton.SetActive(false);
         UIManager.Instance.BattleMenu.SetActive(false);
         UIManager.Instance.Minimap.SetActive(false);
-        SoundManager.Instance.PlayMusic("Day_Theme");
+        //SoundManager.Instance.PlayMusic("Village_Theme");
     }
     public void InitializeNextDay(bool cheatMode = false)
     {
@@ -239,7 +234,7 @@ public class GMDebug : Singleton<GMDebug>
         if (currentDay > 21) { maxWaves = 10; enemiesPerWave = Random.Range(7,10); }
 
         skyboxController.ToggleSkybox();    // Start a new daytime
-        SoundManager.Instance.PlayMusic("Day_Theme");
+        SoundManager.Instance.PlayMusic("Village_Theme");
     }
 
     public void EndBattle()
@@ -382,17 +377,13 @@ public class GMDebug : Singleton<GMDebug>
 
     public void CheckWinLoseCondition()
     {
-        // If player died respawn back to last save point
-        if (player.GetComponent<Health>().IsDead())
-        {
-            // Make player respawn back to town center
-
-        }
         // If current day exceeds the max day then Win Game 
         if (currentDay > maxDays)
         {
             Debug.Log("You win!");
             SoundManager.Instance.PlayMusic("Ending_Theme");
+            // Show ending 
+            MenuUIController.Instance.LoadEndingScene(); 
         }
         // If the last wall is destroyed then Game Over
         if (lastWall.IsDead())

@@ -46,7 +46,7 @@ namespace RPG.SceneManagement
                 {
                     StartCoroutine(Transition(other.gameObject));
                     
-                    if (playerHouse)
+                    if (playerHouse && !GMDebug.Instance.battleStarted && !GMDebug.Instance.hasLeftTown)
                     {
                         // Start New Day
                         GMDebug.Instance.InitializeNextDay();

@@ -9,15 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: d480e62d020b5484cb31f2c0fa95d748
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/IntroductionScene.unity
+    guid: f71859076039ab64497be4cf46d9588c
   - enabled: 1
     path: Assets/Scenes/GameWorld.unity
     guid: 67d5c21f089b93440baddf015560ac94
   - enabled: 1
-    path: Assets/Scenes/Guild_InteriorScene.unity
-    guid: 2b4d52deee5a5d049984e4511b92dec8
-  - enabled: 1
-    path: Assets/Scenes/Magic_Shop_Interior.unity
-    guid: cc44636bdb99782419a61a3814fe5a91
+    path: Assets/Scenes/EndingScene.unity
+    guid: d3bacfcb12a5a2943a76a14908809701
   m_configObjects: {}

@@ -61,7 +61,10 @@ public class MenuUIController : Singleton<MenuUIController>
         Time.timeScale = 1f; // resume the game in case it was paused
         SceneManager.LoadScene("MainMenu"); // load the main menu scene
     }
-
+    public void LoadEndingScene()
+    {
+        SceneManager.LoadScene("EndingScene");
+    }
     public void QuitGame()
     {
         Application.Quit(); // quit the game
