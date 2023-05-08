@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using GameDevTV.Saving;
-using static UnityEditor.Progress;
 
 namespace GameDevTV.Inventories
 {

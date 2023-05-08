@@ -384,7 +384,7 @@ public class GMDebug : Singleton<GMDebug>
             Debug.Log("You win!");
             SoundManager.Instance.musicSource.Stop(); 
             // Show ending 
-            MenuUIController.Instance.LoadEndingScene(); 
+            //MenuUIController.Instance.LoadEndingScene(); 
         }
         // If the last wall is destroyed then Game Over
         if (lastWall.IsDead())
