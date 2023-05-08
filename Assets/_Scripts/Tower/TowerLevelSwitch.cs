@@ -76,21 +76,22 @@ public class TowerLevelSwitch : MonoBehaviour
     {
         if (GMDebug.Instance.isBuilding)
         {
-            UIManager.Instance.ShowUpgradeMenu(this);
-            UIManager.Instance.currentSelectedBuilding = this.gameObject;
-
-            if (WizardTower == true)
-            {
-                UIManager.Instance.SwitchElementUIMenu.gameObject.SetActive(true);
-                Debug.Log("Wizard tower selected");
-            }
-            else { UIManager.Instance.SwitchElementUIMenu.gameObject.SetActive(false); }
-
-            DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount,
-                baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount,
-                upgradedFiringRangeAmount, upgradedAoeRangeAmount, upgradedAoeBlastForceAmount, upgradedEffectDurationAmount, upgradedDOTAmount);
 
         }
+        UIManager.Instance.ShowUpgradeMenu(this);
+        UIManager.Instance.currentSelectedBuilding = this.gameObject;
+
+        if (WizardTower == true)
+        {
+            UIManager.Instance.SwitchElementUIMenu.gameObject.SetActive(true);
+            Debug.Log("Wizard tower selected");
+        }
+        else { UIManager.Instance.SwitchElementUIMenu.gameObject.SetActive(false); }
+
+        DisplayCurrentTowerStats(currentTowerLevel, currentTowerLevel + 1, baseSellingPrice, baseUpgradePrice, baseIncome, upgradedIncomeAmount,
+            baseDamage, baseFireRate, baseFiringRange, baseAoeRadius, baseAoeBlastForce, upgradedDamageAmount, upgradedFireRateAmount,
+            upgradedFiringRangeAmount, upgradedAoeRangeAmount, upgradedAoeBlastForceAmount, upgradedEffectDurationAmount, upgradedDOTAmount);
+
     }
     public void UpgradeTestMessage()
     {

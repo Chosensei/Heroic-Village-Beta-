@@ -52,8 +52,8 @@ namespace RPG.Combat
 
         private void Update()
         {
-            // check for attack input
-            if (Input.GetMouseButtonDown(0) && !isAttacking)
+            // check for attack input & only allow swing sword when not in town
+            if (Input.GetMouseButtonDown(0) && !isAttacking && GMDebug.Instance.hasLeftTown)   
             {
                 StartCoroutine(WeaponAttack());
             }
@@ -106,7 +106,7 @@ namespace RPG.Combat
             isAttacking = true;
             // set attack animation here
             TriggerAttack();
-
+            SoundManager.Instance.PlaySfx("CharacterAttack");
             // wait for attack duration
             yield return new WaitForSeconds(2f);
 

@@ -366,6 +366,13 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: d5128d7f46bf98d459a4fdd4092889a6, type: 2}
   HealthBar: {fileID: 2519802500983145633}
   isLich: 0
+  slime: 0
+  Orc: 0
+  Dryed: 0
+  Golem: 1
+  Lizardman: 0
+  Skeleton: 0
+  Wolf: 0
   isDead: 0
   CageWall: []
   wallIndex: 0

@@ -175,11 +175,11 @@ MonoBehaviour:
   musicSounds:
   - name: Main_Menu
     clip: {fileID: 8300000, guid: 1555213885dc6f24bae1da289acce149, type: 3}
-  - name: Day_Theme
+  - name: Battle_Theme
     clip: {fileID: 8300000, guid: 029cdec70bc2f814391c01865cc494dd, type: 3}
   - name: Ending_Theme
     clip: {fileID: 8300000, guid: 83457b567e9b457438c17cc30ecb5484, type: 3}
-  - name: Night_Theme
+  - name: Village_Theme
     clip: {fileID: 8300000, guid: b9d46f82229655c4ba27a2e5c5e4caed, type: 3}
   sfxSounds:
   - name: ArcherTower

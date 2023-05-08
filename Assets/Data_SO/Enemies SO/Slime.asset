@@ -15,9 +15,9 @@ MonoBehaviour:
   maxHealth: 25
   currentHealth: 0
   minDamage: 5
-  maxDamage: 10
+  maxDamage: 15
   atkRange: 3
   atkSpeed: 1
   timeBetweenAtks: 1
-  killReward: 30
+  killReward: 15
   moveSpeed: 1

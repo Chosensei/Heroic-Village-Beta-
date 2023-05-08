@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0c2b0a9b9e3804fa3628bb4815e82e, type: 3}
   m_Name: Golem
   m_EditorClassIdentifier: 
-  maxHealth: 85
+  maxHealth: 300
   currentHealth: 0
-  minDamage: 60
-  maxDamage: 75
+  minDamage: 30
+  maxDamage: 60
   atkRange: 3.5
   atkSpeed: 0.3
   timeBetweenAtks: 3
-  killReward: 200
-  moveSpeed: 0.5
+  killReward: 150
+  moveSpeed: 2

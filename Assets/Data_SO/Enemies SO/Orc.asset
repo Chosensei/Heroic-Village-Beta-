@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0c2b0a9b9e3804fa3628bb4815e82e, type: 3}
   m_Name: Orc
   m_EditorClassIdentifier: 
-  maxHealth: 75
+  maxHealth: 100
   currentHealth: 0
-  minDamage: 35
-  maxDamage: 55
+  minDamage: 15
+  maxDamage: 30
   atkRange: 3.2
   atkSpeed: 0.2
   timeBetweenAtks: 2
-  killReward: 120
-  moveSpeed: 3.5
+  killReward: 60
+  moveSpeed: 3

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0c2b0a9b9e3804fa3628bb4815e82e, type: 3}
   m_Name: Lich
   m_EditorClassIdentifier: 
-  maxHealth: 55
+  maxHealth: 50
   currentHealth: 0
   minDamage: 25
-  maxDamage: 35
+  maxDamage: 40
   atkRange: 7
   atkSpeed: 1
   timeBetweenAtks: 2
-  killReward: 220
+  killReward: 120
   moveSpeed: 3

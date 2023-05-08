@@ -58,9 +58,11 @@ MonoBehaviour:
   baseAoeRadius: 5
   baseAoeBlastForce: 100
   baseAnimationSpeed: 1
+  baseEffectDuration: 0
   baseDot: 0
   baseSlowMvt: 0
-  baseStunDuration: 0
+  baseStun: 0
+  stunCircleZone: {fileID: 0}
   baseIncome: 0
   towerLevelUpPrefabs:
   - {fileID: 4490083723456570418}
@@ -86,8 +88,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 5}
-  m_Center: {x: 0, y: 2.5, z: 0}
+  m_Size: {x: 20, y: 5, z: 12.504961}
+  m_Center: {x: -0, y: 2.5, z: -0.15542436}
 --- !u!1001 &4070411771251835936
 PrefabInstance:
   m_ObjectHideFlags: 0

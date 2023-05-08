@@ -18,14 +18,15 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     [Header("Enemy SO")]
     public EnemyData enemyData;
     [SerializeField] private HealthBarController HealthBar;
-    [SerializeField] private bool isLich = false; 
+    [SerializeField] private bool isLich = false;
+    [SerializeField] private bool slime, Orc, Dryed, Golem, Lizardman, Skeleton, Wolf;
     private bool targetWithinRange => Vector3.Distance(transform.position, currentTarget.transform.position) <= enemyData.atkRange;
     //public static bool isDead = false;
     public bool isDead = false;
     private bool isAttacking = false;
-    private float maxHealth, currentHealth; 
+    private float maxHealth, currentHealth;
     private float attackRate, attackCooldown;
-    private int killReward; 
+    private int killReward;
     private List<GameObject> targetsInRange = new List<GameObject>();
     private NavMeshAgent agent;
     private Animator animator;
@@ -41,7 +42,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         renderer = transform.GetChild(0).GetComponent<Renderer>();
-        SetupAIFromSOConfig(); 
+        SetupAIFromSOConfig();
     }
     void Start()
     {
@@ -83,7 +84,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
             animator.SetBool("isWalking", true);
             agent.isStopped = false;
         }
-            
+
 
         // If there is no current target or if the current target is inactive, find a new target 
         if (currentTarget == null || !currentTarget.activeInHierarchy)
@@ -98,7 +99,7 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
                 if (!isAttacking)
                     StartCoroutine(Attack());
             }
-            else 
+            else
             {
                 isAttacking = false;
                 agent.isStopped = false;
@@ -114,6 +115,11 @@ public class EnemyBehavior : MonoBehaviour, IDamageable
     {
         isAttacking = true;
         animator.SetTrigger("attack");
+
+        if (Orc || Lizardman || Skeleton || Wolf) { SoundManager.Instance.PlaySfx("OrcAttack");  }
+        if (isLich) { SoundManager.Instance.PlaySfx("LichAttack"); }
+        if (Golem) { SoundManager.Instance.PlaySfx("RockSmashShort"); }
+        if (slime) { SoundManager.Instance.PlaySfx("Slime"); }
 
         yield return new WaitForSeconds(attackCooldown);
 

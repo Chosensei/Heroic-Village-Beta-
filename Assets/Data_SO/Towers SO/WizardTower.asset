@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WizardTower
   m_EditorClassIdentifier: 
   upgrades:
-  - damageBoost: 0
+  - damageBoost: 2
     fireRateBoost: 0
     firingRangeBoost: 0
     aoeRangeBoost: 0
@@ -24,8 +24,7 @@ MonoBehaviour:
     incomeBoost: 0
     saleAmount: 250
     upgradeAmount: 500
-    wallHPBuffAmount: 0
-  - damageBoost: 0
+  - damageBoost: 2
     fireRateBoost: 0
     firingRangeBoost: 0
     aoeRangeBoost: 0
@@ -36,8 +35,7 @@ MonoBehaviour:
     incomeBoost: 0
     saleAmount: 350
     upgradeAmount: 700
-    wallHPBuffAmount: 0
-  - damageBoost: 0
+  - damageBoost: 2
     fireRateBoost: 0
     firingRangeBoost: 0
     aoeRangeBoost: 0
@@ -48,8 +46,7 @@ MonoBehaviour:
     incomeBoost: 0
     saleAmount: 450
     upgradeAmount: 900
-    wallHPBuffAmount: 0
-  - damageBoost: 0
+  - damageBoost: 2
     fireRateBoost: 0
     firingRangeBoost: 0
     aoeRangeBoost: 0
@@ -60,8 +57,7 @@ MonoBehaviour:
     incomeBoost: 0
     saleAmount: 600
     upgradeAmount: 1200
-    wallHPBuffAmount: 0
-  - damageBoost: 0
+  - damageBoost: 2
     fireRateBoost: 0
     firingRangeBoost: 0
     aoeRangeBoost: 0
@@ -72,4 +68,3 @@ MonoBehaviour:
     incomeBoost: 0
     saleAmount: 750
     upgradeAmount: 0
-    wallHPBuffAmount: 0

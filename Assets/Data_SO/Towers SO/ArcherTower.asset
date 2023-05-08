@@ -13,18 +13,7 @@ MonoBehaviour:
   m_Name: ArcherTower
   m_EditorClassIdentifier: 
   upgrades:
-  - damageBoost: 2
-    fireRateBoost: 1
-    firingRangeBoost: 25
-    aoeRangeBoost: 0
-    aoeBlastBoost: 0
-    animSpeedBoost: 0
-    effectDurationBoost: 0
-    dotBoost: 0
-    incomeBoost: 0
-    saleAmount: 35
-    upgradeAmount: 75
-  - damageBoost: 4
+  - damageBoost: 8
     fireRateBoost: 2
     firingRangeBoost: 25
     aoeRangeBoost: 0
@@ -33,22 +22,22 @@ MonoBehaviour:
     effectDurationBoost: 0
     dotBoost: 0
     incomeBoost: 0
-    saleAmount: 60
-    upgradeAmount: 125
+    saleAmount: 35
+    upgradeAmount: 100
   - damageBoost: 6
-    fireRateBoost: 3
-    firingRangeBoost: 25
+    fireRateBoost: 4
+    firingRangeBoost: 35
     aoeRangeBoost: 0
     aoeBlastBoost: 0
     animSpeedBoost: 0
     effectDurationBoost: 0
     dotBoost: 0
     incomeBoost: 0
-    saleAmount: 125
+    saleAmount: 120
     upgradeAmount: 250
   - damageBoost: 8
-    fireRateBoost: 4
-    firingRangeBoost: 25
+    fireRateBoost: 8
+    firingRangeBoost: 45
     aoeRangeBoost: 0
     aoeBlastBoost: 0
     animSpeedBoost: 0
@@ -58,8 +47,19 @@ MonoBehaviour:
     saleAmount: 250
     upgradeAmount: 500
   - damageBoost: 10
-    fireRateBoost: 5
-    firingRangeBoost: 25
+    fireRateBoost: 10
+    firingRangeBoost: 50
+    aoeRangeBoost: 0
+    aoeBlastBoost: 0
+    animSpeedBoost: 0
+    effectDurationBoost: 0
+    dotBoost: 0
+    incomeBoost: 0
+    saleAmount: 350
+    upgradeAmount: 750
+  - damageBoost: 10
+    fireRateBoost: 10
+    firingRangeBoost: 50
     aoeRangeBoost: 0
     aoeBlastBoost: 0
     animSpeedBoost: 0

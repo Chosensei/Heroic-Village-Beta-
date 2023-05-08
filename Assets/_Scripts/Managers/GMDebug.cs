@@ -104,7 +104,7 @@ public class GMDebug : Singleton<GMDebug>
         // Deactivate minimap
         UIManager.Instance.Minimap.SetActive(false);
         SoundManager.Instance.sfxSource.Stop();
-        SoundManager.Instance.PlayMusic("Village_Theme");
+        //SoundManager.Instance.PlayMusic("Village_Theme");
         skyboxController.ToggleSkybox();    // Start night time
     }
     public void EnterBuildMode()
@@ -176,6 +176,7 @@ public class GMDebug : Singleton<GMDebug>
             // display current wave when has battle started 
             currentWaveCount = currentWave;
             UIManager.Instance.CurrentWaveValue.text = currentWaveCount.ToString();
+            //SoundManager.Instance.PlayMusic("Battle_Theme");
 
             // check for if final wave is cleared & all enemies in world are dead
             if (currentWave > maxWaves)
@@ -210,7 +211,7 @@ public class GMDebug : Singleton<GMDebug>
         UIManager.Instance.StartBattleButton.SetActive(false);
         UIManager.Instance.BattleMenu.SetActive(false);
         UIManager.Instance.Minimap.SetActive(false);
-        //SoundManager.Instance.PlayMusic("Village_Theme");
+        SoundManager.Instance.PlayMusic("Village_Theme");
     }
     public void InitializeNextDay(bool cheatMode = false)
     {
@@ -234,7 +235,7 @@ public class GMDebug : Singleton<GMDebug>
         if (currentDay > 21) { maxWaves = 10; enemiesPerWave = Random.Range(7,10); }
 
         skyboxController.ToggleSkybox();    // Start a new daytime
-        SoundManager.Instance.PlayMusic("Village_Theme");
+        //SoundManager.Instance.PlayMusic("Village_Theme");
     }
 
     public void EndBattle()
@@ -381,7 +382,7 @@ public class GMDebug : Singleton<GMDebug>
         if (currentDay > maxDays)
         {
             Debug.Log("You win!");
-            SoundManager.Instance.PlayMusic("Ending_Theme");
+            SoundManager.Instance.musicSource.Stop(); 
             // Show ending 
             MenuUIController.Instance.LoadEndingScene(); 
         }
@@ -389,6 +390,7 @@ public class GMDebug : Singleton<GMDebug>
         if (lastWall.IsDead())
         {
             UIManager.Instance.LoseDayMenu.SetActive(true);
+            SoundManager.Instance.PlaySfx("Dead"); 
         }
     }
 

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0c2b0a9b9e3804fa3628bb4815e82e, type: 3}
   m_Name: Dryad
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 60
   currentHealth: 0
   minDamage: 15
-  maxDamage: 30
+  maxDamage: 25
   atkRange: 4
-  atkSpeed: 1
+  atkSpeed: 2
   timeBetweenAtks: 1.5
   killReward: 90
   moveSpeed: 2

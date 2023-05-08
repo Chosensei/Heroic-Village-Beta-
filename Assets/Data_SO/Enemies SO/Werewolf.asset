@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0c2b0a9b9e3804fa3628bb4815e82e, type: 3}
   m_Name: Werewolf
   m_EditorClassIdentifier: 
-  maxHealth: 45
+  maxHealth: 70
   currentHealth: 0
-  minDamage: 30
-  maxDamage: 40
+  minDamage: 15
+  maxDamage: 25
   atkRange: 4.5
   atkSpeed: 4
   timeBetweenAtks: 2.74
-  killReward: 240
-  moveSpeed: 6
+  killReward: 120
+  moveSpeed: 10

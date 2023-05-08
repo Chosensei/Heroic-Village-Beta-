@@ -3935,8 +3935,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7, y: 20, z: 7}
-  m_Center: {x: 0, y: 10, z: 0}
+  m_Size: {x: 20, y: 9.156666, z: 20}
+  m_Center: {x: -0.7277527, y: 34.367928, z: -0.16592407}
 --- !u!1 &8145024992333226662
 GameObject:
   m_ObjectHideFlags: 0
@@ -4906,6 +4906,10 @@ PrefabInstance:
       value: Archer_Level_2
       objectReference: {fileID: 0}
     - target: {fileID: 8384716496324624720, guid: a40e79ea96e4c6545a024c07e8cfda8b, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8384716496324624720, guid: a40e79ea96e4c6545a024c07e8cfda8b, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -5014,6 +5018,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Archer_Level_1
       objectReference: {fileID: 0}
+    - target: {fileID: 8384716496324624720, guid: 7f36bda4951a63944896450e1256980f, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9157981426790554602, guid: 7f36bda4951a63944896450e1256980f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -5080,6 +5088,10 @@ PrefabInstance:
     - target: {fileID: 1372123273320861808, guid: 61008141cb399664cbef972e0c0311f6, type: 3}
       propertyPath: m_Name
       value: Archer_Level_5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1372123273320861808, guid: 61008141cb399664cbef972e0c0311f6, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1372123273320861808, guid: 61008141cb399664cbef972e0c0311f6, type: 3}
       propertyPath: m_IsActive
@@ -5185,6 +5197,10 @@ PrefabInstance:
     - target: {fileID: 200245844452540393, guid: 951eab3fc50a76e4e904f9949e193997, type: 3}
       propertyPath: m_Name
       value: Archer_Level_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 200245844452540393, guid: 951eab3fc50a76e4e904f9949e193997, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 200245844452540393, guid: 951eab3fc50a76e4e904f9949e193997, type: 3}
       propertyPath: m_IsActive
@@ -5334,6 +5350,10 @@ PrefabInstance:
     - target: {fileID: 6650451443739913592, guid: fb68465c2db512b44944dbcf3e0a4a67, type: 3}
       propertyPath: m_Name
       value: Archer_Level_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6650451443739913592, guid: fb68465c2db512b44944dbcf3e0a4a67, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6650451443739913592, guid: fb68465c2db512b44944dbcf3e0a4a67, type: 3}
       propertyPath: m_IsActive
